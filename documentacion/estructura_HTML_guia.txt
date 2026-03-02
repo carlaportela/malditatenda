@@ -1,0 +1,21 @@
+Favicon --------------------------------------------------------------------
+Es un pequeño icono gráfico, generalmente de 16×16 o 32×32 píxeles, 
+que representa visualmente una página web en diferentes lugares del navegador.  
+Su función principal es ayudar a los usuarios a identificar rápidamente una página web entre múltiples pestañas abiertas, en la barra de direcciones, en marcadores, historial de navegación o incluso en resultados de búsqueda. 
+Esencialmente, es una versión reducida del logotipo de una marca.
+Su uso es compatible con la mayoría de los navegadores modernos, pero hay consideraciones clave para que funcione correctamente:
+    - Chrome prioriza el archivo .ico sobre el SVG si está presente.  Para forzar el uso del SVG, asegúrate de incluir el atributo sizes="any" en el enlace al .ico, o reemplázalo con un .png de 32×32 píxeles.
+    - Safari no soporta completamente los SVG como favicon en todos los contextos.  Si necesitas soporte en Safari, añade un <link rel="mask-icon" href="/safari-mask-icon.svg" color="#990000" /> para iconos monocromáticos.
+    - Para soporte de modo oscuro, puedes incluir una regla @media (prefers-color-scheme: dark) directamente dentro del archivo SVG.
+
+<!-- Favicon clásico -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<!-- PNG alternativo -->
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<!-- Apple/Safari pestañas ancladas -->
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+
+Herramientas recomendadas: Usa generadores como RealFaviconGenerator o IONOS Favicon Generator para crear todos los formatos necesarios y el código HTML correcto de forma automática.
+Un favicon bien configurado mejora la identidad visual, profesionalismo y experiencia del usuario en todos los dispositivos y navegadores, especialmente en iOS y macOS.
+

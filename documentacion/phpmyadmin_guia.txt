@@ -1,0 +1,19 @@
+1. Crear base de datos y seleccionar collation utf8mb4_unicode_ci 
+    (soporta emojis, caracteres especiales y escrituras asiáticas y presenta mejor ordenamiento y comparación de caracteres en múltiples idiomas, incluyendo español).
+2. Crear un nuevo usuario (no recomendable usar root) y asignar permisos en la base de datos solo.
+3. Crear las columnas de las tablas y configurar:
+    - Tipo
+    - Longitud
+    - Cotejamiento en TEXT, VARCHAR y CHAR. Heredado del cotejamiento de la tabla a la que pertenece
+    - Indice para búsquedas instantaneas sólo en columnas que aparezcan en búsquedas, ya que muchos índices hacen mas lentos los INERT y los UPDATE
+    - Atributos: Modifican el comportamiento del tipo de dato. UNSIGNED evita en INT numeros negativos (para precio y stock).
+    - Nulo: Si se activa permite valores nulos en columna. No usar en campos obligatorios.
+
+    Las contraseñas de los usuarios se guardan en una columna VARCHAR(255) en forma de hash
+        <?php
+            // Registrar usuario
+            $password_plain = "miSecreta123!";
+            $hash = password_hash($password_plain, PASSWORD_BCRYPT);
+    Para guardar fecha y hora en mensajes, pedidos, usuarios se usa el tipo TIMESTAMP y predeterminado CURRENT TIMESTAMP o ON UPDATE para que actualice la fecha y hora
+    cada vez que se modifica el registro.
+4. Crear relaciones entre tablas, claves foraneas. Tiene que coincidir el nombre de las columnas, el tipo, atributos...

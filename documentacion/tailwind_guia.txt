@@ -1,0 +1,67 @@
+Instalar localmente con npm--------------------------------------------------------------------------
+	1. Abre el terminal en VS Code
+	2. Comprobar que Node.js está instalado
+		node -v 
+		Si no se muestra una versión, Node.js no está instalado o no está accesible. 
+		2.1 Instalalo, usando la versión LTS para mayor estabilidad, desde el sitio oficial.
+			Durante la instalación, asegúrate de que la opción "Add to PATH" esté activada.
+		2.2 Configura la variable de entorno PATH manualmente (si es necesario):
+			- Presiona Win + R, escribe sysdm.cpl y entra en Propiedades del sistema.
+			- Haz clic en Configuración avanzada del sistema → Variables de entorno.
+			- En Variables del usuario o Variables del sistema, selecciona Path y haz clic en Editar.
+			- Haz clic en Nuevo y agrega la ruta:
+				C:\Program Files\nodejs\
+			- Haz clic en Aceptar en todas las ventanas.
+			- Reinicia tu terminal (o tu computadora) para aplicar los cambios. 
+			- Verifica que npm funcione:
+				Abre una nueva terminal y ejecuta:
+				npm -v
+	3.Inicializa el proyecto con npm
+	Este enfoque permite que Tailwind elimine automáticamente los estilos no usados en producción, optimizando el tamaño del CSS final. 
+	Asegúrate de tener package.json en tu proyecto. Si no lo tienes, ejecuta:
+		npm init -y	
+	4. Instalar dependencias
+		Abre tu terminal en la raíz del proyecto y ejecuta:
+			npm install -D tailwindcss@3.4.4 postcss autoprefixer
+	5. Generar archivo de configuración
+		Ejecuta el siguiente comando para crear tailwind.config.js:
+			npx tailwindcss init -p
+		Este comando genera automáticamente el archivo de configuración y un postcss.config.js. 
+	6. Configurar tailwind.config.js
+		Asegúrate de que el archivo contenga las rutas correctas a tus archivos HTML, JS y plantillas.
+			/** @type {import('tailwindcss').Config} */
+			module.exports = {
+			content: ["
+				./public/**/*.php",
+			    "./public/**/*.html",
+    			"./src/**/*.js"],
+			theme: {
+				extend: {},
+			},
+			plugins: [],
+			}
+	7. Agregar directivas en tu archivo CSS
+		En tu archivo de estilos principal (src/input.css), añade:
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
+	8. Compilar Tailwind
+		En Powershell 
+			npx tailwindcss -i ./src/input.css -o ./public/dist/output.css --watch
+		Esto generará:
+			dist/output.css
+	9. Usa el CSS en tu HTML o php
+		<link href="dist/output.css" rel="stylesheet">
+
+	La estructura para un proyecto recomendada es 
+		mi-proyecto/
+		│
+		├── public/
+		│   ├── index.php
+		│   └── dist/output.css
+		│
+		├── src/
+		│   └── input.css
+		│
+		├── tailwind.config.js
+		├── package.json

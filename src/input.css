@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Importar Flowbite */
+@import "flowbite";
+
+/* Activar plugin de Flowbite */
+@plugin "flowbite/plugin";
