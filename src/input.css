@@ -5,3 +5,7 @@
 
 /* Activar plugin de Flowbite */
 @plugin "flowbite/plugin";
+
+.font-handwritten {
+  font-family: 'Homemade Apple', cursive;
+}

@@ -12,8 +12,13 @@
     <meta property="og:title" content="Maldita Carlita" />
     <meta property="og:url" content="https://www.malditacarlita.com/" />
     <title>Maldita Carlita</title>
+
     <!-- Hoja de estilos CSS de Tailwind -->
     <link rel="stylesheet" href="/malditatenda/dist/output.css">
+    
+    <!-- Fuente de Google Fonst -->
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
+    
     <!-- Favicon clásico -->
     <link rel="icon" type="image/svg+xml" href="../src/img/favicon/favicon.svg" />
     <link rel="shortcut icon" href="../src/img/favicon/favicon.ico" />
@@ -23,7 +28,7 @@
     <link rel="mask-icon" href="../src/img/favicon/favicon.svg" color="#990000"/>
     <link rel="apple-touch-icon" sizes="180x180" href="../src/img/favicon/apple-touch-icon.png" />
     <!-- Funcionalidad Javascript-->
-    <script src="../src/js/main.js"></script>
+    <script src="../public/js/main.js"></script>
   </head>
   <body>
 
@@ -35,65 +40,58 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center h-16">
 
-            <!--  Enlaces de navegación principales -->
-            
+            <!-- Contenedor de icono de marca y enlace a página de inicio -->
+            <div class="flex items-center space-x-4">
               <a href="index.php" class="flex items-center space-x-2">
                 <!-- Logo de la página que redirecciona a la página principal -->
                 <img src="../src/img/favicon/favicon-96x96.png" alt="Logo" class="h-8 w-auto">
               </a>
-              <div class="hidden md:flex space-x-8 items-center">
-                <a href="./ceramica.php" class="text-gray-700 hover:text-red-300 transition">Cerámica</a>
-                <a href="./bordados.php" class="text-gray-700 hover:text-red-300 transition">Bordados</a>
-                <a href="./ilustracion.php" class="text-gray-700 hover:text-red-300 transition">Ilustración</a>
-                <a href="./contacto.php" class="text-gray-700 hover:text-red-300 transition">Contacto</a>
-              </div>
-            
-            <!-- Buscador -->
-            <form class="max-w-xs hidden md:flex">
-              <div class="relative">
-                <!-- Icono de lupa -->
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/>
-                  </svg>
-                </div>
-
-                <!-- Input -->
-                <input 
-                  type="search" 
-                  id="search" 
-                  class="focus:outline-none block w-full rounded-md border border-gray-300 pl-10 pr-20 py-2 text-sm text-gray-700 focus:ring-gray-500" 
-                  placeholder="" 
-                  required
-                />
-
-                <!-- Botón -->
-                <button type="submit" 
-                  class="cursor-pointer absolute right-1 top-1/2 -translate-y-1/2 bg-red-400 text-white text-sm px-3 py-1.5 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                  Buscar
-                </button>
-              </div>
-            </form>
-
-            <!-- Botón de inicio de sesión -->
-             <div class="relative">
-                <a href="login.php"
-                  class=" pointer-events-auto bg-gray-800 text-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-gray-500">
-                  Iniciar sesión
-                </a>
-             </div>
-            
-            <!-- Cesta -->
+            </div>
+              
+            <!-- Conetenedor de navegación principales -->
             <div class="flex items-center space-x-4">
-              <div class="relative">
-                <a href="./canastro.php" class="inline-block transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
-                  <img src="../src/img/favicon/icono_cesta.png" alt="Cesta" class="w-6 h-6">
-                </a>
-                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full pointer-events-none">
-                  0
-                </span>
+              <div class="hidden md:flex space-x-8 items-center">
+                <a href="./ceramica.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Cerámica</a>
+                <a href="./bordados.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Bordados</a>
+                <a href="./ilustracion.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Ilustración</a>
+                <a href="./contacto.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Contacto</a>
               </div>
             </div>
+              
+
+            <!-- Contenedor de botones de inicio y resgistro -->
+            <div class="flex items-center space-x-4">
+
+              <!-- Botón de inicio de sesión -->
+              <div class="relative">
+                  <a href="login.php"
+                    class=" pointer-events-auto text-sm bg-gray-800 text-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-300">
+                    Iniciar sesión
+                  </a>
+              </div>
+              
+              <!-- Botón de registro -->
+              <div class="relative">
+                  <a href="login.php"
+                    class=" pointer-events-auto text-sm bg-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-200 border-1 border-solid">
+                    Registrarse
+                  </a>
+              </div>
+              <!-- Cesta -->
+              <div class="flex items-center space-x-4">
+                <div class="relative">
+                  <a href="./canastro.php" class="inline-block transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
+                    <img src="../src/img/favicon/icono_cesta.png" alt="Cesta" class="w-6 h-6">
+                  </a>
+                  <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full pointer-events-none">
+                    0
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            
+
                 <!-- Botón de móvil -->
                 <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
                   ☰
@@ -112,11 +110,152 @@
         </div>
       </nav>
     </header>
+
     <!-- Cuerpo principal de la página con los productos destacados-->
-    <main></main>
-              <!-- Producto sin stock -->
-              
-              <!-- Producto con stock -->
+    <main>
+      <div class="max-w-6xl mx-auto px-6 py-10">
+
+        <!-- Grid contenedor -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/IMG_20250802_141615.png" 
+                alt="Producto destacado 1"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Fogar"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                19,90€
+              </p>
+            </div>
+          </div>
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250130_204652.png" 
+                alt="Producto destacado 2"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Soñando"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                25,90€
+              </p>
+            </div>
+          </div>
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250728_154007_8.png" 
+                alt="Producto destacado 3"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Beleza"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                35,90€
+              </p>
+            </div>
+          </div>
+
+        <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250728_154007_11.png" 
+                alt="Producto destacado 4"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Heroes"
+              </h3>
+              <p class="text-red-400  text-base mt-2">
+                25,90€
+              </p>
+            </div>
+          </div>
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250728_154007_20.png" 
+                alt="Producto destacado 5"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Mimosas"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                29,90€
+              </p>
+            </div>
+          </div>
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250728_154007_17.png" 
+                alt="Producto destacado 6"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Nai"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                19,99€
+              </p>
+            </div>
+          </div>
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250728_154007_14.png" 
+                alt="Producto destacado 7"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Cabaliño do demo"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                19,99€
+              </p>
+            </div>
+          </div>
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250728_154007_9.png" 
+                alt="Producto destacado 8"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Dente de León"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                29,90€
+              </p>
+            </div>
+          </div>
+
+          <!-- Producto -->
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="../src/img/productos/PhotoRoom-20250728_154006_4.png" 
+                alt="Producto destacado 9"
+                class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
+            <div class="p-4">
+              <h3 class="text-lg font-handwritten text-gray-800">
+                Bastidor "Bonita"
+              </h3>
+              <p class="text-red-400 text-base mt-2">
+                24,90€
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+      
               
     <!-- Pie de la página con enlaces e información relevante-->
     <footer>
@@ -129,7 +268,6 @@
         menu.classList.toggle('hidden');
       });
     </script>
-    <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
-
+    <script src="js/flowbite.min.js"></script>
   </body>
 </html>
