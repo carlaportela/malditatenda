@@ -19,14 +19,25 @@
     <!-- Fuente de Google Fonst -->
     <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
     
-    <!-- Favicon clásico -->
-    <link rel="icon" type="image/svg+xml" href="./assets/img/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="./assets/img/favicon/favicon.ico" />
-    <link rel="icon" type="image/png" href="./assets/img/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="manifest" href="./assets/img/favicon/site.webmanifest" />
-    <!-- Favicon para Apple/Safari -->
-    <link rel="mask-icon" href="./assets/img/favicon/favicon.svg" color="#990000"/>
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicon/apple-touch-icon.png" />
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="./assets/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./assets/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./assets/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./assets/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./assets/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./assets/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="./assets/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./assets/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="./assets/img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="./assets/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    
     <!-- Funcionalidad Javascript-->
     <script src="../public/js/main.js"></script>
   </head>
@@ -44,7 +55,7 @@
             <div class="flex items-center space-x-4">
               <!-- Logo de la página que redirecciona a la página principal -->
               <a href="index.php" class="flex items-center space-x-2">
-                <img src="./assets/img/favicon/favicon-96x96.png" alt="Logo" class="h-8 w-auto">
+                <img src="./assets/img/logos/logo_web_maldita_carlita.png" alt="Logo" class="h-8 w-auto">
               </a>
             </div>
               
@@ -76,7 +87,7 @@
               
               <!-- Cesta -->
               <div class="flex items-center space-x-4">
-                <div class="relative">
+                <div class="relative transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
                   <a href="./canastro.php" class="inline-block transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
                     <img src="./assets/img/favicon/icono_cesta.png" alt="Cesta" class="w-6 h-6">
                   </a>
@@ -96,7 +107,6 @@
 
         <!-- Menú móvil -->
         <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
-          <a href="/" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Inicio</a>
           <a href="./ceramica.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Cerámica</a>
           <a href="./bordados.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Bordados</a>
           <a href="./ilustracion.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Ilustración</a>
