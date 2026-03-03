@@ -20,13 +20,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
     
     <!-- Favicon clásico -->
-    <link rel="icon" type="image/svg+xml" href="../src/img/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="../src/img/favicon/favicon.ico" />
-    <link rel="icon" type="image/png" href="../src/img/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="manifest" href="../src/img/favicon/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="./assets/img/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="./assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/png" href="./assets/img/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="manifest" href="./assets/img/favicon/site.webmanifest" />
     <!-- Favicon para Apple/Safari -->
-    <link rel="mask-icon" href="../src/img/favicon/favicon.svg" color="#990000"/>
-    <link rel="apple-touch-icon" sizes="180x180" href="../src/img/favicon/apple-touch-icon.png" />
+    <link rel="mask-icon" href="./assets/img/favicon/favicon.svg" color="#990000"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicon/apple-touch-icon.png" />
     <!-- Funcionalidad Javascript-->
     <script src="../public/js/main.js"></script>
   </head>
@@ -35,92 +35,87 @@
     <!-- Encabezado de la página con el navegador principal-->
     <header>
 
-      <!-- Navegador principal-->
+      <!-- Navegador principal superior-->
       <nav class="bg-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center h-16">
 
             <!-- Contenedor de icono de marca y enlace a página de inicio -->
             <div class="flex items-center space-x-4">
+              <!-- Logo de la página que redirecciona a la página principal -->
               <a href="index.php" class="flex items-center space-x-2">
-                <!-- Logo de la página que redirecciona a la página principal -->
-                <img src="../src/img/favicon/favicon-96x96.png" alt="Logo" class="h-8 w-auto">
+                <img src="./assets/img/favicon/favicon-96x96.png" alt="Logo" class="h-8 w-auto">
               </a>
             </div>
               
-            <!-- Conetenedor de navegación principales -->
+            <!-- Conetenedor de navegación principal, si están seleccionados text-red-400 pointer-events-none -->
             <div class="flex items-center space-x-4">
               <div class="hidden md:flex space-x-8 items-center">
                 <a href="./ceramica.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Cerámica</a>
                 <a href="./bordados.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Bordados</a>
                 <a href="./ilustracion.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Ilustración</a>
+                <a href="./about.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Sobre mí</a>
                 <a href="./contacto.php" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Contacto</a>
               </div>
             </div>
               
-
-            <!-- Contenedor de botones de inicio y resgistro -->
+            <!-- Contenedor de botones PARTE DERECHA -->
             <div class="flex items-center space-x-4">
 
               <!-- Botón de inicio de sesión -->
-              <div class="relative">
-                  <a href="login.php"
-                    class=" pointer-events-auto text-sm bg-gray-800 text-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-300">
-                    Iniciar sesión
-                  </a>
-              </div>
+              <a href="login.php"
+                class=" pointer-events-auto text-xs bg-gray-800 text-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-300">
+                Iniciar sesión
+              </a>
               
               <!-- Botón de registro -->
-              <div class="relative">
-                  <a href="login.php"
-                    class=" pointer-events-auto text-sm bg-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-200 border-1 border-solid">
-                    Registrarse
-                  </a>
-              </div>
+              <a href="registro.php"
+                class=" pointer-events-auto text-xs bg-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-200 border-1 border-solid">
+                Registrarse
+              </a>
+              
               <!-- Cesta -->
               <div class="flex items-center space-x-4">
                 <div class="relative">
                   <a href="./canastro.php" class="inline-block transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
-                    <img src="../src/img/favicon/icono_cesta.png" alt="Cesta" class="w-6 h-6">
+                    <img src="./assets/img/favicon/icono_cesta.png" alt="Cesta" class="w-6 h-6">
                   </a>
-                  <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 rounded-full pointer-events-none">
+                  <span class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
                     0
                   </span>
                 </div>
               </div>
             </div>
             
-            
+            <!-- Botón de móvil -->
+            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+              ☰
+            </button>
+          </div>
+        </div>
 
-                <!-- Botón de móvil -->
-                <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-                  ☰
-                </button>
-              </div>
-            </div>
-            <!-- Menú móvil -->
-            <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
-              <a href="/" class="block py-2 text-gray-700 hover:text-indigo-600">Inicio</a>
-              <a href="./ceramica.php" class="block py-2 text-gray-700 hover:text-indigo-600">Cerámica</a>
-              <a href="./bordados.php" class="block py-2 text-gray-700 hover:text-indigo-600">Bordados</a>
-              <a href="./ilustracion.php" class="block py-2 text-gray-700 hover:text-indigo-600">Ilustración</a>
-              <a href="./contacto.php" class="block py-2 text-gray-700 hover:text-indigo-600">Contacto</a>
-            </div>
-          </div> 
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
+          <a href="/" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Inicio</a>
+          <a href="./ceramica.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Cerámica</a>
+          <a href="./bordados.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Bordados</a>
+          <a href="./ilustracion.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Ilustración</a>
+          <a href="./about.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Sobre mí</a>
+          <a href="./contacto.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Contacto</a>
         </div>
       </nav>
     </header>
 
-    <!-- Cuerpo principal de la página con los productos destacados-->
+    <!-- Cuerpo principal de la página con los productos destacados -->
     <main>
       <div class="max-w-6xl mx-auto px-6 py-10">
 
-        <!-- Grid contenedor -->
+        <!-- Grid contenedor de productos -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/IMG_20250802_141615.png" 
+          <!-- Producto 1 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/IMG_20250802_141615.png" 
                 alt="Producto destacado 1"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -131,11 +126,11 @@
                 19,90€
               </p>
             </div>
-          </div>
+          </a>
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250130_204652.png" 
+          <!-- Producto 2 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250130_204652.png" 
                 alt="Producto destacado 2"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -146,11 +141,11 @@
                 25,90€
               </p>
             </div>
-          </div>
+          </a>
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250728_154007_8.png" 
+          <!-- Producto 3 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250728_154007_8.png" 
                 alt="Producto destacado 3"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -161,11 +156,11 @@
                 35,90€
               </p>
             </div>
-          </div>
+          </a>
 
-        <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250728_154007_11.png" 
+          <!-- Producto 4 -->
+          <a href="producto.php?id=1" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250728_154007_11.png" 
                 alt="Producto destacado 4"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -176,11 +171,11 @@
                 25,90€
               </p>
             </div>
-          </div>
+          </a>
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250728_154007_20.png" 
+          <!-- Producto 5 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250728_154007_20.png" 
                 alt="Producto destacado 5"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -191,11 +186,11 @@
                 29,90€
               </p>
             </div>
-          </div>
+          </a>
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250728_154007_17.png" 
+          <!-- Producto 6 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250728_154007_17.png" 
                 alt="Producto destacado 6"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -206,11 +201,11 @@
                 19,99€
               </p>
             </div>
-          </div>
+          </a>
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250728_154007_14.png" 
+          <!-- Producto 7 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250728_154007_14.png" 
                 alt="Producto destacado 7"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -221,11 +216,11 @@
                 19,99€
               </p>
             </div>
-          </div>
+          </a>
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250728_154007_9.png" 
+          <!-- Producto 8 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250728_154007_9.png" 
                 alt="Producto destacado 8"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -236,11 +231,11 @@
                 29,90€
               </p>
             </div>
-          </div>
+          </a>
 
-          <!-- Producto -->
-          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            <img src="../src/img/productos/PhotoRoom-20250728_154006_4.png" 
+          <!-- Producto 9 -->
+          <a href="producto.php?id=" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+            <img src="./assets/img/productos/PhotoRoom-20250728_154006_4.png" 
                 alt="Producto destacado 9"
                 class="w-full h-80 object-cover transform hover:scale-105 transition duration-300">
             <div class="p-4">
@@ -251,15 +246,33 @@
                 24,90€
               </p>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </main>
-      
-              
+          
     <!-- Pie de la página con enlaces e información relevante-->
-    <footer>
+    <footer class="bg-white border-t border-gray-200 mt-16">
+      <div class="max-w-7xl mx-auto px-6 py-8">
+        <div class="flex flex-col items-center space-y-4">
+          
+          <!-- Texto -->
+          <p class="text-gray-500 text-sm">
+            © 2026 MalditaTenda. Todos los derechos reservados.
+          </p>
+
+          <!-- Enlace a Instagram -->
+          <a href="https://www.instagram.com/maldita.carlita" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:opacity-80 transition duration-300">
+            <img src="./assets/img/logos_instagram/logo_instagram_acuarela.png" alt="Instagram" class="w-6 h-6">
+            <span class="font-handwritten text-lg">
+              &nbsp;Sígueme en Instagram
+            </span>
+          </a>
+        </div>
+      </div>
     </footer>
+
+    <!-- Script para que despliegue el menú del navbar contenido en el icono de menu en pantallas pequeñas -->
     <script>
       const btn = document.getElementById('menu-btn');
       const menu = document.getElementById('mobile-menu');
@@ -268,6 +281,8 @@
         menu.classList.toggle('hidden');
       });
     </script>
-    <script src="js/flowbite.min.js"></script>
+
+    <!-- Script para que funcionen los menús desplegable con Flowbite -->
+    <script src="./assets/js/flowbite.min.js"></script>
   </body>
 </html>
