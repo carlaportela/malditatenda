@@ -75,7 +75,7 @@
 
               <!-- Botón de inicio de sesión -->
               <a href="login.php"
-                class=" pointer-events-auto text-xs bg-gray-800 text-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-300">
+                class=" pointer-events-auto text-xs bg-gray-800 text-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-300 border-1 border-solid">
                 Iniciar sesión
               </a>
               
@@ -89,7 +89,7 @@
               <div class="flex items-center space-x-4">
                 <div class="relative transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
                   <a href="./canastro.php" class="inline-block transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
-                    <img src="./assets/img/favicon/icono_cesta.png" alt="Cesta" class="w-6 h-6">
+                    <img src="./assets/img/logos/icono_cesta.png" alt="Cesta" class="w-6 h-6">
                   </a>
                   <span class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
                     0
