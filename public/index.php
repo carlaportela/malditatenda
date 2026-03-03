@@ -54,8 +54,9 @@
             <!-- Contenedor de icono de marca y enlace a página de inicio -->
             <div class="flex items-center space-x-4">
               <!-- Logo de la página que redirecciona a la página principal -->
-              <a href="index.php" class="flex items-center space-x-2">
+              <a href="index.php" class="flex items-center space-x-2 text-gray-800 font-handwritten font-semibold">
                 <img src="./assets/img/logos/logo_web_maldita_carlita.png" alt="Logo" class="h-8 w-auto">
+                &nbsp;Maldita Carlita
               </a>
             </div>
               
@@ -75,13 +76,13 @@
 
               <!-- Botón de inicio de sesión -->
               <a href="login.php"
-                class=" pointer-events-auto text-xs bg-gray-800 text-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-300 border-1 border-solid">
+                class=" pointer-events-auto text-xs bg-gray-700 text-white rounded-md px-3 py-2 inline-block transition-colors duration-200 hover:bg-red-300 border-1 border-solid">
                 Iniciar sesión
               </a>
               
               <!-- Botón de registro -->
               <a href="registro.php"
-                class=" pointer-events-auto text-xs bg-white rounded-md px-3 py-1 inline-block transition-colors duration-200 hover:bg-red-200 border-1 border-solid">
+                class=" pointer-events-auto text-xs bg-white rounded-md px-3 py-2 inline-block transition-colors duration-200 hover:bg-red-200 border-1 border-solid">
                 Registrarse
               </a>
               
