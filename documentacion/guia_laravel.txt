@@ -85,3 +85,5 @@
     4.6 Crear el enlace público de las imágenes
         php artisan storage:link
         Esto crea un enlace que apunta mediante public/storage a /app/public
+    4.7 Para crear las vistas de los productos de cada página hay que añadir un función en ProductoController con la consulta necesaria y agregar en web.php la ruta para cada vista y función.
+    

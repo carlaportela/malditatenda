@@ -33,3 +33,4 @@ use App\Http\Controllers\ProductoController;
 Route::get('/', [ProductoController::class, 'index']);
 Route::get('/ceramica', [ProductoController::class, 'ceramica']);
 Route::get('/bordados', [ProductoController::class, 'bordados']);
+Route::get('/ilustracion', [ProductoController::class, 'ilustracion']);

@@ -28,4 +28,12 @@ class ProductoController extends Controller
 
         return view('bordados', compact('productos'));
     }
+
+    public function ilustracion()
+    {
+        $productos = Producto::where('idCategoria', 4)->get();
+
+        return view('ilustracion', compact('productos'));
+    }
+    
 }
