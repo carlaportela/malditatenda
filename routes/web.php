@@ -1,5 +1,6 @@
 <?php
 
+//Para mostrar las vistas de las páginas de los enlaces en el navegador de la página principal
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +27,7 @@ Route::get('/contacto', function () {
     return view('contacto');
 });
 
+//Para mostrar los productos destacados en la página principal
 use App\Http\Controllers\ProductoController;
 
 Route::get('/', [ProductoController::class, 'index']);
