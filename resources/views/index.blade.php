@@ -1,4 +1,4 @@
-
+<!-- Página principal -->
 <!DOCTYPE html>
 <html  lang="es">
   <head>
@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://www.malditacarlita.com/" />
     <title>Maldita Carlita</title>
     
-    <!-- Fuente de Google Fonst -->
+    <!-- Fuente de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
     
     <!-- Favicon -->
@@ -108,7 +108,7 @@
           <a href="/ceramica" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Cerámica</a>
           <a href="/bordados" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Bordados</a>
           <a href="/ilustracion" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Ilustración</a>
-          <a href="/about.php" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Sobre mí</a>
+          <a href="/about" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Sobre mí</a>
           <a href="/contacto" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Contacto</a>
         </div>
       </nav>
@@ -121,7 +121,7 @@
         <!-- Grid contenedor de productos -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
-          <!-- Mostrar productos con Mode Producto -->
+          <!-- Mostrar productos con Model Producto -->
           @foreach($productos as $producto)
             <a href="/producto" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
               <img src="{{ asset('storage/'.$producto->imagen) }}"
