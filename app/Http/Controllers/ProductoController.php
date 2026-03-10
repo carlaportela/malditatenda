@@ -21,4 +21,11 @@ class ProductoController extends Controller
 
         return view('ceramica', compact('productos'));
     }
+
+    public function bordados()
+    {
+        $productos = Producto::where('idCategoria', 3)->get();
+
+        return view('bordados', compact('productos'));
+    }
 }
