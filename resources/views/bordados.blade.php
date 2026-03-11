@@ -60,11 +60,26 @@
             <!-- Conetenedor de navegación principal, si están seleccionados text-red-400 pointer-events-none -->
             <div class="flex items-center space-x-4">
               <div class="hidden md:flex space-x-8 items-center">
-                <a href="/ceramica" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Cerámica</a>
-                <a href="/bordados" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Bordados</a>
-                <a href="/ilustracion" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Ilustración</a>
-                <a href="/about" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Sobre mí</a>
-                <a href="/contacto" class="text-gray-700 font-semibold font-handwritten hover:text-red-300 transition">Contacto</a>
+                <a href="/ceramica" class="font-semibold font-handwritten transition
+                    {{ request()->is('ceramica') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Cerámica
+                </a>
+                <a href="/bordados" class="font-semibold font-handwritten transition
+                    {{ request()->is('bordados') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Bordados
+                </a>
+                <a href="/ilustracion" class="font-semibold font-handwritten transition
+                    {{ request()->is('ilustracion') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Ilustración
+                </a>
+                <a href="/about" class="font-semibold font-handwritten transition
+                    {{ request()->is('about') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Sobre mí
+                </a>
+                <a href="/contacto" class="font-semibold font-handwritten transition
+                    {{ request()->is('contacto') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Contacto
+                </a>
               </div>
             </div>
               
@@ -105,11 +120,26 @@
 
         <!-- Menú móvil -->
         <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
-          <a href="/ceramica" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Cerámica</a>
-          <a href="/bordados" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Bordados</a>
-          <a href="/ilustracion" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Ilustración</a>
-          <a href="/about" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Sobre mí</a>
-          <a href="/contacto" class="block py-2 text-gray-700 font-semibold font-handwritten hover:text-red-300">Contacto</a>
+          <a href="/ceramica" class="block py-2 font-semibold font-handwritten
+              {{ request()->is('ceramica') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+              Cerámica
+          </a>
+          <a href="/bordados" class="block py-2 font-semibold font-handwritten
+              {{ request()->is('bordados') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+              Bordados
+          </a>
+          <a href="/ilustracion" class="block py-2 font-semibold font-handwritten
+              {{ request()->is('ilustracion') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+              Ilustración
+          </a>
+          <a href="/about" class="block py-2 font-semibold font-handwritten
+              {{ request()->is('about') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+              Sobre mí
+          </a>
+          <a href="/contacto" class="block py-2 font-semibold font-handwritten
+              {{ request()->is('contacto') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+              Contacto
+          </a>
         </div>
       </nav>
     </header>
@@ -163,5 +193,15 @@
         </div>
       </div>
     </footer>
+
+    <!-- Script para que despliegue el menú del navbar contenido en el icono de menu en pantallas pequeñas -->
+    <script>
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    </script>
   </body>
 </html>

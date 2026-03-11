@@ -30,7 +30,7 @@ Route::get('/contacto', function () {
 //Para mostrar los productos destacados en la página principal
 use App\Http\Controllers\ProductoController;
 
-Route::get('/', [ProductoController::class, 'index']);
-Route::get('/ceramica', [ProductoController::class, 'ceramica']);
-Route::get('/bordados', [ProductoController::class, 'bordados']);
-Route::get('/ilustracion', [ProductoController::class, 'ilustracion']);
+Route::get('/', [ProductoController::class, 'index'])->name('index');
+Route::get('/ceramica', [ProductoController::class, 'ceramica'])->name('ceramica');
+Route::get('/bordados', [ProductoController::class, 'bordados'])->name('bordados');
+Route::get('/ilustracion', [ProductoController::class, 'ilustracion'])->name('ilustracion');
