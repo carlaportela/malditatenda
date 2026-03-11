@@ -86,23 +86,39 @@
             <!-- Contenedor de botones PARTE DERECHA -->
             <div class="flex items-center space-x-4">
 
-                <!-- Botón de inicio de sesión -->
-                <a href="/login"
-                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-                {{ request()->is('login') 
-                    ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-                    : 'bg-gray-700 text-white hover:bg-red-300' }}">
-                Iniciar sesión
-                </a>
+                @if(session('usuario_nombre'))
 
-                <!-- Botón de registro -->
-                <a href="/registro"
-                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-                {{ request()->is('registro') 
-                    ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-                    : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
-                Registrarse
-                </a>
+                    <!-- Botón de sesión iniciada -->
+                    <a href="/micuenta"
+                    class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200 bg-gray-700 text-white hover:bg-red-300">
+                    Hola {{ session('usuario_nombre') }}
+                    </a>
+                    
+                    <!-- Botón de cerrar sesión -->
+                    <a href="/logout"
+                    class="text-xs rounded-md px-3 py-2 bg-white text-black inline-block border border-solid transition-colors duration-200 hover:bg-red-300 hover:text-white">
+                    Cerrar sesión
+                    </a>
+                @else
+
+                    <!-- Botón de inicio de sesión -->
+                    <a href="/login"
+                    class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+                    {{ request()->is('login') 
+                        ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                        : 'bg-gray-700 text-white hover:bg-red-300' }}">
+                    Iniciar sesión
+                    </a>
+
+                    <!-- Botón de registro -->
+                    <a href="/registro"
+                    class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+                    {{ request()->is('registro') 
+                        ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                        : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
+                    Registrarse
+                    </a>
+                @endif 
               
               <!-- Cesta -->
               <div class="flex items-center space-x-4">

@@ -86,23 +86,39 @@
             <!-- Contenedor de botones PARTE DERECHA -->
             <div class="flex items-center space-x-4">
 
-                <!-- Botón de inicio de sesión -->
-                <a href="/login"
-                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-                {{ request()->is('login') 
-                    ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-                    : 'bg-gray-700 text-white hover:bg-red-300' }}">
-                Iniciar sesión
-                </a>
+                @if(session('usuario_nombre'))
 
-                <!-- Botón de registro -->
-                <a href="/registro"
-                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-                {{ request()->is('registro') 
-                    ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-                    : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
-                Registrarse
-                </a>
+                    <!-- Botón de sesión iniciada -->
+                    <a href="/micuenta"
+                    class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200 bg-gray-700 text-white hover:bg-red-300">
+                    Hola {{ session('usuario_nombre') }}
+                    </a>
+                    
+                    <!-- Botón de cerrar sesión -->
+                    <a href="/logout"
+                    class="text-xs rounded-md px-3 py-2 bg-white text-black inline-block border border-solid transition-colors duration-200 hover:bg-red-300 hover:text-white">
+                    Cerrar sesión
+                    </a>
+                @else
+
+                    <!-- Botón de inicio de sesión -->
+                    <a href="/login"
+                    class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+                    {{ request()->is('login') 
+                        ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                        : 'bg-gray-700 text-white hover:bg-red-300' }}">
+                    Iniciar sesión
+                    </a>
+
+                    <!-- Botón de registro -->
+                    <a href="/registro"
+                    class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+                    {{ request()->is('registro') 
+                        ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                        : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
+                    Registrarse
+                    </a>
+                @endif 
               
               <!-- Cesta -->
               <div class="flex items-center space-x-4">
@@ -153,8 +169,8 @@
     <!-- Cuerpo principal de la página -->
     <main>
         <!-- Introducción -->
-        <section class="max-w-6xl mx-auto p-6">
-            <p class="text-gray-600 text-md leading-relaxed max-w-3xl mx-auto">
+        <section class="max-w-6xl mx-auto px-6 py-6">
+            <p class="text-gray-600 text-md leading-relaxed text-center">
                 Maldita Carlita es un proyecto de artesanía donde la cerámica, el bordado
                 y la ilustración se mezclan con identidad, creatividad y mucho cariño.
                 Cada pieza está hecha a mano y pensada para sacar una sonrisa.
@@ -163,13 +179,13 @@
 
         <!-- Historia -->
         <section class="max-w-6xl mx-auto px-6 py-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class=" items-center">
 
                 <!-- Imagen -->
                 
 
                 <!-- Texto -->
-                <div>
+                <div class="max-w-5xl">
                     <h2 class="text-3xl font-handwritten text-center text-gray-800 mb-4">
                         La historia detrás de la marca
                     </h2>
@@ -188,9 +204,9 @@
         </section>
 
         <!-- Valores/Proceso -->
-        <section class="bg-gray-50 py-16">
+        <section class="bg-gray-50 py-10">
 
-            <div class="max-w-6xl mx-auto px-6 p-6">
+            <div class="max-w-6xl mx-auto px-6">
                 <h2 class="text-3xl font-handwritten text-center text-gray-800 mb-4">
                     Cómo se hacen las piezas
                 </h2>
@@ -213,15 +229,15 @@
                                 class="w-full"/>
                         <p class="text-gray-600 text-sm p-2">
                             Cada producto empieza con una idea y un pequeño boceto.
-                            La inspiración suele venir de elementos cotidianos,
-                            naturaleza y cultura gallega.
+                            La inspiración proviene de los elementos cotidianos,
+                            de la naturaleza y de la cultura gallega.
                         </p>
                     </div>
 
                     <!-- Artesanía -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm">
                         <h3 class="font-handwritten text-xl text-gray-800 mb-3 p-2">
-                            Hecho a mano
+                            Proceso
                         </h3>
 
                         <!-- Imagen -->
@@ -239,7 +255,7 @@
                     <!-- Amor -->
                     <div class="bg-white p-6 rounded-2xl shadow-sm">
                         <h3 class="font-handwritten text-xl text-gray-800 mb-3 p-2">
-                            Mucho cariño
+                            Identidad
                         </h3>
 
                         <!-- Imagen -->
@@ -249,7 +265,7 @@
                                 class="w-full"/>
                         <p class="text-gray-600 text-sm p-2">
                             El objetivo es crear piezas que nos conecten con nuestra cultura,
-                            que nos recuerden algo bonito o que simplemente nos arranquen una sonrisa.
+                            nuestro idioma y nuestra tradición.
                         </p>
                     </div>
                 </div>

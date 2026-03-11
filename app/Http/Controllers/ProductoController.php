@@ -35,5 +35,13 @@ class ProductoController extends Controller
 
         return view('ilustracion', compact('productos'));
     }
+
+    public function show($id)
+    {
+        // Buscar producto o devolver 404
+        $producto = Producto::findOrFail($id);
+
+        return view('producto', compact('producto'));
+    }
     
 }

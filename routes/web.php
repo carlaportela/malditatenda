@@ -35,6 +35,10 @@ Route::get('/registro', function () {
     return view('registro');
 });
 
+Route::get('/producto', function () {
+    return view('producto');
+});
+
 Route::get('/micuenta', function () {
     return view('micuenta');
 });
@@ -46,6 +50,9 @@ Route::get('/', [ProductoController::class, 'index'])->name('index');
 Route::get('/ceramica', [ProductoController::class, 'ceramica'])->name('ceramica');
 Route::get('/bordados', [ProductoController::class, 'bordados'])->name('bordados');
 Route::get('/ilustracion', [ProductoController::class, 'ilustracion'])->name('ilustracion');
+
+//Para mostrar el producto en detalle
+Route::get('/producto/{id}', [ProductoController::class, 'show'])->name('producto.show');
 
 //Para guardar los mensajes de los usuarios en la base de datos
 use App\Http\Controllers\ContactoController;
