@@ -166,7 +166,7 @@
 
             <!-- Mensaje de éxito -->
             @if(session('success'))
-                <div class="max-w-xl mx-auto mb-6 text-red-300 p-4 rounded-md text-center">
+                <div class="max-w-xl mx-auto mb-6 bg-red-100 text-red-300 p-4 rounded-md text-center">
                      {!! session('success') !!}
                 </div>
             @else

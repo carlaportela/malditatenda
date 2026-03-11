@@ -49,3 +49,9 @@ Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto');
 
 Route::post('/contacto', [ContactoController::class, 'store'])
     ->name('contacto.store');
+
+//Para guardar los datos de los usuarios que se registran
+use App\Http\Controllers\RegistroController;
+
+Route::get('/registro', [RegistroController::class, 'index'])->name('registro');
+Route::post('/registro', [RegistroController::class, 'store'])->name('registro.store');
