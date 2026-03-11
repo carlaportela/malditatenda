@@ -153,6 +153,13 @@
     <!-- Cuerpo principal de la página -->
     <main>
         <section class="max-w-2xl mx-auto px-6 py-16 p-6">
+            
+          <!-- Mensaje de éxito -->
+          @if(session('success'))
+              <div class="max-w-xl mx-auto mb-6 bg-red-100 text-red-300 p-4 rounded-md text-center">
+                    {!! session('success') !!}
+              </div>
+          @else
             <p class="text-gray-600 mb-8 text-center max-w-xl mx-auto">
                 Si tienes alguna duda, puedes contactarme en la dirección de correo electrónico 
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=malditacarlitaoficial@gmail.com"
@@ -163,14 +170,6 @@
                 </a>
                 o enviarme un mensaje a través de este formulario
             </p>
-
-            <!-- Mensaje de éxito -->
-            @if(session('success'))
-                <div class="max-w-xl mx-auto mb-6 bg-red-100 text-red-300 p-4 rounded-md text-center">
-                     {!! session('success') !!}
-                </div>
-            @else
-
             <!-- Formulario de contacto -->
             <form action="{{ route('contacto.store') }}"
                 method="POST"

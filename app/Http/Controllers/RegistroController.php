@@ -35,7 +35,7 @@ class RegistroController extends Controller
 
         // Redirigir al login con mensaje de éxito
         return redirect()->route('registro')
-                         ->with('success', '¡Registro completado correctamente!
+                         ->with('success', '¡Registro completado correctamente!.
                          <br>Ahora puedes iniciar sesión');
     }
 }

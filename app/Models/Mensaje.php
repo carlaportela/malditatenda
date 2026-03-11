@@ -14,5 +14,4 @@ class Mensaje extends Model
         'correomensaje',
         'textoMensaje'
     ];
-     public $timestamps = false; // 🔹 desactiva created_at y updated_at
 }
