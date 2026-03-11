@@ -35,6 +35,10 @@ Route::get('/registro', function () {
     return view('registro');
 });
 
+Route::get('/micuenta', function () {
+    return view('micuenta');
+});
+
 //Para mostrar los productos en cada una de las páginas
 use App\Http\Controllers\ProductoController;
 
