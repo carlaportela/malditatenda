@@ -51,7 +51,7 @@
             <!-- Contenedor de icono de marca y enlace a página de inicio -->
             <div class="flex items-center space-x-4">
               <!-- Logo de la página que redirecciona a la página principal -->
-              <a href="index.php" class="flex items-center space-x-2 text-gray-800 font-handwritten font-semibold">
+              <a href="/" class="flex items-center space-x-2 text-gray-800 font-handwritten font-semibold">
                 <img src="/assets/img/logos/logo_web_maldita_carlita.png" alt="Logo" class="h-8 w-auto">
                 &nbsp;Maldita Carlita
               </a>
