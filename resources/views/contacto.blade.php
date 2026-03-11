@@ -148,8 +148,14 @@
     <main>
         <section class="max-w-2xl mx-auto px-6 py-16 p-6">
             <p class="text-gray-600 mb-8 text-center max-w-xl mx-auto">
-                Si tienes alguna duda, puedes contactarme en la dirección de correo electrónico malditacarlitaoficial@gmail.com o
-                enviarme un mensaje a través de este formulario
+                Si tienes alguna duda, puedes contactarme en la dirección de correo electrónico 
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=malditacarlitaoficial@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-red-300">
+                malditacarlitaoficial@gmail.com
+                </a>
+                o enviarme un mensaje a través de este formulario
             </p>
 
             <!-- Mensaje de éxito -->
@@ -224,7 +230,7 @@
                 <!-- Botón -->
                 <button
                     type="submit"
-                    class="w-full bg-gray-700 text-white py-2 rounded-md font-semibold hover:bg-red-300 transition pointer-events-auto">
+                    class="w-full bg-gray-700 text-white py-2 rounded-md font-semibold hover:bg-red-300 transition cursor-pointer">
                     Enviar mensaje
                 </button>
             </form>
