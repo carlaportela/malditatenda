@@ -27,6 +27,14 @@ Route::get('/contacto', function () {
     return view('contacto');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/registro', function () {
+    return view('registro');
+});
+
 //Para mostrar los productos en cada una de las páginas
 use App\Http\Controllers\ProductoController;
 

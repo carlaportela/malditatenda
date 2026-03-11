@@ -88,14 +88,20 @@
 
               <!-- Botón de inicio de sesión -->
               <a href="/login"
-                class=" pointer-events-auto text-xs bg-gray-700 text-white rounded-md px-3 py-2 inline-block transition-colors duration-200 hover:bg-red-300 border-1 border-solid">
-                Iniciar sesión
+              class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+              {{ request()->is('login') 
+                  ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                  : 'bg-gray-700 text-white hover:bg-red-300' }}">
+              Iniciar sesión
               </a>
-              
+
               <!-- Botón de registro -->
               <a href="/registro"
-                class=" pointer-events-auto text-xs bg-white rounded-md px-3 py-2 inline-block transition-colors duration-200 hover:bg-red-200 border-1 border-solid">
-                Registrarse
+              class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+              {{ request()->is('registro') 
+                  ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                  : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
+              Registrarse
               </a>
               
               <!-- Cesta -->
