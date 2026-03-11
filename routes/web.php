@@ -35,3 +35,9 @@ Route::get('/ceramica', [ProductoController::class, 'ceramica'])->name('ceramica
 Route::get('/bordados', [ProductoController::class, 'bordados'])->name('bordados');
 Route::get('/ilustracion', [ProductoController::class, 'ilustracion'])->name('ilustracion');
 
+//Para guardar los mensajes de los usuarios en la base de datos
+use App\Http\Controllers\ContactoController;
+Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto');
+
+Route::post('/contacto', [ContactoController::class, 'store'])
+    ->name('contacto.store');

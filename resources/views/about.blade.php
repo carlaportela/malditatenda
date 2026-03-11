@@ -1,4 +1,4 @@
-<!-- Página que muestra información sobre mí -->
+<!-- Página que muestra información sobre la marca -->
 <!DOCTYPE html>
 <html  lang="es">
   <head>
