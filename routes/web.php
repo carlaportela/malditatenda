@@ -55,3 +55,12 @@ use App\Http\Controllers\RegistroController;
 
 Route::get('/registro', [RegistroController::class, 'index'])->name('registro');
 Route::post('/registro', [RegistroController::class, 'store'])->name('registro.store');
+
+//Para iniciar sesión como usuario registrado
+use App\Http\Controllers\LoginController;
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+
+Route::post('/login', [LoginController::class, 'login'])->name('login.procesar');
+
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
