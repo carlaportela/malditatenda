@@ -11,7 +11,7 @@
     <meta property="og:site_name" content="Maldita Carlita" />
     <meta property="og:title" content="Maldita Carlita" />
     <meta property="og:url" content="https://www.malditacarlita.com/" />
-    <title>Maldita Carlita</title>
+    <title>Ilustración | Maldita Carlita</title>
     
     <!-- Fuente de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
@@ -144,7 +144,7 @@
       </nav>
     </header>
 
-    <!-- Cuerpo principal de la página con los productos destacados -->
+    <!-- Cuerpo principal de la página con los productos de ilustración -->
     <main>
       <div class="max-w-6xl mx-auto px-6 py-10">
 

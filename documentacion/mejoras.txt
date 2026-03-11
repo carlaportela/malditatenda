@@ -1,1 +1,2 @@
 1. Mismo fondo para todas las fotografías de los productos -> Cambiar columna imagen en tabla productos
+2. hacer una versión mucho más limpia y escalable, usando un componente Blade NavLink para no repetir todo este código y que cualquier cambio en el estilo o rutas se haga en un solo lugar
