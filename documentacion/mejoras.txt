@@ -1,2 +1,3 @@
 1. Mismo fondo para todas las fotografías de los productos -> Cambiar columna imagen en tabla productos
-2. hacer una versión mucho más limpia y escalable, usando un componente Blade NavLink para no repetir todo este código y que cualquier cambio en el estilo o rutas se haga en un solo lugar
+2. Hacer una versión mucho más limpia y escalable, usando un componente Blade NavLink para no repetir todo este código y que cualquier cambio en el estilo o rutas se haga en un solo lugar.
+3. Si un usuario esta loggeado, en contacto no hace falta que ponga el nombre y el correo, o en su defecto, los campos se rellenan automáticamente.

@@ -32,9 +32,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $view->with('contadorCesta', $contadorCesta);
-
-    });
+        });
     }
-
-
 }
