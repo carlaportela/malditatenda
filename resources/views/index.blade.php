@@ -86,23 +86,23 @@
             <!-- Contenedor de botones PARTE DERECHA -->
             <div class="flex items-center space-x-4">
 
-              @if(session('usuario_nombre'))
+              @if(Auth::check())
 
                     <!-- Botón de sesión iniciada -->
                     <a href="/micuenta"
                     class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200 bg-gray-700 text-white hover:bg-red-300">
-                    Hola {{ session('usuario_nombre') }}
+                    Hola  {{ Auth::user()->nombreUsuario }}
                     </a>
                     
                     <!-- Botón de cerrar sesión -->
-                    <a href="/logout"
+                    <a href="{{ route('logout') }}"
                     class="text-xs rounded-md px-3 py-2 bg-white text-black inline-block border border-solid transition-colors duration-200 hover:bg-red-300 hover:text-white">
                     Cerrar sesión
                     </a>
-                @else
+              @else
 
                     <!-- Botón de inicio de sesión -->
-                    <a href="/login"
+                    <a href="{{ route('login') }}"
                     class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
                     {{ request()->is('login') 
                         ? 'bg-red-300 text-white pointer-events-none cursor-default' 
@@ -111,14 +111,14 @@
                     </a>
 
                     <!-- Botón de registro -->
-                    <a href="/registro"
+                    <a href="{{ route('registro') }}"
                     class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
                     {{ request()->is('registro') 
                         ? 'bg-red-300 text-white pointer-events-none cursor-default' 
                         : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
                     Registrarse
                     </a>
-                @endif 
+              @endif  
               
               <!-- Cesta -->
               <div class="flex items-center space-x-4">
@@ -127,7 +127,7 @@
                     <img src="{{ asset ('assets/img/logos/icono_cesta.png')}}" alt="Cesta" class="w-6 h-6">
                   </a>
                   <span class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
-                    0
+                    {{ $contadorCesta }}
                   </span>
                 </div>
               </div>
@@ -172,7 +172,7 @@
 
         <!-- Grid contenedor de productos -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-
+          
           <!-- Mostrar productos con Model Producto -->
           @foreach($productos as $producto)
             <a href="{{ route('producto.show', $producto->idProducto) }}" class="block group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">

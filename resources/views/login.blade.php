@@ -86,12 +86,12 @@
             <!-- Contenedor de botones PARTE DERECHA -->
             <div class="flex items-center space-x-4">
 
-                @if(session('usuario_nombre'))
+                @if(Auth::check())
 
                     <!-- Botón de sesión iniciada -->
                     <a href="/micuenta"
                     class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200 bg-gray-700 text-white hover:bg-red-300">
-                    Hola {{ session('usuario_nombre') }}
+                    Hola  {{ Auth::user()->nombreUsuario }}
                     </a>
                     
                     <!-- Botón de cerrar sesión -->
@@ -127,7 +127,7 @@
                     <img src="{{ asset ('assets/img/logos/icono_cesta.png')}}" alt="Cesta" class="w-6 h-6">
                   </a>
                   <span class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
-                    0
+                    {{ $contadorCesta }}
                   </span>
                 </div>
               </div>
@@ -227,7 +227,7 @@
                 </a>
             </p>
         </form>
-        </section>
+      </section>
     </main>
           
     <!-- Pie de la página con enlaces e información relevante-->

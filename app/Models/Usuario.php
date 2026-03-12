@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
-    protected $table = 'usuarios';        // Nombre de la tabla
-    protected $primaryKey = 'idUsuario';  // Clave primaria
-    public $timestamps = true;            // created_at y updated_at
+    protected $table = 'usuarios';
+    protected $primaryKey = 'idUsuario';
+
+    public $timestamps = true;
 
     protected $fillable = [
         'nombreUsuario',
@@ -24,7 +25,29 @@ class Usuario extends Model
         'autorizado',
     ];
 
-    // Hash automático de la contraseña
+    protected $hidden = [
+        'contrasenha',
+    ];
+
+    /**
+     * Laravel espera password
+     */
+    public function getAuthPassword()
+    {
+        return $this->contrasenha;
+    }
+
+    /**
+     * Laravel espera email como identificador
+     */
+    public function getAuthIdentifierName()
+    {
+        return 'correo';
+    }
+
+    /**
+     * Hash automático de la contraseña
+     */
     public function setContrasenhaAttribute($value)
     {
         $this->attributes['contrasenha'] = Hash::make($value);

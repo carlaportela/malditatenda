@@ -127,7 +127,7 @@
                     <img src="{{ asset ('assets/img/logos/icono_cesta.png')}}" alt="Cesta" class="w-6 h-6">
                   </a>
                   <span class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
-                    0
+                    {{ $contadorCesta }}
                   </span>
                 </div>
               </div>
@@ -169,94 +169,39 @@
     <!-- Cuerpo principal de la página con el formulario de registro -->
     <main>
       <section class="max-w-6xl mx-auto px-6 py-16">
-        @if(session('success'))
-            <div class="max-w-xl mx-auto mb-6 bg-red-100 text-red-300 p-4 rounded-md text-center">
-                {!! session('success') !!}
-            </div>
+        @if(Auth::check())
+
+                <!-- Botón de sesión iniciada -->
+                <a href="/micuenta"
+                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200 bg-gray-700 text-white hover:bg-red-300">
+                Hola  {{ Auth::user()->nombreUsuario }}
+                </a>
+                
+                <!-- Botón de cerrar sesión -->
+                <a href="{{ route('logout') }}"
+                class="text-xs rounded-md px-3 py-2 bg-white text-black inline-block border border-solid transition-colors duration-200 hover:bg-red-300 hover:text-white">
+                Cerrar sesión
+                </a>
         @else
-            <form action="{{ route('registro.store') }}" method="POST"
-                class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow-md space-y-4">
-                @csrf
 
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Nombre</label>
-                    <input type="text" name="nombreUsuario" value="{{ old('nombreUsuario') }}"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none" required>
-                    @error('nombreUsuario')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+          <!-- Botón de inicio de sesión -->
+          <a href="{{ route('login') }}"
+          class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+          {{ request()->is('login') 
+              ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+              : 'bg-gray-700 text-white hover:bg-red-300' }}">
+          Iniciar sesión
+          </a>
 
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Apellidos</label>
-                    <input type="text" name="apellidos" value="{{ old('apellidos') }}"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none" required>
-                    @error('apellidos')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Teléfono</label>
-                    <input type="text" name="telefono" value="{{ old('telefono') }}"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Dirección</label>
-                    <input type="text" name="direccion" value="{{ old('direccion') }}"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none">
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-1">Código Postal</label>
-                        <input type="text" name="cp" value="{{ old('cp') }}"
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-1">Localidad</label>
-                        <input type="text" name="localidad" value="{{ old('localidad') }}"
-                            class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Provincia</label>
-                    <input type="text" name="provincia" value="{{ old('provincia') }}"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Correo electrónico</label>
-                    <input type="email" name="correo" value="{{ old('correo') }}"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none" required>
-                    @error('correo')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Contraseña</label>
-                    <input type="password" name="contrasenha"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none" required>
-                    @error('contrasenha')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-1">Confirmar contraseña</label>
-                    <input type="password" name="contrasenha_confirmation"
-                        class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none" required>
-                </div>
-
-                <button type="submit"
-                        class="w-full bg-gray-700 text-white py-2 rounded-md font-semibold hover:bg-red-300 transition cursor-pointer">
-                    Validar registro
-                </button>
-            </form>
-        @endif
+          <!-- Botón de registro -->
+          <a href="{{ route('registro') }}"
+          class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+          {{ request()->is('registro') 
+              ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+              : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
+          Registrarse
+          </a>
+        @endif  
     </section>
     </main>
           

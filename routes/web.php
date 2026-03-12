@@ -39,6 +39,10 @@ Route::get('/producto', function () {
     return view('producto');
 });
 
+Route::get('/canastro', function () {
+    return view('canastro');
+});
+
 Route::get('/micuenta', function () {
     return view('micuenta');
 });
@@ -67,11 +71,15 @@ use App\Http\Controllers\RegistroController;
 Route::get('/registro', [RegistroController::class, 'index'])->name('registro');
 Route::post('/registro', [RegistroController::class, 'store'])->name('registro.store');
 
-//Para iniciar sesión como usuario registrado
+//Para iniciar sesión como usuario registrado y meter productos en la cesta
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CestaController;
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::middleware('web')->group(function() {
 
-Route::post('/login', [LoginController::class, 'login'])->name('login.procesar');
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.procesar');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/cesta/add', [CestaController::class, 'add'])->middleware('auth')->name('cesta.add');
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+});
