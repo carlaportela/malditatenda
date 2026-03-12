@@ -51,7 +51,7 @@
         </div>
 
         <!-- Formulario para añadir productos a la cesta -->
-        <form action="{{ route('cesta.add') }}" method="POST">
+        <form action="{{ route('cesta.add') }}" method="POST" class="add-to-cart-form">
           @csrf
 
           <input type="hidden" name="idProducto" value="{{ $producto->idProducto }}">

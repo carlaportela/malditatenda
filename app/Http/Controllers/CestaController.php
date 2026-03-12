@@ -39,7 +39,13 @@ class CestaController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Producto añadido a la cesta');
+        // Devolver contador actualizado
+        $contador = Cesta::where('idUsuario', $usuario->idUsuario)->sum('cantidad');
+
+        return response()->json([
+            'success' => true,
+            'contador' => $contador
+        ]);
     }
 }
 

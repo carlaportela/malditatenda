@@ -179,3 +179,80 @@
             </div>
         </div>
         @endsection
+6. Poner una animación en el número de la cesta cada vez que se añade un producto
+    6.1 Modifica el span de la cesta en tu header (partials/header.blade.php) donde tienes el icono de la cesta, añade un id al span para poder animarlo (id="contadorCesta")
+    6.2 En la vista de Producto, añade la clase  class="add-to-cart-form" al form del botón de Añadir a la cesta
+    6.3 En layouts/app.blade.php dentro de la etiqueta script añade:
+        document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // evitar recarga
+            const data = new FormData(this);
+            const url = this.action;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': data.get('_token'),
+                    'Accept': 'application/json'
+                },
+                body: data
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.success){
+                    // Actualizar el contador
+                    const contador = document.getElementById('contadorCesta');
+                    contador.textContent = result.contador;
+
+                    // Animación pop
+                    contador.classList.add('animate-pop');
+                    setTimeout(() => {
+                        contador.classList.remove('animate-pop');
+                    }, 300);
+                }
+            })
+            .catch(err => console.error(err));
+            });
+        });
+    6.4 Define la animación en Tailwind en el archivo resources/css/app.css
+        @keyframes pop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.5); }
+        100% { transform: scale(1); }
+        }
+
+        .animate-pop {
+        animation: pop 0.3s ease-in-out;
+        }
+    6.5 Modifica el controlador de la cesta 
+        public function add(Request $request)
+        {
+            $request->validate([
+                'idProducto' => 'required|integer|exists:productos,idProducto'
+            ]);
+
+            $usuario = Auth::user();
+
+            $item = Cesta::where('idUsuario', $usuario->idUsuario)
+                ->where('idProducto', $request->idProducto)
+                ->first();
+
+            if($item){
+                $item->cantidad += 1;
+                $item->save();
+            } else {
+                Cesta::create([
+                    'idProducto' => $request->idProducto,
+                    'idUsuario' => $usuario->idUsuario,
+                    'cantidad' => 1
+                ]);
+            }
+
+            // Devolver contador actualizado
+            $contador = Cesta::where('idUsuario', $usuario->idUsuario)->sum('cantidad');
+
+            return response()->json([
+                'success' => true,
+                'contador' => $contador
+            ]);
+        }
+    Para que se carguen los nuevos estilos y se visualice la nueva animación npm run dev, npm run build, php artisan optimize:clear y php artisan serve

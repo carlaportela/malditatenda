@@ -48,11 +48,45 @@
         @include('partials.footer')
 
         <script>
+            //Para la animación del menú desplegable de la pantalla de móvil
             const btn = document.getElementById('menu-btn');
             const menu = document.getElementById('mobile-menu');
             if(btn){
                 btn.addEventListener('click', () => menu.classList.toggle('hidden'));
             }
+
+            //Para la animación de la cesta al añadir producto
+            document.querySelectorAll('.add-to-cart-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // evitar recarga
+                const data = new FormData(this);
+                const url = this.action;
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': data.get('_token'),
+                        'Accept': 'application/json'
+                    },
+                    body: data
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if(result.success){
+                        // Actualizar el contador
+                        const contador = document.getElementById('contadorCesta');
+                        contador.textContent = result.contador;
+
+                        // Animación pop
+                        contador.classList.add('animate-pop');
+                        setTimeout(() => {
+                            contador.classList.remove('animate-pop');
+                        }, 300);
+                    }
+                })
+                .catch(err => console.error(err));
+            });
+        });
+
         </script>
     </body>
 </html>

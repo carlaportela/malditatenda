@@ -84,7 +84,7 @@
                 <a href="/canastro" class="inline-block transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
                 <img src="{{ asset ('assets/img/logos/icono_cesta.png')}}" alt="Cesta" class="w-6 h-6">
                 </a>
-                <span class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
+                <span id="contadorCesta" class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
                 {{ $contadorCesta }}
                 </span>
             </div>
