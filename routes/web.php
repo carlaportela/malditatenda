@@ -77,9 +77,19 @@ use App\Http\Controllers\CestaController;
 
 Route::middleware('web')->group(function() {
 
+    // LOGIN
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.procesar');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::post('/cesta/add', [CestaController::class, 'add'])->middleware('auth')->name('cesta.add');
+
+});
+
+Route::middleware(['web','auth'])->group(function() {
+
+    // CESTA
+    Route::post('/cesta/add', [CestaController::class, 'add'])->name('cesta.add');
+    Route::get('/canastro', [CestaController::class, 'index'])->name('cesta.index');
+    Route::delete('/cesta/{id}', [CestaController::class, 'destroy'])->name('cesta.destroy');
+    Route::delete('/cesta', [CestaController::class, 'vaciar'])->name('cesta.vaciar');
 
 });

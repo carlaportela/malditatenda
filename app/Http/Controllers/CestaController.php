@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CestaController extends Controller
 {   
+    //Añadir productos a la cesta
     public function add(Request $request)
     {
         // Para depuración
@@ -47,5 +48,30 @@ class CestaController extends Controller
             'contador' => $contador
         ]);
     }
-}
+
+    //Mostrar, eliminar productos y vaciar cesta
+    public function index()
+    {
+        $items = Cesta::where('idUsuario', Auth::user()->idUsuario)
+            ->with('producto')
+            ->get();
+
+        return view('canastro', compact('items'));
+    }
+
+    public function destroy($id)
+    {
+        $item = Cesta::findOrFail($id);
+        $item->delete();
+
+        return back()->with('success','Producto eliminado de la cesta');
+    }
+
+    public function vaciar()
+    {
+        Cesta::where('idUsuario', Auth::user()->idUsuario)->delete();
+
+        return back()->with('success','Cesta vaciada');
+    }
+    }
 

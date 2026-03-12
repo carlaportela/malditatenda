@@ -15,5 +15,9 @@ class Cesta extends Model
         'idUsuario',
         'cantidad'
     ];
- 
+    
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class,'idProducto','idProducto');
+    }
 }

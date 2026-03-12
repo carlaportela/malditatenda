@@ -80,14 +80,16 @@
             
             <!-- Cesta -->
             <div class="flex items-center space-x-4">
-            <div class="relative transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
-                <a href="/canastro" class="inline-block transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
-                <img src="{{ asset ('assets/img/logos/icono_cesta.png')}}" alt="Cesta" class="w-6 h-6">
-                </a>
-                <span id="contadorCesta" class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
-                {{ $contadorCesta }}
-                </span>
-            </div>
+                <div class="relative transition-transform duration-200 hover:scale-110 hover:opacity-80 transition-opacity duration-200">
+                    <a href="/canastro"
+                    class="inline-block transition-transform duration-200 hover:scale-110
+                    {{ request()->is('canastro') ? 'opacity-60 pointer-events-none cursor-default' : 'hover:opacity-80' }}">
+                        <img src="{{ asset('assets/img/logos/icono_cesta.png')}}" alt="Cesta" class="w-6 h-6">
+                    </a>
+                    <span id="contadorCesta" class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
+                        {{ $contadorCesta }}
+                    </span>
+                </div>
             </div>
         </div>
         
