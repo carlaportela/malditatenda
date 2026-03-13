@@ -31,16 +31,17 @@
 
           <!-- Nombre -->
           <div>
-              <label class="block text-gray-700 font-semibold mb-1">
+              <label for="nombreMensaje" class="block text-gray-700 font-semibold mb-1">
                   Nombre
               </label>
 
               <input
-                  type="text"
-                  name="nombreMensaje"
-                  value="{{ old('nombreMensaje') }}"
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none"
-                  required
+                type="text"
+                id="nombreMensaje"
+                name="nombreMensaje"
+                value="{{ old('nombreMensaje') }}"
+                class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none"
+                required
               >
 
               @error('nombreMensaje')
@@ -50,16 +51,17 @@
 
           <!-- Correo -->
           <div>
-              <label class="block text-gray-700 font-semibold mb-1">
+              <label for="correomensaje" class="block text-gray-700 font-semibold mb-1">
                   Correo electrónico
               </label>
 
               <input
-                  type="email"
-                  name="correomensaje"
-                  value="{{ old('correomensaje') }}"
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none"
-                  required
+                type="email"
+                id="correomensaje"
+                name="correomensaje"
+                value="{{ old('correomensaje') }}"
+                class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none"
+                required
               >
 
               @error('correomensaje')
@@ -69,15 +71,16 @@
 
           <!-- Mensaje -->
           <div>
-              <label class="block text-gray-700 font-semibold mb-1">
-                  Mensaje
+              <label for ="textoMensaje" class="block text-gray-700 font-semibold mb-1">
+                Mensaje
               </label>
 
               <textarea
-                  name="textoMensaje"
-                  rows="5"
-                  class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none"
-                  required>{{ old('textoMensaje') }}</textarea>
+                id="textoMensaje"
+                name="textoMensaje"
+                rows="5"
+                class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-red-300 focus:outline-none"
+                required>{{ old('textoMensaje') }}</textarea>
 
               @error('textoMensaje')
                   <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
