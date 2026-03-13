@@ -1,7 +1,7 @@
 <!-- Página que permite enviar mensaje a la tienda -->
 @extends('layouts.app')
 
-@section('title', 'Maldita Carlita')
+@section('title', 'Contacto | Maldita Carlita')
 
 @section('content')
   <section class="max-w-2xl mx-auto px-6 py-16 p-6">

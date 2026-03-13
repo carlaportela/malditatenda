@@ -1,7 +1,7 @@
 <!-- Página de detalle de producto -->
 @extends('layouts.app')
 
-@section('title', 'Maldita Carlita')
+@section('title', 'Producto | Maldita Carlita')
 
 @section('content')
     <section class="max-w-6xl mx-auto px-6 py-16">

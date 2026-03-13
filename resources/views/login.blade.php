@@ -1,7 +1,7 @@
 <!-- Página de inicio de sesión -->
 @extends('layouts.app')
 
-@section('title', 'Maldita Carlita')
+@section('title', 'Inicio de sesión | Maldita Carlita')
 
 @section('content')
   <section class="max-w-6xl mx-auto px-6 py-16">

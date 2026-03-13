@@ -1,7 +1,7 @@
 <!-- Página principal -->
 @extends('layouts.app')
 
-@section('title', 'Maldita Carlita')
+@section('title', 'Inicio | Maldita Carlita')
 
 @section('content')
   <div class="max-w-6xl mx-auto px-6 py-10">

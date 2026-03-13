@@ -1,7 +1,7 @@
 <!-- Página que muestra información sobre la marca -->
 @extends('layouts.app')
 
-@section('title', 'Maldita Carlita')
+@section('title', 'Sobre mí | Maldita Carlita')
 
 @section('content')
 
