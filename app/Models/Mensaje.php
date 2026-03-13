@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Mensaje extends Model
 {
     protected $table = 'mensajes';
+    protected $primaryKey = 'idMensaje';
+    public $timestamps = true;
 
-    // Campos que se pueden rellenar masivamente
     protected $fillable = [
-        'nombreMensaje',
-        'correomensaje',
-        'textoMensaje'
+        'idUsuario','nombreMensaje','correoMensaje','textoMensaje','respondido'
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class,'idUsuario','idUsuario');
+    }
 }

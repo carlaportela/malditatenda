@@ -93,3 +93,16 @@ Route::middleware(['web','auth'])->group(function() {
     Route::delete('/cesta', [CestaController::class, 'vaciar'])->name('cesta.vaciar');
 
 });
+
+//Para ver los datos personales de la cuenta del usuario, los pedidos, devoluciones y mensajes
+use App\Http\Controllers\MiCuentaController;
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/micuenta', [MiCuentaController::class,'index'])->name('micuenta');
+
+    Route::post('/micuenta/actualizar', [MiCuentaController::class,'actualizar'])->name('micuenta.actualizar');
+
+    Route::post('/micuenta/password', [MiCuentaController::class,'cambiarPassword'])->name('micuenta.password');
+
+});
