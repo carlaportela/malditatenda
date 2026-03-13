@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cesta;
 
 class ProductoController extends Controller
 {
@@ -40,8 +42,17 @@ class ProductoController extends Controller
     {
         // Buscar producto o devolver 404
         $producto = Producto::findOrFail($id);
+        $enCesta = false;
 
-        return view('producto', compact('producto'));
+        if(Auth::check()){
+            $enCesta = Cesta::where('idUsuario', Auth::user()->idUsuario)
+                ->where('idProducto', $id)
+                ->exists();
+        }
+         return view('producto', [
+            'producto' => $producto,
+            'enCesta' => $enCesta
+        ]);
     }
     
 }

@@ -28,9 +28,8 @@ class CestaController extends Controller
             ->first();
 
         if ($item) {
-            // Incrementar cantidad
-            $item->cantidad += 1;
-            $item->save();
+            // Esto no permita que se añada dos veces el mismo producto a la cesta
+             return back()->with('error', 'Este producto ya está en tu cesta');
         } else {
             // Crear nuevo registro
             Cesta::create([
@@ -73,5 +72,17 @@ class CestaController extends Controller
 
         return back()->with('success','Cesta vaciada');
     }
-    }
+    
+    //Mostrar el número de artículos en la cesta
+    public function contador()
+    {
+        if(!Auth::check()){
+            return response()->json(['contador' => 0]);
+        }
 
+        $contador = Cesta::where('idUsuario', Auth::user()->idUsuario)
+            ->sum('cantidad');
+
+        return response()->json(['contador' => $contador]);
+    }
+}

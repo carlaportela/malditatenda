@@ -7,15 +7,11 @@
 
     <section class="max-w-6xl mx-auto px-6 py-16">
         @if($items->count() == 0)
-
             <div class="text-center text-gray-500">
             Tu cesta está vacía
             </div>
-
         @else
-
             <div class="space-y-6">
-
                 @foreach($items as $item)
                     <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-md">
 
