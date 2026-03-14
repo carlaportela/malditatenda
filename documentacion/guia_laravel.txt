@@ -256,3 +256,87 @@
             ]);
         }
     Para que se carguen los nuevos estilos y se visualice la nueva animación npm run dev, npm run build, php artisan optimize:clear y php artisan serve
+7. integrar pasarela de pago Stripe en la vista de pedido
+    7.1 Instala el SDK oficial de Stripe: composer require stripe/stripe-php
+    7.2 Añade tus claves en .env:
+        STRIPE_KEY=pk_test_xxx   # clave pública
+        STRIPE_SECRET=sk_test_xxx # clave secreta
+    7.3 Configura el servicio en config/services.php:
+            'stripe' => [
+            'key' => env('STRIPE_KEY'),
+            'secret' => env('STRIPE_SECRET'),
+        ],
+    7.4 Crear la ruta para generar la sesión de pago en web.php:
+        use App\Http\Controllers\PedidoController;
+
+        Route::post('/pedido/stripe', [PedidoController::class, 'stripeCheckout'])->name('pedido.stripe');
+    7.5 COnfigurar el controlador de PedidoController:
+        use Stripe\Stripe;
+        use Stripe\Checkout\Session as StripeSession;
+
+        public function stripeCheckout(Request $request)
+        {
+            $usuario = Auth::user();
+            $cesta = $usuario->cesta()->with('producto')->get();
+
+            if($cesta->isEmpty()){
+                return redirect()->route('pedido.checkout')->with('error','Tu cesta está vacía.');
+            }
+
+            $line_items = [];
+
+            foreach($cesta as $item){
+                $line_items[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $item->producto->nombreProducto,
+                        ],
+                        'unit_amount' => $item->producto->precio * 100, // en céntimos
+                    ],
+                    'quantity' => $item->cantidad,
+                ];
+            }
+
+            // Envío
+            $line_items[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Envío estándar (3-5 días laborables)',
+                    ],
+                    'unit_amount' => 395, // 3,95 € en céntimos
+                ],
+                'quantity' => 1,
+            ];
+
+            Stripe::setApiKey(config('services.stripe.secret'));
+
+            $session = StripeSession::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $line_items,
+                'mode' => 'payment',
+                'success_url' => route('pedido.exito'),
+                'cancel_url' => route('pedido.checkout'),
+                'customer_email' => $usuario->correo,
+            ]);
+
+            return redirect($session->url);
+        }
+    7.6 Actualizar el botón de Realizar pedido en la vista de pedido
+        <form action="{{ route('pedido.stripe') }}" method="POST" class="flex-1">
+            @csrf
+            <button type="submit"
+                class="w-full bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition text-center">
+                Realizar pedido
+            </button>
+        </form>
+        Que ya no hace submit a mi propio controlador sino que redirige a Stripe Checkout
+    7.7 Añadir rutas de éxito y cancelación en web.php
+        Route::get('/pedido/exito', [PedidoController::class, 'success'])->name('pedido.exito');
+    7.8 Añadir las función de éxito al PedidoController
+        public function success()
+        {
+            // Aquí puedes vaciar la cesta, generar pedido en BD, etc.
+            return view('pedido.exito'); // vista simple de confirmación
+        }
