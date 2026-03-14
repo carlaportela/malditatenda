@@ -46,37 +46,40 @@
 
             @if(Auth::check())
 
-                <!-- Botón de sesión iniciada -->
-                <a href="/micuenta"
-                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200 bg-gray-700 text-white hover:bg-red-300">
-                Hola  {{ Auth::user()->nombreUsuario }}
-                </a>
-                
-                <!-- Botón de cerrar sesión -->
-                <a href="{{ route('logout') }}"
-                class="text-xs rounded-md px-3 py-2 bg-white text-black inline-block border border-solid transition-colors duration-200 hover:bg-red-300 hover:text-white">
-                Cerrar sesión
-                </a>
-            @else
+    <!-- Botón de sesión iniciada -->
+    <a href="/micuenta"
+       class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+       {{ request()->is('micuenta') 
+            ? 'bg-red-300 text-white cursor-default pointer-events-none' 
+            : 'bg-gray-700 text-white hover:bg-red-300 cursor-pointer' }}">
+        Hola {{ Auth::user()->nombreUsuario }}
+    </a>
+    
+    <!-- Botón de cerrar sesión -->
+    <a href="{{ route('logout') }}"
+       class="text-xs rounded-md px-3 py-2 bg-white text-black inline-block border border-solid transition-colors duration-200 hover:bg-red-300 hover:text-white">
+        Cerrar sesión
+    </a>
 
-                <!-- Botón de inicio de sesión -->
-                <a href="{{ route('login') }}"
-                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-                {{ request()->is('login') 
-                    ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-                    : 'bg-gray-700 text-white hover:bg-red-300' }}">
-                Iniciar sesión
-                </a>
+@else
+    <!-- Botón de inicio de sesión -->
+    <a href="{{ route('login') }}"
+       class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+       {{ request()->is('login') 
+            ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+            : 'bg-gray-700 text-white hover:bg-red-300 cursor-pointer' }}">
+        Iniciar sesión
+    </a>
 
-                <!-- Botón de registro -->
-                <a href="{{ route('registro') }}"
-                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-                {{ request()->is('registro') 
-                    ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-                    : 'bg-white text-black hover:bg-red-300 hover:text-white' }}">
-                Registrarse
-                </a>
-            @endif  
+    <!-- Botón de registro -->
+    <a href="{{ route('registro') }}"
+       class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+       {{ request()->is('registro') 
+            ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+            : 'bg-white text-black hover:bg-red-300 hover:text-white cursor-pointer' }}">
+        Registrarse
+    </a>
+@endif
             
             <!-- Cesta -->
             <div class="flex items-center space-x-4">
