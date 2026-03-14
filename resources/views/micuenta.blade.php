@@ -29,7 +29,7 @@
 
         <!-- Botones separados -->
         <div class="mt-6 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-            <a href="{{ route('micuenta.actualizar') }}" 
+            <a href="{{ route('micuenta.editar') }}" 
                 class="inline-block bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition text-center">
                 Editar datos
             </a>

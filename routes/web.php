@@ -99,10 +99,14 @@ use App\Http\Controllers\MiCuentaController;
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/micuenta', [MiCuentaController::class,'index'])->name('micuenta');
-
-    Route::post('/micuenta/actualizar', [MiCuentaController::class,'actualizar'])->name('micuenta.actualizar');
-
-    Route::post('/micuenta/password', [MiCuentaController::class,'cambiarPassword'])->name('micuenta.password');
+Route::get('/micuenta', [MiCuentaController::class,'index'])->name('micuenta');
+Route::get('/micuenta/editar', [MiCuentaController::class,'editar'])
+    ->name('micuenta.editar');
+Route::put('/micuenta/editar', [MiCuentaController::class,'guardarDatos'])
+    ->name('micuenta.guardar');
+Route::get('/micuenta/password', [MiCuentaController::class,'password'])
+    ->name('micuenta.password');
+Route::put('/micuenta/password', [MiCuentaController::class,'guardarPassword'])
+    ->name('micuenta.password.guardar');
 
 });

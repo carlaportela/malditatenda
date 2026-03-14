@@ -24,46 +24,73 @@ class MiCuentaController extends Controller
     return view('micuenta', compact('usuario', 'pedidos', 'devoluciones', 'mensajes'));
     }
 
-
-    public function actualizar(Request $request)
+    // Mostrar formulario editar datos
+    public function editar()
     {
+        $usuario = Auth::user();
 
+        return view('micuenta.editar', compact('usuario'));
+    }
+
+    // Guardar datos
+    public function guardarDatos(Request $request)
+    {
         $usuario = Auth::user();
 
         $request->validate([
-            'nombreUsuario' => 'required',
-            'telefono' => 'nullable',
-            'direccion' => 'nullable',
-            'cp' => 'nullable',
-            'localidad' => 'nullable',
-            'provincia' => 'nullable'
+            'nombreUsuario' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'telefono' => 'nullable|string|max:20',
+            'direccion' => 'nullable|string|max:255',
+            'cp' => 'nullable|string|max:10',
+            'localidad' => 'nullable|string|max:255',
+            'provincia' => 'nullable|string|max:255',
         ]);
 
-        $usuario->update($request->all());
+        $usuario->update($request->only([
+            'nombreUsuario',
+            'apellidos',
+            'telefono',
+            'direccion',
+            'cp',
+            'localidad',
+            'provincia'
+        ]));
 
-        return back()->with('success','Datos actualizados correctamente');
+        return redirect()->route('micuenta')->with('success','Datos actualizados correctamente');
     }
 
-
-    public function cambiarPassword(Request $request)
+    // Mostrar formulario cambiar contraseña
+    public function password()
     {
+        return view('micuenta.password');
+    }
 
-        $usuario = Auth::user();
+    // Guardar nueva contraseña
+    public function guardarPassword(Request $request)
+    {
 
         $request->validate([
             'password_actual' => 'required',
-            'password_nueva' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed'
         ]);
+
+        $usuario = Auth::user();
 
         if(!Hash::check($request->password_actual, $usuario->contrasenha)){
-            return back()->with('error','La contraseña actual no es correcta');
+            return back()->withErrors([
+                'password_actual' => 'La contraseña actual no es correcta'
+            ]);
         }
 
-        $usuario->update([
-            'contrasenha' => Hash::make($request->password_nueva)
-        ]);
+        $usuario->contrasenha = $request->password;
+        $usuario->save();
 
-        return back()->with('success','Contraseña actualizada');
+        // 🔹 refrescar usuario autenticado
+        Auth::setUser($usuario->fresh());
+
+        return redirect()
+        ->route('micuenta.password')
+        ->with('success', 'Contraseña cambiada correctamente');
     }
-
 }
