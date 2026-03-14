@@ -7,10 +7,10 @@
     <!-- Tabs -->
     <div class="mb-10 font-handwritten">
         <nav class="flex space-x-4 border-b border-gray-200">
-            <button data-tab="datos" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:border-red-300 cursor-pointer transition">Datos personales</button>
-            <button data-tab="pedidos" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:border-red-300 cursor-pointer transition">Pedidos</button>
-            <button data-tab="devoluciones" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:border-red-300 cursor-pointer transition">Devoluciones</button>
-            <button data-tab="mensajes" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:border-red-300 cursor-pointer transition">Mensajes</button>
+            <button data-tab="datos" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:text-red-300 hover:border-red-300 cursor-pointer transition">Datos personales</button>
+            <button data-tab="pedidos" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:text-red-300 hover:border-red-300 cursor-pointer transition">Pedidos</button>
+            <button data-tab="devoluciones" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:text-red-300 hover:border-red-300 cursor-pointer transition">Devoluciones</button>
+            <button data-tab="mensajes" class="tab-btn text-gray-600 py-2 px-4 font-semibold border-b-2 border-transparent hover:text-red-300 hover:border-red-300 cursor-pointer transition">Mensajes</button>
         </nav>
     </div>
 
@@ -41,15 +41,16 @@
     </div>
 
     <!-- Pedidos -->
-    <div id="pedidos" class="tab-content hidden bg-white shadow-md rounded-xl p-6">
+    <div id="pedidos" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
         @if($pedidos->isEmpty())
-            <p class="text-gray-500">No tienes pedidos realizados.</p>
+            <p class="text-gray-500 text-center">No has realizado ningún pedido áun.</p>
         @else
-            <ul class="space-y-4">
+            <ul class="space-y-6">
                 @foreach($pedidos as $pedido)
-                    <li class="border rounded-md p-4 flex justify-between items-center hover:shadow-md transition">
+                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 flex justify-between items-center hover:shadow-lg transition-shadow duration-200">
                         <div>
-                            <span class="font-semibold">Pedido #{{ $pedido->idPedido }}</span> - {{ $pedido->created_at->format('d/m/Y') }}
+                            <span class="font-handwritten text-red-400 text-lg">Pedido #{{ $pedido->idPedido }}</span>
+                            <span class="text-gray-600"> - {{ $pedido->created_at->format('d/m/Y') }}</span>
                         </div>
                         <div class="text-red-400 font-semibold">{{ $pedido->total }} €</div>
                     </li>
@@ -59,14 +60,17 @@
     </div>
 
     <!-- Devoluciones -->
-    <div id="devoluciones" class="tab-content hidden bg-white shadow-md rounded-xl p-6">   
+    <div id="devoluciones" class="tab-content hidden bg-white shadow-md rounded-xl p-8">   
         @if($devoluciones->isEmpty())
-            <p class="text-gray-500">No tienes devoluciones registradas.</p>
+            <p class="text-gray-500 text-center">No has realizado ninguna devolución aún.</p>
         @else
-            <ul class="space-y-4">
+            <ul class="space-y-6">
                 @foreach($devoluciones as $devolucion)
-                    <li class="border rounded-md p-4 flex justify-between items-center hover:shadow-md transition">
-                        <div>Devolución #{{ $devolucion->idDevolucion }} - {{ $devolucion->created_at->format('d/m/Y') }}</div>
+                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 flex justify-between items-center hover:shadow-lg transition-shadow duration-200">
+                        <div>
+                            <span class="font-handwritten text-red-400 text-lg">Devolución #{{ $devolucion->idDevolucion }}</span>
+                            <span class="text-gray-600"> - {{ $devolucion->created_at->format('d/m/Y') }}</span>
+                        </div>
                         <div class="text-red-400 font-semibold">{{ $devolucion->estado }}</div>
                     </li>
                 @endforeach
@@ -75,42 +79,62 @@
     </div>
 
     <!-- Mensajes -->
-    <div id="mensajes" class="tab-content hidden bg-white shadow-md rounded-xl p-6">
-        @if($mensajes->isEmpty())
-            <p class="text-gray-500">No has enviado mensajes aún.</p>
-        @else
-            <ul class="space-y-4">
-                @foreach($mensajes as $mensaje)
-                    <li class="border rounded-md p-4 hover:shadow-md transition">
-                        <span class="font-semibold">{{ $mensaje->asunto }}</span>
-                        <p class="text-gray-600 mt-1">{{ $mensaje->contenido }}</p>
-                        <span class="text-gray-400 text-xs">Enviado: {{ $mensaje->created_at->format('d/m/Y H:i') }}</span>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </div>
+    <div id="mensajes" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
+    @if($mensajes->isEmpty())
+        <p class="text-gray-500 text-center">No has enviado mensajes aún.</p>
+    @else
+        <ul class="space-y-6">
+            @foreach($mensajes as $mensaje)
+                <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200">
+                    
+                    <!-- Asunto -->
+                    <span class="block font-handwritten text-red-400 text-lg mb-2">
+                        {{ $mensaje->asunto }}
+                    </span>
+                    
+                    <!-- Contenido del mensaje -->
+                    <p class="text-gray-600 mb-2">
+                        {{ $mensaje->textoMensaje }}
+                    </p>
+                    
+                    <!-- Fecha -->
+                    <span class="text-gray-400 text-xs">
+                        Enviado: {{ $mensaje->created_at->format('d/m/Y H:i') }}
+                    </span>
+                </li>
+            @endforeach
+        </ul>
+    @endif
+</div>
 
 </div>
 
 <script>
-    // Tab functionality
     const tabs = document.querySelectorAll('.tab-btn');
     const contents = document.querySelectorAll('.tab-content');
 
+    function activarTab(tab) {
+        tabs.forEach(t => {
+            // Reset tabs inactivos
+            t.classList.remove('text-red-300', 'cursor-pointer');
+            t.classList.add('hover:border-red-300', 'text-gray-600', 'cursor-pointer');
+        });
+
+        contents.forEach(c => c.classList.add('hidden'));
+
+        // Tab activo
+        tab.classList.add('text-red-300', 'cursor-pointer');
+        tab.classList.remove('hover:border-red-300','text-gray-600', 'cursor-pointer');
+        document.getElementById(tab.dataset.tab).classList.remove('hidden');
+    }
+
+    // Activar primer tab al cargar
+    activarTab(tabs[0]);
+
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // Reset all tabs
-            tabs.forEach(t => t.classList.remove('border-red-300', 'text-red-500'));
-            contents.forEach(c => c.classList.add('hidden'));
-
-            // Activate clicked tab
-            tab.classList.add('border-red-300', 'text-red-500');
-            document.getElementById(tab.dataset.tab).classList.remove('hidden');
+            activarTab(tab);
         });
     });
-
-    // Set default tab
-    tabs[0].click();
 </script>
 @endsection
