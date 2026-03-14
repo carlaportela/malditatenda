@@ -16,7 +16,7 @@
             @else
                 <ul class="space-y-4">
                     @foreach($cesta as $item)
-                        <li class="border rounded-md p-4 flex justify-between items-center hover:shadow-md transition">
+                        <li class="bg-gray-100 rounded-md p-4 flex justify-between items-center hover:shadow-md transition">
                             <div class="flex items-center space-x-4">
                                 <img src="{{ asset('storage/'.$item->producto->imagen) }}" 
                                      alt="{{ $item->producto->nombreProducto }}"
