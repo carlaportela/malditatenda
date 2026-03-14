@@ -77,7 +77,7 @@ use App\Http\Controllers\CestaController;
 
 Route::middleware('web')->group(function() {
 
-    // LOGIN
+    //Login
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.procesar');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -86,7 +86,7 @@ Route::middleware('web')->group(function() {
 
 Route::middleware(['web','auth'])->group(function() {
 
-    // CESTA
+    //Cesta
     Route::post('/cesta/add', [CestaController::class, 'add'])->name('cesta.add');
     Route::get('/canastro', [CestaController::class, 'index'])->name('cesta.index');
     Route::get('/cesta/contador', [CestaController::class, 'contador'])->name('cesta.contador');
@@ -109,5 +109,15 @@ Route::get('/micuenta/password', [MiCuentaController::class,'password'])
     ->name('micuenta.password');
 Route::put('/micuenta/password', [MiCuentaController::class,'guardarPassword'])
     ->name('micuenta.password.guardar');
+
+});
+
+//Para ir a la vista de pedido y realizar le pedido
+use App\Http\Controllers\PedidoController;
+
+Route::middleware('auth')->group(function () {
+
+Route::get('/pedido', [PedidoController::class, 'checkout'])->name('pedido.checkout');
+Route::post('/pedido', [PedidoController::class, 'realizar'])->name('pedido.realizar');
 
 });

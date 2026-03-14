@@ -52,4 +52,12 @@ class Usuario extends Authenticatable
     {
         $this->attributes['contrasenha'] = Hash::make($value);
     }
+
+    public function cesta()
+    {
+        return $this->hasMany(Cesta::class, 'idUsuario', 'idUsuario'); 
+        // 'Cesta' es tu modelo de la tabla de la cesta
+        // 'idUsuario' es la clave foránea en la tabla cesta
+        // 'idUsuario' es la PK en usuarios
+    }
 }
