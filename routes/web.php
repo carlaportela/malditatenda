@@ -89,6 +89,7 @@ Route::middleware(['web','auth'])->group(function() {
     // CESTA
     Route::post('/cesta/add', [CestaController::class, 'add'])->name('cesta.add');
     Route::get('/canastro', [CestaController::class, 'index'])->name('cesta.index');
+    Route::get('/cesta/contador', [CestaController::class, 'contador'])->name('cesta.contador');
     Route::delete('/cesta/{id}', [CestaController::class, 'destroy'])->name('cesta.destroy');
     Route::delete('/cesta', [CestaController::class, 'vaciar'])->name('cesta.vaciar');
 
