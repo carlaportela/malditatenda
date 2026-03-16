@@ -8,10 +8,10 @@ class Devolucion extends Model
 {
     protected $table = 'devoluciones';
     protected $primaryKey = 'idDevolucion';
-    public $timestamps = false;
+    
 
     protected $fillable = [
-        'idProducto','idPagoDevolucion','razonDevolucion','fechaDevolucion','fechaRecepcion','estadoDevolucion','cantidadDevolucion'
+        'idUsuario', 'idPedido', 'idProducto','idPagoDevolucion','razonDevolucion', 'fechaRecepcion','estadoDevolucion','cantidadDevolucion'
     ];
 
     // Relación con producto

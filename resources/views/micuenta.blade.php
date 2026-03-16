@@ -56,35 +56,42 @@
                             <p><span class="font-semibold">Referencia:</span> {{ $pedido->idPedido}}</p>
                             <p><span class="font-semibold">Fecha:</span> {{ $pedido->created_at->format('d/m/Y') }}</p>
                             <p><span class="font-semibold">Total:</span> {{ number_format($pedido->pago->cantidadPago, 2) }} €</p>
-                            <p><span class="font-semibold">Método de pago:</span> {{ $pedido->pago->transaccion->metodoPago }}.</p>
-                            <p><span class="font-semibold">Estado del pedido:</span> {{ $pedido->estadoPedido }}.</p>
+                            <p><span class="font-semibold">Método de pago:</span> {{ $pedido->pago->transaccion->metodoPago }}</p>
+                            <p><span class="font-semibold">Estado del pedido:</span> {{ $pedido->estadoPedido }}</p>
                         </div>
 
                         <div>
                             <span class="font-semibold text-gray-600">Productos:</span>
-                
                             <ul class="mt-2 space-y-2">
-        @foreach($pedido->pedidoProductos ?? [] as $item)
-            <li class="flex items-center space-x-3 text-gray-600">
-                <!-- Imagen miniatura -->
-                <div class="w-16 h-16 flex-shrink-0">
-                    <img 
-                        src="{{ optional($item->producto)->imagen ? asset('storage/' . $item->producto->imagen) : asset('images/no-image.png') }}" 
-                        alt="{{ optional($item->producto)->nombreProducto ?? 'Producto no disponible' }}"
-                        class="w-full h-full object-cover rounded-xl p-2"
-                    >
-                </div>
-                <!-- Nombre y cantidad -->
-                <span>
-                    {{ optional($item->producto)->nombreProducto ?? 'Producto no disponible' }}
-                    @if($item->cantidad > 1)
-                        (x{{ $item->cantidad }})
-                    @endif
-                </span>
-            </li>
-        @endforeach
-    </ul>
-                            
+                                @foreach($pedido->pedidoProductos ?? [] as $item)
+                                    <li class="flex items-center space-x-3 text-gray-600">
+                                        <!-- Imagen miniatura -->
+                                        <div class="w-16 h-16 flex-shrink-0">
+                                            <img 
+                                                src="{{ optional($item->producto)->imagen ? asset('storage/' . $item->producto->imagen) : asset('images/no-image.png') }}" 
+                                                alt="{{ optional($item->producto)->nombreProducto ?? 'Producto no disponible' }}"
+                                                class="w-full h-full object-cover rounded-xl p-2"
+                                            >
+                                        </div>
+                                        <!-- Nombre y cantidad -->
+                                        <span>
+                                            {{ optional($item->producto)->nombreProducto ?? 'Producto no disponible' }}
+                                            @if($item->cantidad > 1)
+                                                (x{{ $item->cantidad }})
+                                            @endif
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <!-- Botón iniciar devolución -->
+                            <div class="mt-4">
+                                <form action="{{ route('devolucion.iniciar', $pedido->idPedido) }}" method="GET">
+                                    <button type="submit"
+                                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer">
+                                        Iniciar devolución
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </li>
                 @endforeach

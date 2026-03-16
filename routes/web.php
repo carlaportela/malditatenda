@@ -83,4 +83,13 @@ Route::get('/pedido/exito', [PedidoController::class, 'exito'])->name('pedido.ex
 Route::post('/validar-descuento', [PedidoController::class,'validarDescuento']);
 });
 
+use App\Http\Controllers\DevolucionController;
+
+Route::middleware('auth')->group(function () {
+
+Route::get('/devolucion/iniciar/{pedido}', [DevolucionController::class, 'crear'])->name('devolucion.iniciar');
+Route::post('/devolucion/guardar', [DevolucionController::class, 'guardar'])
+    ->name('devolucion.guardar');
+});
+
 

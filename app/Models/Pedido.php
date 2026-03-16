@@ -42,4 +42,9 @@ class Pedido extends Model
         return $this->hasMany(PedidoProducto::class, 'idPedido', 'idPedido');
     }
 
+    public function descuento()
+    {
+        return $this->belongsTo(Descuento::class, 'codigoDescuento', 'codigoDescuento');
+    }
+
 }
