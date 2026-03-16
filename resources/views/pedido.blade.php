@@ -63,7 +63,8 @@
         
         <!-- Resumen del pedido -->
         <div class="bg-white shadow-md rounded-xl p-8 space-y-6">
-            <h2 class="text-xl font-handwritten text-gray-700 mb-4">Resumen del pedido</h2>
+            <h2 class="text-xl font-handwritten text-gray-700 mb-4">Resumen de tu
+                 pedido</h2>
 
             <div class="flex justify-between text-gray-700">
                 <span>Subtotal:</span>
