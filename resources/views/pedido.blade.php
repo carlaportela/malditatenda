@@ -56,19 +56,20 @@
 
             <!-- Botones -->
             <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 pt-6">
+
                 <a href="{{ route('cesta.index') }}"
                 class="flex-1 bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition text-center">
                 Volver a la cesta
                 </a>
 
-                 <form action="{{ route('pedido.realizar') }}" method="POST" class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 pt-6">
+                <form action="{{ route('pedido.realizar') }}" method="POST" class="flex-1">
                     @csrf
-
                     <button type="submit"
-                        class="flex-1 bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition text-center cursor-pointer">
+                        class="w-full bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition cursor-pointer">
                         Realizar pedido
                     </button>
                 </form>
+
             </div>
         </div>
     </div>
