@@ -29,6 +29,26 @@ class PedidoController extends Controller
         return view('pedido', compact('cesta', 'subtotal', 'envio', 'total'));
     }
 
+    public function validarDescuento(Request $request)
+    {
+        $codigo = $request->codigo;
+
+        $descuento = DB::table('descuentos')
+            ->where('codigoDescuento',$codigo)
+            ->first();
+
+        if(!$descuento){
+            return response()->json([
+                'valido'=>false
+            ]);
+        }
+
+        return response()->json([
+            'valido'=>true,
+            'descuento'=>$descuento->cantidadDescuento
+        ]);
+    }
+
     public function realizarPedido(Request $request)
     {
         $usuario = Auth::user();
@@ -40,7 +60,25 @@ class PedidoController extends Controller
             return $item->producto->precio * $item->cantidad;
         });
         $envio = 3.95;
-        $total = $subtotal + $envio;
+
+
+        //Aplicar descuento
+
+        $codigo = $request->codigoDescuento;
+        $descuento = 0;
+
+        if($codigo){
+            $desc = DB::table('descuentos')
+                ->where('codigoDescuento',$codigo)
+                ->first();
+
+            if($desc){
+                $descuento = $desc->cantidadDescuento;
+            }
+        }
+
+        $total = $subtotal + $envio - ($subtotal*$descuento);
+
         // Crear envío
         $envio = Envio::create([
             'fechaEnvio' => now(),
@@ -64,16 +102,18 @@ class PedidoController extends Controller
             'realizadoPago' => 1,
         ]);
 
-        // 3️⃣ Crear pedido
+        //Crear pedido
         $idCesta=$cesta->first()->idCesta; //Guardamos el idCesta en una variable para no perderlo cuando se borra la cesta
         $pedido = Pedido::create([
             'idUsuario' => $usuario->idUsuario,
             'idCesta' => $idCesta, 
             'idPago' => $pago->idPago,
             'idEnvio' => $envio->idEnvio,
+            'codigoDescuento' => $codigo,
             'estadoPedido' => 'pagado'
         ]);
 
+        //Guardar los productos del pedido
         foreach($cesta as $item){
 
             PedidoProducto::create([
@@ -84,6 +124,7 @@ class PedidoController extends Controller
             ]);
 
         }
+
         //Vaciar la cesta
         Cesta::where('idUsuario', $usuario->idUsuario)->delete();
 
@@ -95,4 +136,6 @@ class PedidoController extends Controller
     {
         return view('pedido.exito');
     }
+
+    
 }

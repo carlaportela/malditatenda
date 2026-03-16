@@ -80,4 +80,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/pedido', [PedidoController::class, 'checkout'])->name('pedido.checkout');
 Route::post('/pedido', [PedidoController::class, 'realizarPedido'])->name('pedido.realizar');
 Route::get('/pedido/exito', [PedidoController::class, 'exito'])->name('pedido.exito');
+Route::post('/validar-descuento', [PedidoController::class,'validarDescuento']);
 });
+
+
