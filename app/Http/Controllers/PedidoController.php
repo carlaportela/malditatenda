@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pedido;
+use App\Models\Producto; 
 use App\Models\Cesta;
 use App\Models\Pago;
 use App\Models\Envio;
@@ -131,6 +132,11 @@ class PedidoController extends Controller
                 'cantidad' => $item->cantidad,
                 'precio' => $item->producto->precio
             ]);
+
+            // Actualizar stock
+            $producto = $item->producto;
+            $producto->stockProducto = 0; // como solo hay 1 de cada producto
+            $producto->save();
 
         }
 

@@ -12,28 +12,37 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        $productos = Producto::where('destacado', 1)->get();
+        $productos = Producto::where('destacado', 1)
+                            ->where('stockProducto', 1)
+                            ->get();
 
         return view('index', compact('productos'));
     }
 
     public function ceramica()
     {
-        $productos = Producto::where('idCategoria', 2)->get();
+        $productos = Producto::where('idCategoria', 2)
+                            ->where('stockProducto', 1)
+                            ->get();
+
 
         return view('ceramica', compact('productos'));
     }
 
     public function bordados()
     {
-        $productos = Producto::where('idCategoria', 3)->get();
+        $productos = Producto::where('idCategoria', 3)
+                            ->where('stockProducto', 1)
+                            ->get();
 
         return view('bordados', compact('productos'));
     }
 
     public function ilustracion()
     {
-        $productos = Producto::where('idCategoria', 4)->get();
+        $productos = Producto::where('idCategoria', 4)
+                            ->where('stockProducto', 1)
+                            ->get();
 
         return view('ilustracion', compact('productos'));
     }
@@ -43,7 +52,12 @@ class ProductoController extends Controller
         // Buscar producto o devolver 404
         $producto = Producto::findOrFail($id);
         $enCesta = false;
-
+        
+        //Comprobar stock
+        if($producto->stockProducto < 1){
+            abort(404, 'Producto no disponible'); // o redirigir a otra página
+        }
+        
         if(Auth::check()){
             $enCesta = Cesta::where('idUsuario', Auth::user()->idUsuario)
                 ->where('idProducto', $id)
@@ -54,5 +68,4 @@ class ProductoController extends Controller
             'enCesta' => $enCesta
         ]);
     }
-    
 }
