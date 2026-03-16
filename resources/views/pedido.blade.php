@@ -34,76 +34,78 @@
                 </ul>
             @endif
         </div>
+        <div class="space-y-6">
+            <!-- Aplicar descuento -->
+            <div class="bg-white shadow-md rounded-xl p-8 space-y-6">
+                <h2 class="text-xl font-handwritten text-gray-700 mb-4">Descuento</h2>
+                <label for="codigoDescuento">
+                </label>
 
-        <!-- Aplicar descuento -->
-        <div class="bg-white shadow-md rounded-xl p-8 space-y-6">
-            <h2 class="text-xl font-handwritten text-gray-700 mb-4">Descuento</h2>
-            <label for="codigoDescuento">
-            </label>
+                <div class="flex space-x-2">
+                    <input 
+                        type="text"
+                        id="codigoDescuento"
+                        placeholder="Introduce tu código"
+                        class="flex-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300"
+                    >
 
-            <div class="flex space-x-2">
-                <input 
-                    type="text"
-                    id="codigoDescuento"
-                    placeholder="Introduce tu código"
-                    class="flex-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300"
-                >
-
-                <button
-                    type="button"
-                    id="aplicarDescuento"
-                    class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer"
-                >
-                    Aplicar
-                </button>
-            </div>
-
-            <p id="mensajeDescuento" class="text-sm"></p>
-        </div>
-        
-        <!-- Resumen del pedido -->
-        <div class="bg-white shadow-md rounded-xl p-8 space-y-6">
-            <h2 class="text-xl font-handwritten text-gray-700 mb-4">Resumen de tu
-                 pedido</h2>
-
-            <div class="flex justify-between text-gray-700">
-                <span>Subtotal:</span>
-                <span>{{ number_format($subtotal, 2) }} €</span>
-            </div>
-            <div id="lineaDescuento" class="flex justify-between text-green-600 hidden">
-                <span>Descuento:</span>
-                <span id="cantidadDescuento">-0.00 €</span>
-            </div>
-            <div class="flex justify-between text-gray-700">
-                <span>Envío (Envío estándar 3-5 días laborables):</span>
-                <span>{{ number_format($envio, 2) }} €</span>
-            </div>
-
-            <div class="flex justify-between text-lg font-semibold text-gray-800 border-t pt-4">
-                <span>Total:</span>
-                <span id="totalPedido" class="text-red-400">{{ number_format($subtotal + $envio, 2) }} €</span>
-            </div>
-
-            <!-- Botones -->
-            <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 pt-6">
-
-                <a href="{{ route('cesta.index') }}"
-                class="flex-1 bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition text-center">
-                Volver a la cesta
-                </a>
-
-                <form action="{{ route('pedido.realizar') }}" method="POST" class="flex-1">
-                    @csrf
-                    <input type="hidden" name="codigoDescuento" id="codigoDescuentoInput">
-                    <button type="submit"
-                        class="w-full bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition cursor-pointer">
-                        Realizar pedido
+                    <button
+                        type="button"
+                        id="aplicarDescuento"
+                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer"
+                    >
+                        Aplicar
                     </button>
-                </form>
+                </div>
 
+                <p id="mensajeDescuento" class="text-sm"></p>
+            </div>
+            
+            <!-- Resumen del pedido -->
+            <div class="bg-white shadow-md rounded-xl p-8 space-y-6">
+                <h2 class="text-xl font-handwritten text-gray-700 mb-4">Resumen de tu
+                    pedido</h2>
+
+                <div class="flex justify-between text-gray-700">
+                    <span>Subtotal:</span>
+                    <span>{{ number_format($subtotal, 2) }} €</span>
+                </div>
+                <div id="lineaDescuento" class="flex justify-between text-green-600 hidden">
+                    <span>Descuento:</span>
+                    <span id="cantidadDescuento">-0.00 €</span>
+                </div>
+                <div class="flex justify-between text-gray-700">
+                    <span>Envío (Envío estándar 3-5 días laborables):</span>
+                    <span>{{ number_format($envio, 2) }} €</span>
+                </div>
+
+                <div class="flex justify-between text-lg font-semibold text-gray-800 border-t pt-4">
+                    <span>Total:</span>
+                    <span id="totalPedido" class="text-red-400">{{ number_format($subtotal + $envio, 2) }} €</span>
+                </div>
+
+                <!-- Botones -->
+                <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 pt-6">
+
+                    <a href="{{ route('cesta.index') }}"
+                    class="flex-1 bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition text-center">
+                    Volver a la cesta
+                    </a>
+
+                    <form action="{{ route('pedido.realizar') }}" method="POST" class="flex-1">
+                        @csrf
+                        <input type="hidden" name="codigoDescuento" id="codigoDescuentoInput">
+                        <button type="submit"
+                            class="w-full bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition cursor-pointer">
+                            Realizar pedido
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Funcionalidad para validar los descuentos -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let subtotal = {{ $subtotal }};
