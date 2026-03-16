@@ -3,48 +3,8 @@
 //Para mostrar las vistas de las páginas de los enlaces en el navegador de la página principal
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::get('/ceramica', function () {
-    return view('ceramica');
-});
-
-Route::get('/bordados', function () {
-    return view('bordados');
-});
-
-Route::get('/ilustracion', function () {
-    return view('ilustracion');
-});
-
 Route::get('/about', function () {
     return view('about');
-});
-
-Route::get('/contacto', function () {
-    return view('contacto');
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::get('/registro', function () {
-    return view('registro');
-});
-
-Route::get('/producto', function () {
-    return view('producto');
-});
-
-Route::get('/canastro', function () {
-    return view('canastro');
-});
-
-Route::get('/micuenta', function () {
-    return view('micuenta');
 });
 
 //Para mostrar los productos en cada una de las páginas
@@ -118,6 +78,6 @@ use App\Http\Controllers\PedidoController;
 Route::middleware('auth')->group(function () {
 
 Route::get('/pedido', [PedidoController::class, 'checkout'])->name('pedido.checkout');
-Route::post('/pedido', [PedidoController::class, 'realizar'])->name('pedido.realizar');
-
+Route::post('/pedido', [PedidoController::class, 'realizarPedido'])->name('pedido.realizar');
+Route::get('/pedido/exito', [PedidoController::class, 'exito'])->name('pedido.exito');
 });

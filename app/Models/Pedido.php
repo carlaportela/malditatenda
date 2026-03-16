@@ -8,15 +8,32 @@ class Pedido extends Model
 {
     protected $table = 'pedidos';
     protected $primaryKey = 'idPedido';
-    public $timestamps = false; // tu tabla no tiene created_at/updated_at
+    public $timestamps = true;
 
     protected $fillable = [
-        'idUsuario','idCesta','idPago','idEnvio','codigoDescuento','idDevolucion','cantidadPedido'
+        'idUsuario',
+        'idCesta',
+        'idPago',
+        'idEnvio',
+        'estadoPedido',
+        'codigoDescuento',
+        'idDevolucion'
     ];
 
     // Relación con usuario
     public function usuario()
     {
         return $this->belongsTo(Usuario::class,'idUsuario','idUsuario');
+    }
+    // Relación con pago
+    public function pago()
+    {
+        return $this->belongsTo(Pago::class, 'idPago', 'idPago');
+    }
+
+    //Relación con envío
+    public function envio()
+    {
+        return $this->belongsTo(Envio::class, 'idEnvio', 'idEnvio');
     }
 }
