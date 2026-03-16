@@ -81,7 +81,7 @@
 
             <div class="flex justify-between text-lg font-semibold text-gray-800 border-t pt-4">
                 <span>Total:</span>
-                <span class="text-red-400">{{ number_format($subtotal + $envio, 2) }} €</span>
+                <span id="totalPedido" class="text-red-400">{{ number_format($subtotal + $envio, 2) }} €</span>
             </div>
 
             <!-- Botones -->
@@ -105,79 +105,79 @@
         </div>
     </div>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    let subtotal = {{ $subtotal }};
-    let envio = {{ $envio }};
-    let total = subtotal + envio;
+        document.addEventListener('DOMContentLoaded', function() {
+            let subtotal = {{ $subtotal }};
+            let envio = {{ $envio }};
+            let total = subtotal + envio;
 
-    // Elementos del DOM
-    const inputCodigo = document.getElementById('codigoDescuento');
-    const btnAplicar = document.getElementById('aplicarDescuento');
-    const mensaje = document.getElementById('mensajeDescuento');
-    const lineaDescuento = document.getElementById('lineaDescuento');
-    const cantidadDescuentoSpan = document.getElementById('cantidadDescuento');
-    const totalSpan = document.querySelectorAll('.text-red-400')[1]; // segundo span con total
+            // Elementos del DOM
+            const inputCodigo = document.getElementById('codigoDescuento');
+            const btnAplicar = document.getElementById('aplicarDescuento');
+            const mensaje = document.getElementById('mensajeDescuento');
+            const lineaDescuento = document.getElementById('lineaDescuento');
+            const cantidadDescuentoSpan = document.getElementById('cantidadDescuento');
+            const totalSpan = document.getElementById('totalPedido'); // segundo span con total
 
-    let descuentoAplicado = 0;
+            let descuentoAplicado = 0;
 
-    btnAplicar.addEventListener('click', function() {
-        let codigo = inputCodigo.value.trim();
+            btnAplicar.addEventListener('click', function() {
+                let codigo = inputCodigo.value.trim();
 
-        if(codigo === '') {
-            mensaje.textContent = 'Introduce un código de descuento.';
-            mensaje.classList.add('text-red-600');
-            lineaDescuento.classList.add('hidden');
-            return;
-        }
+                if(codigo === '') {
+                    mensaje.textContent = 'Introduce un código de descuento.';
+                    mensaje.classList.add('text-red-600');
+                    lineaDescuento.classList.add('hidden');
+                    return;
+                }
 
-        fetch('/validar-descuento', {
-            method: 'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'X-CSRF-TOKEN':'{{ csrf_token() }}'
-            },
-            body: JSON.stringify({codigo: codigo})
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.valido) {
-                descuentoAplicado = data.descuento;
-                mensaje.textContent = `Código válido: ${descuentoAplicado * 100}% de descuento.`;
-                mensaje.classList.remove('text-red-600');
-                mensaje.classList.add('text-red-400');
+                fetch('/validar-descuento', {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'X-CSRF-TOKEN':'{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({codigo: codigo})
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.valido) {
+                        descuentoAplicado = data.descuento;
+                        mensaje.textContent = `Código válido: ${descuentoAplicado * 100}% de descuento.`;
+                        mensaje.classList.remove('text-red-600');
+                        mensaje.classList.add('text-red-400');
 
-                // Mostrar descuento en la línea
-                lineaDescuento.classList.remove('hidden');
-                lineaDescuento.classList.add('text-red-400');
-                cantidadDescuentoSpan.textContent = `-${(subtotal * descuentoAplicado).toFixed(2)} €`;
+                        // Mostrar descuento en la línea
+                        lineaDescuento.classList.remove('hidden');
+                        lineaDescuento.classList.add('text-red-400');
+                        cantidadDescuentoSpan.textContent = `-${(subtotal * descuentoAplicado).toFixed(2)} €`;
 
-                // Actualizar total
-                total = subtotal + envio - (subtotal * descuentoAplicado);
-                totalSpan.textContent = `${total.toFixed(2)} €`;
+                        // Actualizar total
+                        total = subtotal + envio - (subtotal * descuentoAplicado);
+                        totalSpan.textContent = `${total.toFixed(2)} €`;
 
-                // Guardar código en el input hidden para enviar al formulario
-                document.querySelector('form input[name="codigoDescuento"]').value = codigo;
+                        // Guardar código en el input hidden para enviar al formulario
+                        document.querySelector('form input[name="codigoDescuento"]').value = codigo;
 
-            } else {
-                mensaje.textContent = 'Código no válido.';
-                mensaje.classList.remove('text-green-600');
-                mensaje.classList.add('text-red-600');
-                lineaDescuento.classList.add('hidden');
-                descuentoAplicado = 0;
-                total = subtotal + envio;
-                totalSpan.textContent = `${total.toFixed(2)} €`;
+                    } else {
+                        mensaje.textContent = 'El código no existe o ha expirado.';
+                        mensaje.classList.remove('text-green-600');
+                        mensaje.classList.add('text-red-600');
+                        lineaDescuento.classList.add('hidden');
+                        descuentoAplicado = 0;
+                        total = subtotal + envio;
+                        totalSpan.textContent = `${total.toFixed(2)} €`;
 
-                document.querySelector('form input[name="codigoDescuento"]').value = '';
-            }
-        })
-        .catch(err => {
-            console.error('Error al validar el descuento:', err);
-            mensaje.textContent = 'Error al validar el código.';
-            mensaje.classList.remove('text-green-600');
-            mensaje.classList.add('text-red-600');
+                        document.querySelector('form input[name="codigoDescuento"]').value = '';
+                    }
+                })
+                .catch(err => {
+                    console.error('Error al validar el descuento:', err);
+                    mensaje.textContent = 'Error al validar el código.';
+                    mensaje.classList.remove('text-green-600');
+                    mensaje.classList.add('text-red-600');
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 </section>
 @endsection

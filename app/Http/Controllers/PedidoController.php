@@ -36,10 +36,19 @@ class PedidoController extends Controller
         $descuento = DB::table('descuentos')
             ->where('codigoDescuento',$codigo)
             ->first();
+        
+        $hoy = date('Y-m-d'); // fecha actual en formato YYYY-MM-DD
 
         if(!$descuento){
             return response()->json([
                 'valido'=>false
+            ]);
+        }
+
+        // Comprobar fecha de validez
+        if ($hoy > $descuento->fechaValidez) {
+            return response()->json([
+                'valido' => false,
             ]);
         }
 
