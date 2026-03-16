@@ -47,12 +47,45 @@
         @else
             <ul class="space-y-6">
                 @foreach($pedidos as $pedido)
-                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 flex justify-between items-center hover:shadow-lg transition-shadow duration-200">
-                        <div>
-                            <span class="font-handwritten text-red-400 text-lg">Pedido #{{ $pedido->idPedido }}</span>
-                            <span class="text-gray-600"> - {{ $pedido->created_at->format('d/m/Y') }}</span>
+                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="font-handwritten text-red-400 text-lg">Pedido</p>
                         </div>
-                        <div class="text-red-400 font-semibold">{{ $pedido->total }} €</div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2 text-gray-600">
+                            <p><span class="font-semibold">Referencia:</span> {{ $pedido->idPedido}}</p>
+                            <p><span class="font-semibold">Fecha:</span> {{ $pedido->created_at->format('d/m/Y') }}</p>
+                            <p><span class="font-semibold">Total:</span> {{ number_format($pedido->pago->cantidadPago, 2) }} €</p>
+                            <p><span class="font-semibold">Método de pago:</span> {{ $pedido->pago->transaccion->metodoPago }}.</p>
+                            <p><span class="font-semibold">Estado del pedido:</span> {{ $pedido->estadoPedido }}.</p>
+                        </div>
+
+                        <div>
+                            <span class="font-semibold text-gray-600">Productos:</span>
+                
+                            <ul class="mt-2 space-y-2">
+        @foreach($pedido->pedidoProductos ?? [] as $item)
+            <li class="flex items-center space-x-3 text-gray-600">
+                <!-- Imagen miniatura -->
+                <div class="w-16 h-16 flex-shrink-0">
+                    <img 
+                        src="{{ optional($item->producto)->imagen ? asset('storage/' . $item->producto->imagen) : asset('images/no-image.png') }}" 
+                        alt="{{ optional($item->producto)->nombreProducto ?? 'Producto no disponible' }}"
+                        class="w-full h-full object-cover rounded-xl p-2"
+                    >
+                </div>
+                <!-- Nombre y cantidad -->
+                <span>
+                    {{ optional($item->producto)->nombreProducto ?? 'Producto no disponible' }}
+                    @if($item->cantidad > 1)
+                        (x{{ $item->cantidad }})
+                    @endif
+                </span>
+            </li>
+        @endforeach
+    </ul>
+                            
+                        </div>
                     </li>
                 @endforeach
             </ul>

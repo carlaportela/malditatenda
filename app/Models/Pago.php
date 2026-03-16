@@ -17,4 +17,8 @@ class Pago extends Model
         'fechaPago',
         'realizadoPago',
     ];
+    public function transaccion()
+    {
+        return $this->belongsTo(Transaccion::class, 'idTransaccion', 'idTransaccion');
+    }
 }
