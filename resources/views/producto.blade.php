@@ -97,7 +97,7 @@
                 .then(() => {
 
                     // cambiar botón
-                    btnCesta.textContent = "Ya en la cesta";
+                    btnCesta.textContent = "Añadido a la cesta";
 
                     btnCesta.classList.remove(
                         'bg-red-300',
