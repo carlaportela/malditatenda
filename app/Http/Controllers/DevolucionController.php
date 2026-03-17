@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class DevolucionController extends Controller
 {
-   public function crear($idPedido)
+   //Método para crear una devolución en el formulario de devolución
+    public function crear($idPedido)
     {
         $pedido = Pedido::with('pedidoProductos.producto')->findOrFail($idPedido);
         // Filtrar productos NO devolubles
@@ -29,6 +30,7 @@ class DevolucionController extends Controller
         } 
     }
 
+    //Método para crear una devolución
     public function guardar(Request $request)
     {
         $request->validate([
@@ -66,6 +68,7 @@ class DevolucionController extends Controller
         return redirect()->route('micuenta')->with('success','Solicitud de devolución enviada.');
     }
 
+    //Método para cancelar una devolución
     public function cancelar($id)
     {
         $devolucion = Devolucion::findOrFail($id);
@@ -76,6 +79,35 @@ class DevolucionController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    //Método para marcar como recibido un producto devuelto, restaurar el stock y crear el pago de la devolución
+    public function marcarRecibida($id)
+    {
+        $devolucion = Devolucion::with('productos')->findOrFail($id);
+
+        $devolucion->fechaRecepcion = now();
+        $devolucion->estadoDevolucion = 'recibida';
+        $devolucion->save();
+
+        //Restaurar stock
+        foreach($devolucion->productos as $producto){
+            $producto->stockProducto = 1;
+            $producto->save();
+        }
+
+        //Crear pago devolución
+        $pago = Pago::create([
+            'cantidadPago' => $devolucion->cantidadDevolucion,
+            'metodoPago' => 'reembolso',
+        ]);
+
+        //Guardar idPagoDevolucion
+        $devolucion->idPagoDevolucion = $pago->idPago;
+        $devolucion->estadoDevolucion = 'reembolsado';
+        $devolucion->save();
+
+        return back()->with('success','Devolución procesada correctamente');
     }
     
 }
