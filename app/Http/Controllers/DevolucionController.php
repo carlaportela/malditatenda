@@ -13,9 +13,21 @@ class DevolucionController extends Controller
    public function crear($idPedido)
     {
         $pedido = Pedido::with('pedidoProductos.producto')->findOrFail($idPedido);
+        // Filtrar productos NO devolubles
+        foreach ($pedido->pedidoProductos as $item) {
+
+            $producto = $item->producto;
+
+            $yaDevuelto = $producto->devoluciones()
+                ->whereIn('estadoDevolucion', ['pendiente', 'aprobada'])
+                ->where('idPedido', $pedido->idPedido)
+                ->exists();
+
+            $item->noDevolvible = $yaDevuelto;
 
         return view('devolucion', compact('pedido'));
-    } 
+        } 
+    }
 
     public function guardar(Request $request)
     {
@@ -23,6 +35,21 @@ class DevolucionController extends Controller
             'productos' => 'required|array|min:1',
             'motivo' => 'required'
         ]);
+
+        //Comprobar que los productos solicitados no tiene devolucion pendiente o aprobada
+        foreach($request->productos as $productoId){
+
+            $existe = Devolucion::whereHas('productos', function($q) use ($productoId){
+                $q->where('productos.idProducto', $productoId);
+            })
+            ->where('idPedido', $request->idPedido)
+            ->whereIn('estadoDevolucion', ['pendiente','aprobada'])
+            ->exists();
+
+            if($existe){
+                return back()->with('error','Uno de los productos ya tiene devolución.');
+            }
+        }
 
         // 1️⃣ Crear devolución
         $devolucion = Devolucion::create([

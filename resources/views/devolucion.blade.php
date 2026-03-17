@@ -29,7 +29,6 @@
                 <li class="flex items-center justify-between bg-gray-50 p-3 rounded-md">
 
                 <div class="flex items-center space-x-3">
-
                 <input 
                 type="checkbox"
                 class="producto-checkbox"
@@ -37,6 +36,7 @@
                 data-descuento="{{ $pedido->codigoDescuento ? $pedido->descuento->cantidadDescuento : 0 }}"
                 value="{{ $item->idProducto }}"
                 name="productos[]"
+                @if($item->noDevolvible) disabled @endif
                 >
 
                 <img
@@ -53,7 +53,11 @@
                 <p class="text-gray-500 text-sm">
                 {{ number_format($item->precio,2) }} €
                 </p>
-
+                @if($item->noDevolvible)
+                    <span class="text-red-500 text-sm">
+                        Ya tiene devolución en proceso
+                    </span>
+                @endif
                 </div>
 
                 </div>
