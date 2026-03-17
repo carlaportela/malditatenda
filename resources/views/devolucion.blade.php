@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="max-w-3xl mx-auto bg-white shadow-md rounded-xl p-8">
+    <div class="max-w-3xl mx-auto bg-white shadow-md rounded-xl mt-10 p-8">
 
         <h2 class="text-xl font-handwritten text-red-400 mb-6">
         Formulario de devolución
