@@ -100,23 +100,80 @@
     </div>
 
     <!-- Devoluciones -->
-    <div id="devoluciones" class="tab-content hidden bg-white shadow-md rounded-xl p-8">   
-        @if($devoluciones->isEmpty())
-            <p class="text-gray-500 text-center">No has realizado ninguna devolución aún.</p>
-        @else
-            <ul class="space-y-6">
-                @foreach($devoluciones as $devolucion)
-                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 flex justify-between items-center hover:shadow-lg transition-shadow duration-200">
-                        <div>
-                            <span class="font-handwritten text-red-400 text-lg">Devolución #{{ $devolucion->idDevolucion }}</span>
-                            <span class="text-gray-600"> - {{ $devolucion->created_at->format('d/m/Y') }}</span>
-                        </div>
-                        <div class="text-red-400 font-semibold">{{ $devolucion->estado }}</div>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </div>
+<div id="devoluciones" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
+    @if($devoluciones->isEmpty())
+        <p class="text-gray-500 text-center">No has realizado ninguna devolución aún.</p>
+    @else
+        <ul class="space-y-6">
+            @foreach($devoluciones as $devolucion)
+                <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg">
+
+                    <!-- Cabecera -->
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="font-handwritten text-red-400 text-lg">Devolución</p>
+
+                        @if($devolucion->estadoDevolucion == 'pendiente')
+                        <form action="{{ route('devolucion.cancelar', $devolucion->idDevolucion) }}" method="POST">
+                            @csrf
+                            <button class="bg-red-100 text-red-500 px-3 py-1 rounded-md hover:bg-red-200 cursor-pointer">
+                                Cancelar
+                            </button>
+                        </form>
+                        @endif
+                    </div>
+
+                    <!-- Info -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 text-gray-600">
+                        <p><strong>Referencia:</strong> {{ $devolucion->idDevolucion }}</p>
+                        <p><strong>Pedido:</strong> {{ $devolucion->idPedido }}</p>
+                        <p><strong>Fecha:</strong> {{ $devolucion->created_at->format('d/m/Y') }}</p>
+                        <p><strong>Cantidad:</strong> {{ number_format($devolucion->cantidadDevolucion,2) }} €</p>
+
+                        <p>
+                            <strong>Estado:</strong>
+                            <span class="
+                                @if($devolucion->estadoDevolucion == 'pendiente') text-red-200
+                                @elseif($devolucion->estadoDevolucion == 'aprobada') text-green-300
+                                @elseif($devolucion->estadoDevolucion == 'cancelada') text-red-500
+                                @endif
+                            ">
+                                {{ $devolucion->estadoDevolucion }}
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Productos -->
+                    <div>
+                        <span class="font-semibold text-gray-600">Productos:</span>
+
+                        <ul class="mt-2 space-y-2">
+                            @foreach($devolucion->productos as $producto)
+                                <li class="flex items-center space-x-3">
+
+                                    <div class="w-16 h-16 flex-shrink-0">
+                                        <img 
+                                            src="{{ $producto->imagen ? asset('storage/'.$producto->imagen) : asset('images/no-image.png') }}"
+                                            class="w-full h-full object-cover rounded-xl p-2"
+                                        >
+                                    </div>
+
+                                    <span>{{ $producto->nombreProducto }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <!-- Motivo -->
+                    <div class="mt-4">
+                        <strong>Motivo:</strong>
+                        <p>{{ $devolucion->razonDevolucion }}</p>
+                    </div>
+
+                </li>
+            @endforeach
+        </ul>
+    @endif
+</div>
 
     <!-- Mensajes -->
     <div id="mensajes" class="tab-content hidden bg-white shadow-md rounded-xl p-8">

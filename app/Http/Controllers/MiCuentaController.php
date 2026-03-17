@@ -18,7 +18,9 @@ class MiCuentaController extends Controller
 
          // Traer historial de pedidos, devoluciones y mensajes del usuario logeado
     $pedidos = Pedido::where('idUsuario', $usuario->idUsuario)->get();
-    $devoluciones = Devolucion::where('idUsuario', $usuario->idUsuario)->get();
+    $devoluciones = Devolucion::with('productos')
+    ->where('idUsuario', Auth::user()->idUsuario)
+    ->get();
     $mensajes = Mensaje::where('idUsuario', $usuario->idUsuario)->get();
 
     return view('micuenta', compact('usuario', 'pedidos', 'devoluciones', 'mensajes'));

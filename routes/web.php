@@ -90,6 +90,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/devolucion/iniciar/{pedido}', [DevolucionController::class, 'crear'])->name('devolucion.iniciar');
 Route::post('/devolucion/guardar', [DevolucionController::class, 'guardar'])
     ->name('devolucion.guardar');
+Route::post('/devolucion/cancelar/{id}', [DevolucionController::class, 'cancelar'])
+    ->name('devolucion.cancelar');
 });
 
 

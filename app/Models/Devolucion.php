@@ -15,8 +15,13 @@ class Devolucion extends Model
     ];
 
     // Relación con producto
-    public function producto()
+    public function productos()
     {
-        return $this->belongsTo(Producto::class,'idProducto','idProducto');
+        return $this->belongsToMany(
+            Producto::class,
+            'devolucion_productos',
+            'idDevolucion',
+            'idProducto'
+        );
     }
 }

@@ -19,19 +19,36 @@ class DevolucionController extends Controller
 
     public function guardar(Request $request)
     {
-        $productos = $request->productos;
+        $request->validate([
+            'productos' => 'required|array|min:1',
+            'motivo' => 'required'
+        ]);
 
-        foreach($productos as $producto){
+        // 1️⃣ Crear devolución
+        $devolucion = Devolucion::create([
+            'idUsuario' => Auth::user()->idUsuario,
+            'idPedido' => $request->idPedido,
+            'razonDevolucion' => $request->motivo,
+            'estadoDevolucion' => 'pendiente',
+            'cantidadDevolucion' => $request->cantidadDevolucion
+        ]);
 
-            Devolucion::create([
-                'idPedido' => $request->idPedido,
-                'idUsuario' => Auth::user()->idUsuario,
-                'idProducto' => $producto,
-                'razonDevolucion' => $request->motivo,
-                'estadoDevolucion' => 'pendiente',
-                'cantidadDevolucion' => $request->cantidadDevolucion
-            ]);
-        }
-        return redirect()->route('micuenta')->with('success','Tramitada devolución.');
+        // 2️⃣ Asociar productos
+        $devolucion->productos()->attach($request->productos);
+
+        return redirect()->route('micuenta')->with('success','Solicitud de devolución enviada.');
     }
+
+    public function cancelar($id)
+    {
+        $devolucion = Devolucion::findOrFail($id);
+
+        if($devolucion->estadoDevolucion == 'pendiente'){
+            $devolucion->estadoDevolucion = 'cancelada';
+            $devolucion->save();
+        }
+
+        return redirect()->back();
+    }
+    
 }

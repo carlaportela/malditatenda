@@ -22,4 +22,14 @@ class Producto extends Model
         'imagen',
         'destacado'
     ];
+
+    public function devoluciones()
+    {
+        return $this->belongsToMany(
+            Devolucion::class,
+            'devolucion_productos',
+            'idProducto',
+            'idDevolucion'
+        );
+    }
 }
