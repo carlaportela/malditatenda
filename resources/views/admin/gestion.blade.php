@@ -29,17 +29,46 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 mb-4">
                             <p><strong>Referencia:</strong> {{ $pedido->idPedido }}</p>
                             <p><strong>Fecha:</strong> {{ $pedido->created_at->format('d/m/Y') }}</p>
-                            <p><strong>Total:</strong> {{ number_format($pedido->totalVentas, 2) }} €</p>
+                            <p><strong>Total:</strong> {{ number_format($pedido->totalVenta, 2) }} €</p>
                             <p><strong>Estado:</strong> {{ $pedido->estadoPedido }}</p>
                         </div>
 
+                        <!-- Productos del pedido -->
+                        <div class="mt-4">
+                            <p class="font-semibold text-gray-600 mb-2">Productos:</p>
+                            <ul class="space-y-2">
+                                @foreach($pedido->pedidoProductos as $item)
+                                    @php
+                                        $prod = $item->producto;
+                                    @endphp
+                                    <li class="flex items-center space-x-3 text-gray-600">
+                                        <!-- Miniatura -->
+                                        <div class="w-16 h-16 flex-shrink-0">
+                                            <img 
+                                                src="{{ $prod && $prod->imagen ? asset('storage/' . $prod->imagen) : asset('images/no-image.png') }}" 
+                                                alt="{{ $prod->nombreProducto ?? 'Producto no disponible' }}"
+                                                class="w-full h-full object-cover rounded-xl p-1"
+                                            >
+                                        </div>
+                                        <!-- Nombre y cantidad -->
+                                        <span>
+                                            {{ $prod->nombreProducto ?? 'Producto no disponible' }}
+                                            @if($item->cantidad > 1)
+                                                (x{{ $item->cantidad }})
+                                            @endif
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
                         <!-- Cambiar estado -->
-                        <form method="POST" action="{{ route('pedido.estado', $pedido->idPedido) }}" class="flex gap-2">
+                        <form method="POST" action="{{ route('pedido.estado', $pedido->idPedido) }}" class="flex gap-2 mt-4">
                             @csrf
-                            <select name="estado" class="border rounded-md p-2">
-                                <option value="pendiente">Pendiente</option>
-                                <option value="enviado">Enviado</option>
-                                <option value="entregado">Entregado</option>
+                            <select name="estado" class="border border-gray-300 text-gray-700 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer">
+                                <option value="pendiente" {{ $pedido->estadoPedido=='pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                <option value="enviado" {{ $pedido->estadoPedido=='enviado' ? 'selected' : '' }}>Enviado</option>
+                                <option value="entregado" {{ $pedido->estadoPedido=='entregado' ? 'selected' : '' }}>Entregado</option>
                             </select>
                             <button class="bg-red-300 text-white px-4 py-2 rounded-md hover:bg-red-400 cursor-pointer">
                                 Actualizar
@@ -184,20 +213,26 @@
 
         function activarTab(tab) {
             tabs.forEach(t => {
-                t.classList.remove('text-red-300');
-                t.classList.add('text-gray-600');
+                // Reset de todas las pestañas inactivas
+                t.classList.remove('text-red-300', 'cursor-default');
+                t.classList.add('text-gray-600', 'hover:text-red-300', 'hover:border-red-300', 'cursor-pointer');
             });
 
             contents.forEach(c => c.classList.add('hidden'));
 
-            tab.classList.add('text-red-300');
+            // Tab activa
+            tab.classList.remove('text-gray-600', 'hover:text-red-300', 'hover:border-red-300', 'cursor-pointer');
+            tab.classList.add('text-red-300', 'cursor-default'); // color fijo y cursor normal
             document.getElementById(tab.dataset.tab).classList.remove('hidden');
         }
 
+        // Activar primer tab al cargar
         activarTab(tabs[0]);
 
         tabs.forEach(tab => {
-            tab.addEventListener('click', () => activarTab(tab));
+            tab.addEventListener('click', () => {
+                activarTab(tab);
+            });
         });
     </script>
 
