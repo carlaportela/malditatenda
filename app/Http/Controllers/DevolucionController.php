@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\Devolucion;
+use App\Models\Pago;
 use Illuminate\Support\Facades\Auth;
 
 class DevolucionController extends Controller
@@ -82,10 +83,17 @@ class DevolucionController extends Controller
     }
 
     //Método para marcar como recibido un producto devuelto, restaurar el stock y crear el pago de la devolución
-    public function marcarRecibida($id)
+    public function recibida($id)
     {
+        //Sólo usuarios autorizados (admin) pueden marcar como recibidas las devoluciones
+        if(auth()->user()->autorizado != 1){
+            abort(403);
+        }
         $devolucion = Devolucion::with('productos')->findOrFail($id);
 
+        if($devolucion->fechaRecepcion){
+            return back()->with('error','Ya fue procesada');
+        }
         $devolucion->fechaRecepcion = now();
         $devolucion->estadoDevolucion = 'recibida';
         $devolucion->save();

@@ -28,7 +28,10 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
+            
+            if(Auth::user()->autorizado == 1){
+                return redirect()->route('gestion');
+            }
             return redirect('/')
                 ->with('success', 'Bienvenido ' . Auth::user()->nombreUsuario);
         }
