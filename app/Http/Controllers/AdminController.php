@@ -90,34 +90,33 @@ class AdminController extends Controller
     //Función para guardar un nuevo producto
     public function storeProducto(Request $request)
     {
-        
-        // Buscar categoría por nombre
-        $categoria = Categoria::where('nombreCategoria', $request->nombreCategoria)->first();
-
-        if(!$categoria){
-            return back()->with('error','La categoría no existe');
-        }
-
+       
         $producto = new Producto();
 
         $producto->nombreProducto = $request->nombreProducto;
         $producto->descripcion = $request->descripcion;
-        $producto->idCategoria = $request->idCategoria;
+        $producto->idCategoria = $request->idCategoria; // usar directamente el ID del select
         $producto->destacado = $request->has('destacado') ? 1 : 0;
-        $producto->stockProducto = 1;
+        $producto->stockProducto = $request->stockProducto ?? 1;
         $producto->materiales = $request->materiales;
         $producto->colores = $request->colores;
         $producto->precio = $request->precio;
 
         // Imagen
-        if($request->hasFile('imagen')){
-            $producto->imagen = $request->file('imagen')->store('productos','public');
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('productos','public');
+            if (!$path) {
+                dd('Error al guardar la imagen');
+            }
+            $producto->imagen = $path;
+        } else {
+            $producto->imagen = null; // permite que la imagen sea null
         }
 
         $producto->save();
 
-        return redirect()->route('admin.gestion')
-            ->with('success','Producto creado correctamente');
+        return redirect()->route('gestion')
+            ->with('success', 'Producto creado correctamente');
     }
 
     //Función para actualizar producto

@@ -250,16 +250,12 @@
                                 <form method="POST" action="{{ route('producto.delete',$producto->idProducto) }}"
                                     onsubmit="return confirm('¿Eliminar este producto?')">
                                     @csrf
-                                    @method('DELETE')
-
                                     <button 
                                         class="bg-red-300 font-semibold text-white px-3 py-1 rounded-md text-sm hover:bg-red-500 transition cursor-pointer">
                                         Borrar
                                     </button>
                                 </form>
-
                             </div>
-
                         </div>
 
                     </li>
