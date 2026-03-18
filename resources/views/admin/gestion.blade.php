@@ -18,7 +18,7 @@
             </nav>
         </div>
 
-        <!-- PEDIDOS -->
+        <!-- Pedidos -->
         <div id="pedidos" class="tab-content bg-white shadow-md rounded-xl p-8">
             <ul class="space-y-6">
                 @foreach($pedidos as $pedido)
@@ -33,7 +33,13 @@
                                 
                                 <p><strong>Fecha:</strong> {{ $pedido->created_at->format('d/m/Y') }}</p>
                                 <p><strong>Total:</strong> {{ number_format($pedido->totalVenta, 2) }} €</p>
-                                <p><strong>Estado: </strong><span class="text-red-400">{{ $pedido->estadoPedido }}</span> </p>
+                                <p><strong>Estado: </strong><span class="
+                                    @if($pedido->estadoPedido == 'pendiente') text-red-300
+                                    @elseif($pedido->estadoPedido == 'preparando') text-red-400
+                                    @elseif($pedido->estadoPedido == 'enviado') text-red-500
+                                     @elseif($pedido->estadoPedido == 'entregado') text-grey-700
+                                    @endif
+                                ">{{ $pedido->estadoPedido }}</span> </p>
                             </div>
 
                             <!-- Productos del pedido -->
@@ -66,7 +72,7 @@
                         <!-- Datos del comprador -->
                         <div class="mt-4 bg-gray-100 p-4 rounded-xl">
                             <p class="font-handwritten text-red-300 mb-2">Datos del comprador</p>
-                            <p class="text-gray-700"><strong>Nombre:</strong> {{ $pedido->usuario->nombreUsuario ?? 'No disponible' }}</p>
+                            <p class="text-gray-700"><strong>Nombre:</strong> {{ $pedido->usuario->nombreUsuario ?? 'No disponible' }} {{ $pedido->usuario->apellidos ?? 'No disponible' }}</p>
                             <p class="text-gray-700"><strong>Correo:</strong> {{ $pedido->usuario->correo ?? 'No disponible' }}</p>
                             <p class="text-gray-700"><strong>Teléfono:</strong> {{ $pedido->usuario->telefono ?? 'No disponible' }}</p>
                             <p class="text-gray-700"><strong>Dirección:</strong> {{ $pedido->usuario->direccion ?? 'No disponible' }}</p>
@@ -94,7 +100,7 @@
             </ul>
         </div>
 
-        <!-- DEVOLUCIONES -->
+        <!-- Devoluciones -->
         <div id="devoluciones" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
             <ul class="space-y-6">
                 @foreach($devoluciones as $dev)
@@ -102,23 +108,27 @@
 
                         <div class="flex justify-between items-center mb-2">
                             <p class="font-handwritten text-red-400 text-lg">Devolución Nº {{ $dev->idDevolucion }}</p>
-
-                            @if($dev->estadoDevolucion == 'pendiente' || $dev->estadoDevolucion == 'aprobada')
-                                <form method="POST" action="{{ route('devolucion.recibida', $dev->idDevolucion) }}">
-                                    @csrf
-                                    <button class="bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-300 cursor-pointer">
-                                        Marcar como recibida
-                                    </button>
-                                </form>
-                            @endif
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 mb-4">
                             <p><strong>Pedido:</strong> {{ $dev->idPedido }}</p>
                             <p><strong>Fecha:</strong> {{ $dev->created_at->format('d/m/Y') }}</p>
-                            <p><strong>Estado:</strong> {{ $dev->estadoDevolucion }}</p>
+                            <p><strong>Estado: </strong><span class="
+                                @if($dev->estadoDevolucion == 'pendiente') text-red-300
+                                @elseif($dev->estadoDevolucion == 'aceptada') text-red-400
+                                @elseif($dev->estadoDevolucion == 'finalizada') text-red-500
+                                @elseif($dev->estadoDevolucion == 'rechazada') text-gray-600
+                                @endif
+                            "> {{ $dev->estadoDevolucion }}
+                                </span></p>
                             <p><strong>Cantidad:</strong> {{ number_format($dev->cantidadDevolucion,2) }} €</p>
                             <p><strong>Motivo:</strong> {{ $dev->razonDevolucion }}</p>
+                            <p><strong>Reembolso:</strong>
+                                @if($dev->pago)
+                                    <span class="text-red-500">Realizado</span>
+                                @else
+                                    <span class="text-gray-700">No realizado</span>
+                                @endif
                         </div>
 
                         <!-- Productos -->
@@ -139,7 +149,36 @@
                                 @endforeach
                             </ul>
                         </div>
+                        <!-- Botones de aceptar, rechazar y confirmar -->
+                        <div class="flex gap-3 mt-4 flex-wrap">
 
+                            @if($dev->estadoDevolucion == 'pendiente')
+                                <form method="POST" action="{{ route('devolucion.aceptada', $dev->idDevolucion) }}">
+                                    @csrf
+                                    <button class="bg-red-300 text-white px-3 py-1 rounded-md hover:bg-red-200 cursor-pointer">
+                                        Aceptar
+                                    </button>
+                                </form>
+                            @endif
+
+                            @if($dev->estadoDevolucion == 'aceptada')
+                                <form method="POST" action="{{ route('devolucion.recibida', $dev->idDevolucion) }}">
+                                    @csrf
+                                    <button class="bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-300 cursor-pointer">
+                                        Confirmar recepción
+                                    </button>
+                                </form>
+                            @endif
+
+                            @if($dev->estadoDevolucion == 'pendiente' || $dev->estadoDevolucion == 'aceptada')
+                                <form method="POST" action="{{ route('devolucion.rechazada', $dev->idDevolucion) }}">
+                                    @csrf
+                                    <button class="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-400 cursor-pointer">
+                                        Rechazar
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </li>
                 @endforeach
             </ul>
@@ -181,17 +220,18 @@
                 @foreach($mensajes as $mensaje)
                     <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg">
 
-                        <p class="font-handwritten text-red-400 text-lg mb-2">
-                            {{ $mensaje->nombreMensaje }}
+                        <p class="font-handwritten font-semibold text-red-400 text-lg mb-2">
+                            Mensaje {{ $mensaje->idMensaje }}
                         </p>
-
-                        <p class="text-gray-600">{{ $mensaje->correoMensaje }}</p>
-                        <p class="text-gray-600 mb-2">{{ $mensaje->textoMensaje }}</p>
-
+                        <p class="text-gray-600"><strong>Remitente:</strong> {{ $mensaje->nombreMensaje }}</p>
+                        <p class="text-gray-600"><strong>Correo: </strong>{{ $mensaje->correoMensaje }}</p>
+                        <p class="text-gray-600 mb-3"><strong>Mensaje: </strong>{{ $mensaje->textoMensaje }}</p>
+                        <p class="text-sm text-gray-400">Enviado: {{ $mensaje->created_at }}</p>
                         <p class="text-sm text-gray-400">
-                            Estado: {{ $mensaje->respondido }}
+                            Estado: @if($mensaje->respondido == 0) <span class="text-red-400">Esperando respuesta</span>
+                                    @else <span class="text-gray-400">Respondido</span>
+                                    @endif 
                         </p>
-
                     </li>
                 @endforeach
             </ul>
@@ -204,7 +244,7 @@
                 <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
                     <p class="text-gray-600">Total ventas</p>
                     <p class="text-2xl text-red-400 font-bold">
-                        {{ number_format($pedidos->sum('totalVentas'), 2) }} €
+                        {{ number_format($totalVentas, 2) }} €
                     </p>
                 </div>
 

@@ -81,9 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/devolucion/guardar', [DevolucionController::class, 'guardar'])
         ->name('devolucion.guardar');
     Route::post('/devolucion/cancelar/{id}', [DevolucionController::class, 'cancelar'])
-        ->name('devolucion.cancelar');
-    Route::post('/devolucion/recibida/{id}', [DevolucionController::class, 'recibida'])
-            ->name('devolucion.recibida');    
+        ->name('devolucion.cancelar');   
 });
 
 //Para ir a la vista de gestión, crear, borrar y actualizar productos, cambiar estado de pedido y gestionar devoluciones
@@ -104,7 +102,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/pedido/estado/{id}', [AdminController::class, 'cambiarEstadoPedido'])->name('pedido.estado');
 
     //Devoluciones
-    Route::post('/admin/devolucion/recibida/{id}', [AdminController::class, 'marcarDevolucionRecibida'])->name('devolucion.recibida');
+    Route::post('/admin/devolucion/{id}/aceptada', [AdminController::class, 'marcarAceptada'])->name('devolucion.aceptada');
+    Route::post('/admin/devolucion/{id}/rechazada', [AdminController::class, 'marcarRechazada'])->name('devolucion.rechazada');
+    Route::post('/admin/devolucion/{id}/recibida/', [AdminController::class, 'marcarDevolucionRecibida'])->name('devolucion.recibida');
 });
 
 

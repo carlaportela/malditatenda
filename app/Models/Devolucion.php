@@ -11,7 +11,7 @@ class Devolucion extends Model
     
 
     protected $fillable = [
-        'idUsuario', 'idPedido', 'idProducto','idPagoDevolucion','razonDevolucion', 'fechaRecepcion','estadoDevolucion','cantidadDevolucion'
+        'idUsuario', 'idPedido', 'idProducto','idPago','razonDevolucion', 'fechaRecepcion','estadoDevolucion','cantidadDevolucion'
     ];
 
     // Relación con producto
@@ -24,4 +24,10 @@ class Devolucion extends Model
             'idProducto'
         );
     }
+
+    public function pago()
+    {
+        return $this->belongsTo(Pago::class, 'idPago', 'idPago');
+    }
+    
 }

@@ -97,7 +97,7 @@ class PedidoController extends Controller
         ]);
 
         // Crear transacción fake
-        $transaccion = 'SIMULADO-'.time();
+        $transaccion = 'venta_Stripe'.time();
 
         DB::table('transacciones')->insert([
             'idTransaccion' => $transaccion,

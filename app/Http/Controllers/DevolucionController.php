@@ -82,40 +82,5 @@ class DevolucionController extends Controller
         return redirect()->back();
     }
 
-    //Método para marcar como recibido un producto devuelto, restaurar el stock y crear el pago de la devolución
-    public function recibida($id)
-    {
-        //Sólo usuarios autorizados (admin) pueden marcar como recibidas las devoluciones
-        if(auth()->user()->autorizado != 1){
-            abort(403);
-        }
-        $devolucion = Devolucion::with('productos')->findOrFail($id);
-
-        if($devolucion->fechaRecepcion){
-            return back()->with('error','Ya fue procesada');
-        }
-        $devolucion->fechaRecepcion = now();
-        $devolucion->estadoDevolucion = 'recibida';
-        $devolucion->save();
-
-        //Restaurar stock
-        foreach($devolucion->productos as $producto){
-            $producto->stockProducto = 1;
-            $producto->save();
-        }
-
-        //Crear pago devolución
-        $pago = Pago::create([
-            'cantidadPago' => $devolucion->cantidadDevolucion,
-            'metodoPago' => 'reembolso',
-        ]);
-
-        //Guardar idPagoDevolucion
-        $devolucion->idPagoDevolucion = $pago->idPago;
-        $devolucion->estadoDevolucion = 'reembolsado';
-        $devolucion->save();
-
-        return back()->with('success','Devolución procesada correctamente');
-    }
     
 }

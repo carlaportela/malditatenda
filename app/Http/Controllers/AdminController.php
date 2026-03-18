@@ -9,6 +9,7 @@ use App\Models\Devolucion;
 use App\Models\Producto;
 use App\Models\Mensaje;
 use App\Models\Pago;
+use App\Models\Transaccion;
 use App\Models\Categoria;
 
 
@@ -24,7 +25,7 @@ class AdminController extends Controller
             'pago'                      // cargar pago
         ])->get();
 
-        $devoluciones = Devolucion::with('productos')->latest()->get();
+        $devoluciones = Devolucion::with(['productos','pago'])->latest()->get();
         $productos = Producto::all();
         $mensajes = Mensaje::latest()->get();
 
@@ -162,32 +163,73 @@ class AdminController extends Controller
         return back()->with('success','Estado actualizado');
     }
 
-    //Marcar como recibida una devolución
+    //Función para aceptar devoluciones
+    public function marcarAceptada($id)
+    {
+        $dev = Devolucion::findOrFail($id);
+
+        // Solo permitir si está pendiente
+        if($dev->estadoDevolucion != 'pendiente'){
+            return back()->with('error', 'Esta devolución no se puede aceptar');
+        }
+
+        $dev->estadoDevolucion = 'aceptada';
+        $dev->save();
+
+        return back()->with('success', 'Devolución aceptada correctamente');
+    }
+
+    //Función para marcar como rechaza una devolución
+    public function marcarRechazada($id)
+    {
+        $dev = Devolucion::findOrFail($id);
+
+        // Solo permitir si está pendiente o aceptada
+        if(!in_array($dev->estadoDevolucion, ['pendiente', 'aceptada'])){
+            return back()->with('error', 'No se puede rechazar esta devolución');
+        }
+
+        $dev->estadoDevolucion = 'rechazada';
+        $dev->save();
+
+        return back()->with('success', 'Devolución rechazada correctamente');
+    }
+    
+    //Función para marcar como recibida una devolución
     public function marcarDevolucionRecibida($id)
     {
         $devolucion = Devolucion::with('productos')->findOrFail($id);
 
+
+        // Crear transacción fake
+        $transaccionSimulada = 'reembolso_Stripe'.time();
+        $transaccion = Transaccion::create([
+
+            'idTransaccion' => $transaccionSimulada,
+            'metodoPago' => 'Stripe',
+            'autorizado' => 1
+        ]);
+        // Crear pago devolución
+        $pago = Pago::create([
+
+            'cantidadPago' => $devolucion->cantidadDevolucion,
+            'idTransaccion' => $transaccion->idTransaccion,
+            'realizadoPago' => 1
+        ]);
+
+        // Guardar pago
+        $devolucion->idPago = $pago->idPago;
         $devolucion->fechaRecepcion = now();
-        $devolucion->estadoDevolucion = 'recibida';
+        $devolucion->estadoDevolucion = 'finalizada';
         $devolucion->save();
+
+        $devolucion->refresh();
 
         // Restaurar stock
         foreach($devolucion->productos as $producto){
             $producto->stockProducto = 1;
             $producto->save();
         }
-
-        // Crear pago devolución
-        $pago = Pago::create([
-            'cantidadPago' => $devolucion->cantidadDevolucion,
-            'metodoPago' => 'reembolso',
-        ]);
-
-        // Guardar pago
-        $devolucion->idPagoDevolucion = $pago->idPago;
-        $devolucion->estadoDevolucion = 'reembolsado';
-        $devolucion->save();
-
         return back()->with('success','Devolución procesada');
     }
 }
