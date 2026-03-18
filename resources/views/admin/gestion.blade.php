@@ -242,7 +242,7 @@
 
                                 <!-- Editar -->
                                 <a href="{{ route('producto.edit',$producto->idProducto) }}"
-                                class="bg-gray-300 font-semibold text-white px-3 py-1 rounded-md text-sm hover:bg-gray-500 transition cursor-pointer">
+                                class="bg-gray-400 font-semibold text-white px-3 py-1 rounded-md text-sm hover:bg-gray-300 transition cursor-pointer">
                                     Editar
                                 </a>
 
@@ -251,7 +251,7 @@
                                     onsubmit="return confirm('¿Eliminar este producto?')">
                                     @csrf
                                     <button 
-                                        class="bg-red-300 font-semibold text-white px-3 py-1 rounded-md text-sm hover:bg-red-500 transition cursor-pointer">
+                                        class="bg-red-300 font-semibold text-white px-3 py-1 rounded-md text-sm hover:bg-red-200 transition cursor-pointer">
                                         Borrar
                                     </button>
                                 </form>
@@ -264,11 +264,11 @@
             </ul>
         </div>
 
-        <!-- MENSAJES -->
+        <!-- Mensajes -->
         <div id="mensajes" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
             <ul class="space-y-6">
                 @foreach($mensajes as $mensaje)
-                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg">
+                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg flex flex-col gap-4">
 
                         <p class="font-handwritten font-semibold text-red-400 text-lg mb-2">
                             Mensaje {{ $mensaje->idMensaje }}
@@ -278,10 +278,37 @@
                         <p class="text-gray-600 mb-3"><strong>Mensaje: </strong>{{ $mensaje->textoMensaje }}</p>
                         <p class="text-sm text-gray-400">Enviado: {{ $mensaje->created_at }}</p>
                         <p class="text-sm text-gray-400">
-                            Estado: @if($mensaje->respondido == 0) <span class="text-red-400">Esperando respuesta</span>
-                                    @else <span class="text-gray-400">Respondido</span>
-                                    @endif 
+                            Estado: 
+                            @if($mensaje->respondido == 0)
+                                <span class="text-red-400">Esperando respuesta</span>
+                            @else
+                                <span class="text-gray-400">Respondido</span>
+                            @endif 
                         </p>
+
+                        <!-- Botones -->
+                        <div class="flex gap-2">
+                            <!-- Botón responder -->
+                            @if ($mensaje->respondido != 1)
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ $mensaje->correoMensaje }}&su=Respuesta%20a%20mensaje%20de%20la%20Tienda%20Maldita%20Carlita"
+                                target="_blank"
+                                class="bg-red-300 text-white px-4 py-2 rounded-md hover:bg-red-400 transition cursor-pointer">
+                                    Responder
+                                </a>
+                            @endif
+
+                            <!-- Botón marcar como respondido -->
+                            @if($mensaje->respondido == 0)
+                                <form method="POST" action="{{ route('mensaje.marcarRespondido', $mensaje->idMensaje) }}">
+                                    @csrf
+                                    <button type="submit" 
+                                            class="bg-gray-300 text-white px-4 py-2 rounded-md hover:bg-gray-400 transition cursor-pointer">
+                                        Marcar como respondido
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+
                     </li>
                 @endforeach
             </ul>

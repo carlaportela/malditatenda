@@ -105,6 +105,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/devolucion/{id}/aceptada', [AdminController::class, 'marcarAceptada'])->name('devolucion.aceptada');
     Route::post('/admin/devolucion/{id}/rechazada', [AdminController::class, 'marcarRechazada'])->name('devolucion.rechazada');
     Route::post('/admin/devolucion/{id}/recibida/', [AdminController::class, 'marcarDevolucionRecibida'])->name('devolucion.recibida');
+
+    //Mensajes
+    Route::post('/admin/mensaje/{id}/respondido', [AdminController::class, 'marcarMensajeRespondido'])->name('mensaje.marcarRespondido');
+
 });
 
 

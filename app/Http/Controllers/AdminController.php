@@ -231,4 +231,14 @@ class AdminController extends Controller
         }
         return back()->with('success','Devolución procesada');
     }
+
+    //Función para marcar como respondido un mensaje
+    public function marcarMensajeRespondido($id)
+    {
+        $mensaje = Mensaje::findOrFail($id);
+        $mensaje->respondido = 1;
+        $mensaje->save();
+
+        return back()->with('success', 'Mensaje marcado como respondido');
+    }
 }
