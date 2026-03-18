@@ -184,33 +184,87 @@
             </ul>
         </div>
 
-        <!-- PRODUCTOS -->
+        <!-- Productos -->
         <div id="productos" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
 
+            <!-- Botón añadir -->
             <a href="{{ route('producto.create') }}"
-            class="inline-block bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 mb-4">
+            class="inline-block bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 mb-6 transition">
                 Añadir producto
             </a>
 
-            <ul class="space-y-4">
+            <ul class="space-y-6">
+
                 @foreach($productos as $producto)
-                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-4 flex justify-between items-center">
+                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
 
-                        <span>{{ $producto->nombreProducto }}</span>
+                        <div class="flex items-center justify-between flex-wrap gap-4">
 
-                        <div class="flex gap-3">
-                            <a href="{{ route('producto.edit',$producto->idProducto) }}"
-                            class="text-blue-500 hover:underline">Editar</a>
+                            <!-- IZQUIERDA: Imagen + info -->
+                            <div class="flex items-center gap-4">
 
-                            <form method="POST" action="{{ route('producto.delete',$producto->idProducto) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button class="text-red-500 hover:underline">Borrar</button>
-                            </form>
+                                <!-- Miniatura -->
+                                <div class="w-20 h-20 flex-shrink-0">
+                                    <img 
+                                        src="{{ $producto->imagen ? asset('storage/'.$producto->imagen) : asset('images/no-image.png') }}"
+                                        alt="{{ $producto->nombreProducto }}"
+                                        class="w-full h-full object-cover rounded-xl border border-gray-200 p-1"
+                                    >
+                                </div>
+
+                                <!-- Info producto -->
+                                <div>
+                                    <p class="font-handwritten text-red-400 text-lg">
+                                        {{ $producto->nombreProducto }}
+                                    </p>
+                                    @if($producto->destacado)
+                                        <span class="inline-block bg-red-100 text-gray-700 text-xs px-2 py-1 rounded-md mt-1">
+                                            Destacado
+                                        </span>
+                                    @endif
+
+                                    <div class="text-gray-600 text-sm mt-1 space-y-1">
+                                        <p><strong>Precio:</strong> {{ number_format($producto->precio, 2) }} €</p>
+                                        <p>
+                                            <strong>Stock:</strong> 
+                                            <span class="
+                                                {{ $producto->stockProducto > 0 ? 'text-gray-700' : 'text-red-500' }}">
+                                                {{ $producto->stockProducto > 0 ? 'Disponible' : 'Sin existencias' }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- DERECHA: Acciones -->
+                            <div class="flex gap-3">
+
+                                <!-- Editar -->
+                                <a href="{{ route('producto.edit',$producto->idProducto) }}"
+                                class="bg-gray-300 font-semibold text-white px-3 py-1 rounded-md text-sm hover:bg-gray-500 transition cursor-pointer">
+                                    Editar
+                                </a>
+
+                                <!-- Borrar -->
+                                <form method="POST" action="{{ route('producto.delete',$producto->idProducto) }}"
+                                    onsubmit="return confirm('¿Eliminar este producto?')">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button 
+                                        class="bg-red-300 font-semibold text-white px-3 py-1 rounded-md text-sm hover:bg-red-500 transition cursor-pointer">
+                                        Borrar
+                                    </button>
+                                </form>
+
+                            </div>
+
                         </div>
 
                     </li>
                 @endforeach
+
             </ul>
         </div>
 

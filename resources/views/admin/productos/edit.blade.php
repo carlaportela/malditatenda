@@ -58,10 +58,8 @@
 
                 <!-- Destacado -->
                 <div>
-                    <label class="block text-gray-600 mb-1">Destacado</label>
-                    <span>
-                        
-                    </span><input type="checkbox" name="destacado"
+                    <label for="destacado" class="block text-gray-600 mb-1">Destacado</label>
+                    <input type="checkbox" id="destacado" name="destacado"
                         value="1"
                         >
                 </div>
@@ -81,9 +79,9 @@
 
             <!-- Nueva imagen -->
             <div class="mt-4">
-                <label class="block text-gray-600 mb-1">Cambiar imagen</label>
-                <input type="file" name="imagen"
-                    class="w-full border border-gray-200 rounded-md p-2 bg-white">
+                <label for="imagen" class="block text-gray-600 mb-1">Cambiar imagen</label>
+                <input type="file" id="imagen" name="imagen" 
+                    class="w-full border border-gray-200 rounded-md p-2 bg-white cursor-pointer ">
             </div>
 
             <!-- Botón -->
