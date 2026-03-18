@@ -10,6 +10,8 @@ use App\Models\Cesta;
 
 class ProductoController extends Controller
 {
+
+    //Función para mostrar los productos en la página de inicio
     public function index()
     {
         $productos = Producto::where('destacado', 1)
@@ -19,6 +21,7 @@ class ProductoController extends Controller
         return view('index', compact('productos'));
     }
 
+    //Función para mostrar los productos de cerámica
     public function ceramica()
     {
         $productos = Producto::where('idCategoria', 2)
@@ -29,6 +32,7 @@ class ProductoController extends Controller
         return view('ceramica', compact('productos'));
     }
 
+    //Función para mostrar los productos de bordados
     public function bordados()
     {
         $productos = Producto::where('idCategoria', 3)
@@ -38,6 +42,7 @@ class ProductoController extends Controller
         return view('bordados', compact('productos'));
     }
 
+    //Función para mostrar los productos de ilustracion
     public function ilustracion()
     {
         $productos = Producto::where('idCategoria', 4)
@@ -47,6 +52,7 @@ class ProductoController extends Controller
         return view('ilustracion', compact('productos'));
     }
 
+    //Función para mostrar el producto en detalle
     public function show($id)
     {
         // Buscar producto o devolver 404
@@ -68,4 +74,5 @@ class ProductoController extends Controller
             'enCesta' => $enCesta
         ]);
     }
+
 }
