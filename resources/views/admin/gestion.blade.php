@@ -314,25 +314,71 @@
             </ul>
         </div>
 
-        <!-- ESTADÍSTICAS -->
-        <div id="estadisticas" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Estadísticas -->
+        <div id="estadisticas" class="tab-content hidden bg-white shadow-md rounded-xl p-6 sm:p-8">
 
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
-                    <p class="text-gray-600">Total ventas</p>
-                    <p class="text-2xl text-red-400 font-bold">
-                        {{ number_format($totalVentas, 2) }} €
-                    </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+                <!-- Productos vendidos -->
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                    <!-- Icono de productos vendidos -->
+                    <img/>
+                    <div class="flex-1">
+                        <p class="text-gray-600 font-bold">Productos vendidos</p>
+                        <p class="text-md text-gray-600">{{ $totalProductosComprados }} unidades</p>
+                    </div>
                 </div>
 
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 text-center">
-                    <p class="text-gray-600">Total devoluciones</p>
-                    <p class="text-2xl text-red-400 font-bold">
-                        {{ number_format($totalDevoluciones,2) }} €
-                    </p>
+                <!-- Productos devueltos -->
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                    <!-- Icono de productos devueltos -->
+                    <img/>
+                    <div class="flex-1">
+                        <p class="text-gray-600 font-bold">Productos devueltos</p>
+                        <p class="text-md text-gray-600">{{ $totalProductosDevueltos }} unidades</p>
+                    </div>
                 </div>
 
+                <!-- Mensajes recibidos -->
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                    <img/>
+                    <div class="flex-1">
+                        <p class="text-gray-600 font-bold">Mensajes recibidos</p>
+                        <p class="text-md text-gray-600 ">{{ $totalMensajes}} mensajes</p>
+                    </div>
+                </div>
+                
+                <!-- Total Ventas -->
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                    <!-- Icono de ventas -->
+                    <img/>
+                    <div class="flex-1">
+                        <p class="text-gray-600 font-bold">Importe de ventas</p>
+                        <p class="text-2xl text-red-300 font-semibold">{{ number_format($totalVentas,2) }} €</p>
+                    </div>
+                </div>
+
+                <!-- Total Devoluciones -->
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                    <!-- Icono de devolución -->
+                    <img/>
+                    <div class="flex-1">
+                        <p class="text-gray-600 font-bold">Importe de devoluciones</p>
+                        <p class="text-2xl text-red-200 font-semibold">{{ number_format($totalDevoluciones,2) }} €</p>
+                    </div>
+                </div>
+
+                <!-- Beneficio Neto -->
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                    <!-- Icono de beneficio -->
+                    <img/>
+                    <div class="flex-1">
+                        <p class="text-gray-600 font-bold">Beneficio Bruto</p>
+                        <p class="text-2xl text-red-500 font-semibold">{{ number_format($beneficio,2) }} €</p>
+                    </div>
+                </div>
             </div>
+
         </div>
 
     </div>

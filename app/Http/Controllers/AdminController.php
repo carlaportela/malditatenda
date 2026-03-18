@@ -29,6 +29,8 @@ class AdminController extends Controller
         $productos = Producto::all();
         $mensajes = Mensaje::latest()->get();
 
+        $totalProductosComprados = 0;
+
         // Estadísticas
         // Calcular total dinámico para cada pedido
         foreach($pedidos as $pedido) {
@@ -41,6 +43,8 @@ class AdminController extends Controller
             $envio = 3.95;
 
             $pedido->totalVenta = $subtotalVenta - $descuento + $envio;
+            // Cantidad de productos comprados
+            $totalProductosComprados += $pedido->pedidoProductos->sum(fn($item) => $item->cantidad);
         }
 
         //Total de ventas global
@@ -48,7 +52,23 @@ class AdminController extends Controller
             return $pedido->totalVenta;
         });
 
-        $totalDevoluciones = Devolucion::sum('cantidadDevolucion');
+        //Total de devoluciones global
+        $totalDevoluciones = Devolucion::where('estadoDevolucion', 'finalizada')
+                               ->sum('cantidadDevolucion');
+
+        // Número de productos devueltos (solo finalizadas)
+        $totalProductosDevueltos = Devolucion::where('estadoDevolucion', 'finalizada')
+            ->with('productos')
+            ->get()
+            ->sum(fn($dev) => $dev->productos->sum(fn($p) => $p->pivot->cantidad ?? 1)); 
+            // Ajusta el campo pivot->cantidad si tu tabla pivot tiene cantidad
+
+        // Mensajes
+        $totalMensajes = $mensajes->count();
+        $totalMensajesRespondidos = $mensajes->where('respondido', 1)->count();
+
+        // Beneficios totales globales
+        $beneficio = $totalVentas - $totalDevoluciones;
 
         return view('admin/gestion', compact(
             'pedidos',
@@ -56,7 +76,12 @@ class AdminController extends Controller
             'productos',
             'mensajes',
             'totalVentas',
-            'totalDevoluciones'
+            'totalDevoluciones',
+            'beneficio',
+            'totalProductosComprados',
+            'totalProductosDevueltos',
+            'totalMensajes',
+            'totalMensajesRespondidos'
         ));
     }
 
