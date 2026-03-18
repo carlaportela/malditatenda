@@ -150,9 +150,5 @@ class PedidoController extends Controller
     public function exito()
     {
         return view('pedido.exito');
-    }
-
-    
-
-    
+    }    
 }

@@ -24,42 +24,55 @@
                 @foreach($pedidos as $pedido)
                     <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg">
 
-                        <p class="font-handwritten text-red-400 text-lg mb-2">Pedido</p>
+                        <p class="font-handwritten text-red-400 text-lg mb-2">Pedido Nº {{ $pedido->idPedido }}</p>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 mb-4">
-                            <p><strong>Referencia:</strong> {{ $pedido->idPedido }}</p>
-                            <p><strong>Fecha:</strong> {{ $pedido->created_at->format('d/m/Y') }}</p>
-                            <p><strong>Total:</strong> {{ number_format($pedido->totalVenta, 2) }} €</p>
-                            <p><strong>Estado:</strong> {{ $pedido->estadoPedido }}</p>
+                        <!-- Datos del pedido -->
+                        <div class="mt-4 bg-gray-100 p-4 rounded-xl">
+                            <p class="font-handwritten text-red-300 mb-2">Datos del pedido</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 mb-4">
+                                
+                                <p><strong>Fecha:</strong> {{ $pedido->created_at->format('d/m/Y') }}</p>
+                                <p><strong>Total:</strong> {{ number_format($pedido->totalVenta, 2) }} €</p>
+                                <p><strong>Estado: </strong><span class="text-red-400">{{ $pedido->estadoPedido }}</span> </p>
+                            </div>
+
+                            <!-- Productos del pedido -->
+                            <div class="mt-4">
+                                <p class="text-gray-600 mb-2"><strong>Productos:</strong></p>
+                                <ul class="space-y-2">
+                                    @foreach($pedido->pedidoProductos as $item)
+                                        @php
+                                            $prod = $item->producto;
+                                        @endphp
+                                        <li class="flex items-center space-x-3 text-gray-600">
+                                            <!-- Miniatura -->
+                                            <div class="w-16 h-16 flex-shrink-0">
+                                                <img 
+                                                    src="{{ $prod && $prod->imagen ? asset('storage/' . $prod->imagen) : asset('images/no-image.png') }}" 
+                                                    alt="{{ $prod->nombreProducto ?? 'Producto no disponible' }}"
+                                                    class="w-full h-full object-cover rounded-xl p-1"
+                                                >
+                                            </div>
+                                            <!-- Nombre -->
+                                            <span>
+                                                {{ $prod->nombreProducto ?? 'Producto no disponible' }}
+                                            </span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
 
-                        <!-- Productos del pedido -->
-                        <div class="mt-4">
-                            <p class="font-semibold text-gray-600 mb-2">Productos:</p>
-                            <ul class="space-y-2">
-                                @foreach($pedido->pedidoProductos as $item)
-                                    @php
-                                        $prod = $item->producto;
-                                    @endphp
-                                    <li class="flex items-center space-x-3 text-gray-600">
-                                        <!-- Miniatura -->
-                                        <div class="w-16 h-16 flex-shrink-0">
-                                            <img 
-                                                src="{{ $prod && $prod->imagen ? asset('storage/' . $prod->imagen) : asset('images/no-image.png') }}" 
-                                                alt="{{ $prod->nombreProducto ?? 'Producto no disponible' }}"
-                                                class="w-full h-full object-cover rounded-xl p-1"
-                                            >
-                                        </div>
-                                        <!-- Nombre y cantidad -->
-                                        <span>
-                                            {{ $prod->nombreProducto ?? 'Producto no disponible' }}
-                                            @if($item->cantidad > 1)
-                                                (x{{ $item->cantidad }})
-                                            @endif
-                                        </span>
-                                    </li>
-                                @endforeach
-                            </ul>
+                        <!-- Datos del comprador -->
+                        <div class="mt-4 bg-gray-100 p-4 rounded-xl">
+                            <p class="font-handwritten text-red-300 mb-2">Datos del comprador</p>
+                            <p class="text-gray-700"><strong>Nombre:</strong> {{ $pedido->usuario->nombreUsuario ?? 'No disponible' }}</p>
+                            <p class="text-gray-700"><strong>Correo:</strong> {{ $pedido->usuario->correo ?? 'No disponible' }}</p>
+                            <p class="text-gray-700"><strong>Teléfono:</strong> {{ $pedido->usuario->telefono ?? 'No disponible' }}</p>
+                            <p class="text-gray-700"><strong>Dirección:</strong> {{ $pedido->usuario->direccion ?? 'No disponible' }}</p>
+                            <p class="text-gray-700"><strong>CP:</strong> {{ $pedido->usuario->cp ?? 'No disponible' }}</p>
+                            <p class="text-gray-700"><strong>Localidad:</strong> {{ $pedido->usuario->localidad ?? 'No disponible' }}</p>
+                            <p class="text-gray-700"><strong>Provincia:</strong> {{ $pedido->usuario->provincia ?? 'No disponible' }}</p>
                         </div>
 
                         <!-- Cambiar estado -->
@@ -67,6 +80,7 @@
                             @csrf
                             <select name="estado" class="border border-gray-300 text-gray-700 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer">
                                 <option value="pendiente" {{ $pedido->estadoPedido=='pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                <option value="preparando" {{ $pedido->estadoPedido=='peparando' ? 'selected' : '' }}>Preparando</option>
                                 <option value="enviado" {{ $pedido->estadoPedido=='enviado' ? 'selected' : '' }}>Enviado</option>
                                 <option value="entregado" {{ $pedido->estadoPedido=='entregado' ? 'selected' : '' }}>Entregado</option>
                             </select>
@@ -87,29 +101,29 @@
                     <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg">
 
                         <div class="flex justify-between items-center mb-2">
-                            <p class="font-handwritten text-red-400 text-lg">Devolución</p>
+                            <p class="font-handwritten text-red-400 text-lg">Devolución Nº {{ $dev->idDevolucion }}</p>
 
                             @if($dev->estadoDevolucion == 'pendiente' || $dev->estadoDevolucion == 'aprobada')
                                 <form method="POST" action="{{ route('devolucion.recibida', $dev->idDevolucion) }}">
                                     @csrf
                                     <button class="bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-300 cursor-pointer">
-                                        Marcar recibida
+                                        Marcar como recibida
                                     </button>
                                 </form>
                             @endif
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 mb-4">
-                            <p><strong>Referencia:</strong> {{ $dev->idDevolucion }}</p>
                             <p><strong>Pedido:</strong> {{ $dev->idPedido }}</p>
                             <p><strong>Fecha:</strong> {{ $dev->created_at->format('d/m/Y') }}</p>
                             <p><strong>Estado:</strong> {{ $dev->estadoDevolucion }}</p>
                             <p><strong>Cantidad:</strong> {{ number_format($dev->cantidadDevolucion,2) }} €</p>
+                            <p><strong>Motivo:</strong> {{ $dev->razonDevolucion }}</p>
                         </div>
 
                         <!-- Productos -->
                         <div>
-                            <span class="font-semibold text-gray-600">Productos:</span>
+                            <span class="text-gray-600"><strong>Productos:</strong></span>
 
                             <ul class="mt-2 space-y-2">
                                 @foreach($dev->productos as $prod)
