@@ -6,7 +6,7 @@
 @section('content')
 
     <div class="max-w-6xl mx-auto px-6 py-10">
-
+        
         <!-- Tabs -->
         <div class="mb-10 font-handwritten">
             <nav class="flex space-x-4 border-b border-gray-200">

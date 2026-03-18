@@ -18,26 +18,35 @@
         <!-- Conetenedor de navegación principal, si están seleccionados text-red-400 pointer-events-none -->
         <div class="flex items-center space-x-4">
             <div class="hidden md:flex space-x-8 items-center">
-            <a href="/ceramica" class="font-semibold font-handwritten transition
-                {{ request()->is('ceramica') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
-                Cerámica
-            </a>
-            <a href="/bordados" class="font-semibold font-handwritten transition
-                {{ request()->is('bordados') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
-                Bordados
-            </a>
-            <a href="/ilustracion" class="font-semibold font-handwritten transition
-                {{ request()->is('ilustracion') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
-                Ilustración
-            </a>
-            <a href="/about" class="font-semibold font-handwritten transition
-                {{ request()->is('about') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
-                Sobre mí
-            </a>
-            <a href="/contacto" class="font-semibold font-handwritten transition
-                {{ request()->is('contacto') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
-                Contacto
-            </a>
+                <a href="/ceramica" class="font-semibold font-handwritten transition
+                    {{ request()->is('ceramica') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Cerámica
+                </a>
+                <a href="/bordados" class="font-semibold font-handwritten transition
+                    {{ request()->is('bordados') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Bordados
+                </a>
+                <a href="/ilustracion" class="font-semibold font-handwritten transition
+                    {{ request()->is('ilustracion') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Ilustración
+                </a>
+                <a href="/about" class="font-semibold font-handwritten transition
+                    {{ request()->is('about') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Sobre mí
+                </a>
+                <a href="/contacto" class="font-semibold font-handwritten transition
+                    {{ request()->is('contacto') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Contacto
+                </a>
+
+                <!-- Nueva pestaña Gestion solo para usuarios autorizados -->
+                @if(Auth::check() && Auth::user()->autorizado == 1)
+                    <a href="{{ route('gestion') }}" 
+                    class="font-semibold font-handwritten transition
+                    {{ request()->is('admin/gestion') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+                    Gestión
+                    </a>
+                @endif
             </div>
         </div>
             
@@ -61,27 +70,28 @@
         Cerrar sesión
     </a>
 
-@else
-    <!-- Botón de inicio de sesión -->
-    <a href="{{ route('login') }}"
-       class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-       {{ request()->is('login') 
-            ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-            : 'bg-gray-700 text-white hover:bg-red-300 cursor-pointer' }}">
-        Iniciar sesión
-    </a>
+            @else
+                <!-- Botón de inicio de sesión -->
+                <a href="{{ route('login') }}"
+                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+                {{ request()->is('login') 
+                        ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                        : 'bg-gray-700 text-white hover:bg-red-300 cursor-pointer' }}">
+                    Iniciar sesión
+                </a>
 
-    <!-- Botón de registro -->
-    <a href="{{ route('registro') }}"
-       class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
-       {{ request()->is('registro') 
-            ? 'bg-red-300 text-white pointer-events-none cursor-default' 
-            : 'bg-white text-black hover:bg-red-300 hover:text-white cursor-pointer' }}">
-        Registrarse
-    </a>
-@endif
+                <!-- Botón de registro -->
+                <a href="{{ route('registro') }}"
+                class="text-xs rounded-md px-3 py-2 inline-block border border-solid transition-colors duration-200
+                {{ request()->is('registro') 
+                        ? 'bg-red-300 text-white pointer-events-none cursor-default' 
+                        : 'bg-white text-black hover:bg-red-300 hover:text-white cursor-pointer' }}">
+                    Registrarse
+                </a>
+            @endif
             
-            <!-- Cesta -->
+            <!-- Cesta solo para usuarios NO autorizados -->
+            @if(!Auth::check() || Auth::user()->autorizado != 1)
             <div class="flex items-center space-x-4">
                 <div class="relative transition-transform duration-200 transition-opacity duration-200
                     {{ request()->is('canastro') 
@@ -101,9 +111,9 @@
                     class="absolute -top-2 -right-2 bg-red-400 text-white text-xs px-1.5 rounded-full pointer-events-none">
                         {{ $contadorCesta }}
                     </span>
-
                 </div>
             </div>
+            @endif
         </div>
         
         <!-- Botón de móvil -->
@@ -135,6 +145,13 @@
             {{ request()->is('contacto') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
             Contacto
         </a>
+        @if(Auth::check() && Auth::user()->autorizado == 1)
+            <a href="{{ route('gestion') }}" 
+            class="font-semibold font-handwritten transition
+            {{ request()->is('admin/gestion') ? 'text-red-300 pointer-events-none cursor-default' : 'text-gray-700 hover:text-red-300' }}">
+            Gestión
+            </a>
+        @endif
     </div>
     </nav>
 </header>
