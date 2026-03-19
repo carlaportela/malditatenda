@@ -63,12 +63,19 @@ class AdminController extends Controller
             ->sum(fn($dev) => $dev->productos->sum(fn($p) => $p->pivot->cantidad ?? 1)); 
             // Ajusta el campo pivot->cantidad si tu tabla pivot tiene cantidad
 
-        // Mensajes
-        $totalMensajes = $mensajes->count();
-        $totalMensajesRespondidos = $mensajes->where('respondido', 1)->count();
+        // SOLO productos disponibles
+        $productosDisponibles = Producto::where('stockProducto', 1);
 
-        // Beneficios totales globales
+        // Número de productos a la venta
+        $totalProductosTienda = $productosDisponibles->count();
+
+        // Beneficio potencial (solo productos disponibles)
+        $beneficioPotencial = $productosDisponibles->sum('precio');
+        
+        // Beneficios reales globales
         $beneficio = $totalVentas - $totalDevoluciones;
+
+
 
         return view('admin/gestion', compact(
             'pedidos',
@@ -80,8 +87,8 @@ class AdminController extends Controller
             'beneficio',
             'totalProductosComprados',
             'totalProductosDevueltos',
-            'totalMensajes',
-            'totalMensajesRespondidos'
+            'totalProductosTienda',
+            'beneficioPotencial'
         ));
     }
 

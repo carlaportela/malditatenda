@@ -317,68 +317,124 @@
         <!-- Estadísticas -->
         <div id="estadisticas" class="tab-content hidden bg-white shadow-md rounded-xl p-6 sm:p-8">
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <!-- Productos vendidos -->
                 <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
-                    <!-- Icono de productos vendidos -->
-                    <img/>
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 3h18l-2 13H5L3 3zm0 0l2 13m14-13l-2 13M9 21h6" />
+                    </svg>
                     <div class="flex-1">
                         <p class="text-gray-600 font-bold">Productos vendidos</p>
-                        <p class="text-md text-gray-600">{{ $totalProductosComprados }} unidades</p>
+                        <p class="text-md text-gray-600">
+                            {{ $totalProductosComprados }} 
+                            {{ $totalProductosComprados == 1 ? 'producto' : 'productos' }} 
+                        </p>
                     </div>
                 </div>
 
                 <!-- Productos devueltos -->
                 <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
-                    <!-- Icono de productos devueltos -->
-                    <img/>
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 14l-4-4m0 0l4-4m-4 4h11a4 4 0 110 8h-1" />
+                    </svg>
                     <div class="flex-1">
                         <p class="text-gray-600 font-bold">Productos devueltos</p>
-                        <p class="text-md text-gray-600">{{ $totalProductosDevueltos }} unidades</p>
+                        <p class="text-md text-gray-600">
+                            {{ $totalProductosDevueltos }} 
+                            {{ $totalProductosDevueltos == 1 ? 'producto' : 'productos' }}
+                            </p>
                     </div>
                 </div>
 
-                <!-- Mensajes recibidos -->
-                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
-                    <img/>
-                    <div class="flex-1">
-                        <p class="text-gray-600 font-bold">Mensajes recibidos</p>
-                        <p class="text-md text-gray-600 ">{{ $totalMensajes}} mensajes</p>
-                    </div>
-                </div>
+                
 
-                <!-- Total Ventas -->
+                <!-- Ventas -->
                 <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
-                    <!-- Icono de ventas -->
-                    <img/>
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 10c0-1.1 1.3-2 3-2s3 .9 3 2-1.3 2-3 2-3 .9-3 2 1.3 2 3 2 3-.9 3-2" />
+                    </svg>
                     <div class="flex-1">
                         <p class="text-gray-600 font-bold">Importe de ventas</p>
                         <p class="text-2xl text-red-300 font-semibold">{{ number_format($totalVentas,2) }} €</p>
                     </div>
                 </div>
 
-                <!-- Total Devoluciones -->
+                <!-- Devoluciones -->
                 <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
-                    <!-- Icono de devolución -->
-                    <img/>
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 10c0-1.1 1.3-2 3-2s3 .9 3 2-1.3 2-3 2-3 .9-3 2 1.3 2 3 2 3-.9 3-2" />
+                    </svg>
                     <div class="flex-1">
                         <p class="text-gray-600 font-bold">Importe de devoluciones</p>
                         <p class="text-2xl text-red-200 font-semibold">{{ number_format($totalDevoluciones,2) }} €</p>
                     </div>
                 </div>
 
-                <!-- Beneficio Neto -->
+                <!-- Beneficio potencial -->
                 <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
-                    <!-- Icono de beneficio -->
-                    <img/>
+                    
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 10c0-1.1 1.3-2 3-2s3 .9 3 2-1.3 2-3 2-3 .9-3 2 1.3 2 3 2 3-.9 3-2" />
+                    </svg>
                     <div class="flex-1">
-                        <p class="text-gray-600 font-bold">Beneficio Bruto</p>
-                        <p class="text-2xl text-red-500 font-semibold">{{ number_format($beneficio,2) }} €</p>
+                        <p class="text-gray-600 font-bold">Beneficio potencial (stock actual)</p>
+                        <p class="text-2xl text-red-400 font-semibold">
+                            {{ number_format($beneficioPotencial,2) }} €
+                        </p>
+                    </div>
+                    
+                </div>
+
+                <!-- Productos en tienda -->
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M20 13V7a2 2 0 00-2-2h-3V3H9v2H6a2 2 0 00-2 2v6m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16 0H4" />
+                    </svg>
+                    <div class="flex-1">
+                        <p class="text-gray-600 font-bold">Productos en tienda</p>
+                        <p class="text-md text-gray-600">
+                            {{ $totalProductosTienda }}
+                            {{ $totalProductosTienda == 1 ? 'producto' : 'productos' }}
+                        </p>
                     </div>
                 </div>
-            </div>
 
+                <!-- Beneficio real -->
+                <div class="col-span-1 sm:col-span-2 lg:col-span-3 flex items-center justify-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+    
+                    <!-- Icono -->
+                    <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 10c0-1.1 1.3-2 3-2s3 .9 3 2-1.3 2-3 2-3 .9-3 2 1.3 2 3 2 3-.9 3-2" />
+                    </svg>
+
+                    <!-- Texto -->
+                    <div class="text-center">
+                        <p class="text-gray-600 font-bold">Beneficio real</p>
+                        <p class="text-2xl text-red-400 font-semibold">{{ number_format($beneficio,2) }} €</p>
+                    </div>
+
+                </div>
+                
+            </div>
         </div>
 
     </div>
