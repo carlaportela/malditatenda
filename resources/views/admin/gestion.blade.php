@@ -347,7 +347,7 @@
                         <p class="text-md text-gray-600 ">{{ $totalMensajes}} mensajes</p>
                     </div>
                 </div>
-                
+
                 <!-- Total Ventas -->
                 <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
                     <!-- Icono de ventas -->
@@ -389,28 +389,48 @@
         const contents = document.querySelectorAll('.tab-content');
 
         function activarTab(tab) {
+            // Reset tabs
             tabs.forEach(t => {
-                // Reset de todas las pestañas inactivas
                 t.classList.remove('text-red-300', 'cursor-default');
                 t.classList.add('text-gray-600', 'hover:text-red-300', 'hover:border-red-300', 'cursor-pointer');
             });
 
+            // Ocultar contenidos
             contents.forEach(c => c.classList.add('hidden'));
 
-            // Tab activa
+            // Activar actual
             tab.classList.remove('text-gray-600', 'hover:text-red-300', 'hover:border-red-300', 'cursor-pointer');
-            tab.classList.add('text-red-300', 'cursor-default'); // color fijo y cursor normal
+            tab.classList.add('text-red-300', 'cursor-default');
+
             document.getElementById(tab.dataset.tab).classList.remove('hidden');
+
+            // 💾 Guardar en localStorage
+            localStorage.setItem('admin_active_tab', tab.dataset.tab);
         }
 
-        // Activar primer tab al cargar
-        activarTab(tabs[0]);
+        // 🔁 Recuperar pestaña guardada
+        function cargarTabGuardada() {
+            const savedTab = localStorage.getItem('admin_active_tab');
 
+            if (savedTab) {
+                const tab = document.querySelector(`[data-tab="${savedTab}"]`);
+                if (tab) {
+                    activarTab(tab);
+                    return;
+                }
+            }
+
+            // fallback → primera pestaña
+            activarTab(tabs[0]);
+        }
+
+        // Eventos
         tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                activarTab(tab);
-            });
+            tab.addEventListener('click', () => activarTab(tab));
         });
+
+        // 🚀 Inicialización
+        document.addEventListener('DOMContentLoaded', cargarTabGuardada);
     </script>
 
 @endsection
