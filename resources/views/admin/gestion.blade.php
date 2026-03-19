@@ -416,7 +416,9 @@
                 </div>
 
                 <!-- Beneficio real -->
-                <div class="col-span-1 sm:col-span-2 lg:col-span-3 flex items-center justify-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition">
+                <div class="flex items-center justify-start sm:justify-center lg:justify-center gap-4 
+            bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg transition 
+            col-span-1 sm:col-span-2 lg:col-span-3">
     
                     <!-- Icono -->
                     <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
