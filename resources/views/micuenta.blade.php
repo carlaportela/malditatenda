@@ -29,14 +29,30 @@
 
         <!-- Botones separados -->
         <div class="mt-6 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+
             <a href="{{ route('micuenta.editar') }}" 
-                class="inline-block bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition text-center">
+                class="w-full sm:w-auto bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition text-center">
                 Editar datos
             </a>
+
             <a href="{{ route('micuenta.password') }}" 
-                class="inline-block bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition text-center">
+                class="w-full sm:w-auto bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition text-center">
                 Cambiar contraseña
             </a>
+
+            <form id="delete-account-form" 
+                action="{{ route('micuenta.eliminar') }}" 
+                method="POST"
+                class="w-full sm:w-auto">
+                @csrf
+                @method('DELETE')
+
+                <button type="submit"
+                    class="w-full bg-gray-300 text-white px-6 py-2 rounded-md hover:bg-gray-400 transition cursor-pointer">
+                    Borrar cuenta
+                </button>
+            </form>
+
         </div>
     </div>
 
@@ -84,14 +100,16 @@
                                 @endforeach
                             </ul>
                             <!-- Botón iniciar devolución -->
-                            <div class="mt-4">
-                                <form action="{{ route('devolucion.iniciar', $pedido->idPedido) }}" method="GET">
-                                    <button type="submit"
-                                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer">
-                                        Iniciar devolución
-                                    </button>
-                                </form>
-                            </div>
+                            @if($pedido->estadoPedido === 'entregado')
+                                <div class="mt-4">
+                                    <form action="{{ route('devolucion.iniciar', $pedido->idPedido) }}" method="GET">
+                                        <button type="submit"
+                                            class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer">
+                                            Iniciar devolución
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </li>
                 @endforeach
@@ -101,8 +119,10 @@
 
     <!-- Devoluciones -->
 <div id="devoluciones" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
-    @if($devoluciones->isEmpty())
-        <p class="text-gray-500 text-center">No has realizado ninguna devolución aún.</p>
+    @if(!isset($devoluciones) || $devoluciones->count() === 0)
+        <div class="text-center py-10">
+            <p class="text-gray-400 text-lg">No has realizado ninguna devolución aún.</p>
+        </div>
     @else
         <ul class="space-y-6">
             @foreach($devoluciones as $devolucion)
@@ -233,5 +253,14 @@
             activarTab(tab);
         });
     });
+
+    document.getElementById('delete-account-form').addEventListener('submit', function(e){
+    
+    const confirmacion = confirm("¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.");
+
+    if(!confirmacion){
+        e.preventDefault();
+    }
+});
 </script>
 @endsection

@@ -102,86 +102,92 @@
 
         <!-- Devoluciones -->
         <div id="devoluciones" class="tab-content hidden bg-white shadow-md rounded-xl p-8">
-            <ul class="space-y-6">
-                @foreach($devoluciones as $dev)
-                    <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg">
+            @if(!isset($devoluciones) || $devoluciones->count() === 0)
+                <div class="text-center py-10">
+                    <p class="text-gray-400 text-lg">No se ha realizado ninguna devolución aún.</p>
+                </div>
+            @else
+                <ul class="space-y-6">
+                    @foreach($devoluciones as $dev)
+                        <li class="bg-gray-50 border border-gray-200 rounded-xl p-6 hover:shadow-lg">
 
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="font-handwritten text-red-400 text-lg">Devolución Nº {{ $dev->idDevolucion }}</p>
-                        </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="font-handwritten text-red-400 text-lg">Devolución Nº {{ $dev->idDevolucion }}</p>
+                            </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 mb-4">
-                            <p><strong>Pedido:</strong> {{ $dev->idPedido }}</p>
-                            <p><strong>Fecha:</strong> {{ $dev->created_at->format('d/m/Y') }}</p>
-                            <p><strong>Estado: </strong><span class="
-                                @if($dev->estadoDevolucion == 'pendiente') text-red-300
-                                @elseif($dev->estadoDevolucion == 'aceptada') text-red-400
-                                @elseif($dev->estadoDevolucion == 'finalizada') text-red-500
-                                @elseif($dev->estadoDevolucion == 'rechazada') text-gray-600
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600 mb-4">
+                                <p><strong>Pedido:</strong> {{ $dev->idPedido }}</p>
+                                <p><strong>Fecha:</strong> {{ $dev->created_at->format('d/m/Y') }}</p>
+                                <p><strong>Estado: </strong><span class="
+                                    @if($dev->estadoDevolucion == 'pendiente') text-red-300
+                                    @elseif($dev->estadoDevolucion == 'aceptada') text-red-400
+                                    @elseif($dev->estadoDevolucion == 'finalizada') text-red-500
+                                    @elseif($dev->estadoDevolucion == 'rechazada') text-gray-600
+                                    @endif
+                                "> {{ $dev->estadoDevolucion }}
+                                    </span></p>
+                                <p><strong>Cantidad:</strong> {{ number_format($dev->cantidadDevolucion,2) }} €</p>
+                                <p><strong>Motivo:</strong> {{ $dev->razonDevolucion }}</p>
+                                <p><strong>Reembolso:</strong>
+                                    @if($dev->pago)
+                                        <span class="text-red-500">Realizado</span>
+                                    @else
+                                        <span class="text-gray-700">No realizado</span>
+                                    @endif
+                            </div>
+
+                            <!-- Productos -->
+                            <div>
+                                <span class="text-gray-600"><strong>Productos:</strong></span>
+
+                                <ul class="mt-2 space-y-2">
+                                    @foreach($dev->productos as $prod)
+                                        <li class="flex items-center space-x-3">
+
+                                            <div class="w-16 h-16">
+                                                <img src="{{ $prod->imagen ? asset('storage/'.$prod->imagen) : asset('images/no-image.png') }}"
+                                                    class="w-full h-full object-cover rounded-xl p-2">
+                                            </div>
+
+                                            <span>{{ $prod->nombreProducto }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <!-- Botones de aceptar, rechazar y confirmar -->
+                            <div class="flex gap-3 mt-4 flex-wrap">
+
+                                @if($dev->estadoDevolucion == 'pendiente')
+                                    <form method="POST" action="{{ route('devolucion.aceptada', $dev->idDevolucion) }}">
+                                        @csrf
+                                        <button class="bg-red-300 text-white px-3 py-1 rounded-md hover:bg-red-200 cursor-pointer">
+                                            Aceptar
+                                        </button>
+                                    </form>
                                 @endif
-                            "> {{ $dev->estadoDevolucion }}
-                                </span></p>
-                            <p><strong>Cantidad:</strong> {{ number_format($dev->cantidadDevolucion,2) }} €</p>
-                            <p><strong>Motivo:</strong> {{ $dev->razonDevolucion }}</p>
-                            <p><strong>Reembolso:</strong>
-                                @if($dev->pago)
-                                    <span class="text-red-500">Realizado</span>
-                                @else
-                                    <span class="text-gray-700">No realizado</span>
+
+                                @if($dev->estadoDevolucion == 'aceptada')
+                                    <form method="POST" action="{{ route('devolucion.recibida', $dev->idDevolucion) }}">
+                                        @csrf
+                                        <button class="bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-300 cursor-pointer">
+                                            Confirmar recepción
+                                        </button>
+                                    </form>
                                 @endif
-                        </div>
 
-                        <!-- Productos -->
-                        <div>
-                            <span class="text-gray-600"><strong>Productos:</strong></span>
-
-                            <ul class="mt-2 space-y-2">
-                                @foreach($dev->productos as $prod)
-                                    <li class="flex items-center space-x-3">
-
-                                        <div class="w-16 h-16">
-                                            <img src="{{ $prod->imagen ? asset('storage/'.$prod->imagen) : asset('images/no-image.png') }}"
-                                                class="w-full h-full object-cover rounded-xl p-2">
-                                        </div>
-
-                                        <span>{{ $prod->nombreProducto }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <!-- Botones de aceptar, rechazar y confirmar -->
-                        <div class="flex gap-3 mt-4 flex-wrap">
-
-                            @if($dev->estadoDevolucion == 'pendiente')
-                                <form method="POST" action="{{ route('devolucion.aceptada', $dev->idDevolucion) }}">
-                                    @csrf
-                                    <button class="bg-red-300 text-white px-3 py-1 rounded-md hover:bg-red-200 cursor-pointer">
-                                        Aceptar
-                                    </button>
-                                </form>
-                            @endif
-
-                            @if($dev->estadoDevolucion == 'aceptada')
-                                <form method="POST" action="{{ route('devolucion.recibida', $dev->idDevolucion) }}">
-                                    @csrf
-                                    <button class="bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-300 cursor-pointer">
-                                        Confirmar recepción
-                                    </button>
-                                </form>
-                            @endif
-
-                            @if($dev->estadoDevolucion == 'pendiente' || $dev->estadoDevolucion == 'aceptada')
-                                <form method="POST" action="{{ route('devolucion.rechazada', $dev->idDevolucion) }}">
-                                    @csrf
-                                    <button class="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-400 cursor-pointer">
-                                        Rechazar
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
-                    </li>
-                @endforeach
-            </ul>
+                                @if($dev->estadoDevolucion == 'pendiente' || $dev->estadoDevolucion == 'aceptada')
+                                    <form method="POST" action="{{ route('devolucion.rechazada', $dev->idDevolucion) }}">
+                                        @csrf
+                                        <button class="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-400 cursor-pointer">
+                                            Rechazar
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
 
         <!-- Productos -->

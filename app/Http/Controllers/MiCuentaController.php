@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Models\Pedido;
 use App\Models\Devolucion;
 use App\Models\Mensaje;
@@ -94,5 +95,35 @@ class MiCuentaController extends Controller
         return redirect()
         ->route('micuenta.password')
         ->with('success', 'Contraseña cambiada correctamente');
+    }
+
+    public function eliminarCuenta(Request $request)
+    {
+        $usuario = Auth::user();
+
+        DB::beginTransaction();
+
+        try {
+            // 🔥 Eliminar datos relacionados (orden correcto)
+            DB::table('cestas')->where('idUsuario', $usuario->idUsuario)->delete();
+            DB::table('mensajes')->where('idUsuario', $usuario->idUsuario)->delete();
+            DB::table('devoluciones')->where('idUsuario', $usuario->idUsuario)->delete();
+            DB::table('pedidos')->where('idUsuario', $usuario->idUsuario)->delete();
+
+            // 🔥 Eliminar usuario
+            $usuario->delete();
+
+            DB::commit();
+
+            // 🔐 Logout
+            Auth::logout();
+
+            return redirect('/')->with('success', 'Cuenta eliminada correctamente');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->withErrors('Error al eliminar la cuenta');
+        }
     }
 }

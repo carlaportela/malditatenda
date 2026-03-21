@@ -62,6 +62,8 @@ Route::middleware('auth')->group(function () {
         ->name('micuenta.password');
     Route::put('/micuenta/password', [MiCuentaController::class,'guardarPassword'])
         ->name('micuenta.password.guardar');
+    Route::delete('/micuenta/eliminar', [MiCuentaController::class, 'eliminarCuenta'])
+    ->name('micuenta.eliminar');
 
 });
 

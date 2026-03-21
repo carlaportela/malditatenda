@@ -15,20 +15,21 @@ class DevolucionController extends Controller
     public function crear($idPedido)
     {
         $pedido = Pedido::with('pedidoProductos.producto')->findOrFail($idPedido);
-        // Filtrar productos NO devolubles
+
         foreach ($pedido->pedidoProductos as $item) {
 
             $producto = $item->producto;
 
             $yaDevuelto = $producto->devoluciones()
-                ->whereIn('estadoDevolucion', ['pendiente', 'aprobada'])
                 ->where('idPedido', $pedido->idPedido)
+                ->whereIn('estadoDevolucion', ['pendiente', 'aprobada'])
                 ->exists();
 
+            // 🔥 Flag para frontend
             $item->noDevolvible = $yaDevuelto;
+        }
 
         return view('devolucion', compact('pedido'));
-        } 
     }
 
     //Método para crear una devolución
