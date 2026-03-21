@@ -12,10 +12,14 @@ class CestaController extends Controller
     //Añadir productos a la cesta
     public function add(Request $request)
     {
-        // Para depuración
-        // dd($request->all(), Auth::check(), Auth::user());
+        // 🔐 Si no está autenticado → devolver JSON (no redirect)
+    if (!Auth::check()) {
+        return response()->json([
+            'success' => false,
+            'redirect' => route('login')
+            ], 401); // Unauthorized
+        }
 
-        // Validamos el producto recibido
         $request->validate([
             'idProducto' => 'required|integer|exists:productos,idProducto'
         ]);

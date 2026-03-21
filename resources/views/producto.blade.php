@@ -48,26 +48,34 @@
                 </p>
             </div>
         </div>
-        @if($enCesta)
-            <button
-            class="bg-gray-300 text-white px-6 py-3 rounded-md cursor-default pointer-events-none">
-            Añadido a la cesta
-            </button>
+        @if(!auth()->check())
+            <a href="{{ route('login') }}"
+            class="bg-red-300 text-white px-6 py-3 rounded-md hover:bg-red-400 transition">
+                Inicia sesión para comprar
+            </a>
         @else
-            <!-- Formulario para añadir productos a la cesta -->
-            <form id="form-cesta" action="{{ route('cesta.add') }}" method="POST" class="add-to-cart-form">
-            @csrf
+            @if($enCesta)
+                <button
+                class="bg-gray-300 text-white px-6 py-3 rounded-md cursor-default pointer-events-none">
+                Añadido a la cesta
+                </button>
+            @else
+                <!-- Formulario para añadir productos a la cesta -->
+                <form id="form-cesta" action="{{ route('cesta.add') }}" method="POST" class="add-to-cart-form">
+                @csrf
 
-            <input type="hidden" name="idProducto" value="{{ $producto->idProducto }}">
+                <input type="hidden" name="idProducto" value="{{ $producto->idProducto }}">
 
-            <button 
-                id="btn-cesta"
-                type="submit"
-                class="bg-red-300 text-white px-6 py-3 rounded-md hover:bg-red-400 transition cursor-pointer">
-                Añadir a la cesta
-            </button>
-            </form>
+                <button 
+                    id="btn-cesta"
+                    type="submit"
+                    class="bg-red-300 text-white px-6 py-3 rounded-md hover:bg-red-400 transition cursor-pointer">
+                    Añadir a la cesta
+                </button>
+                </form>
+            @endif
         @endif
+            
         </div>
     </div>
     </section> 
