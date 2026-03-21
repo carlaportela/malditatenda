@@ -32,6 +32,34 @@
                         </li>
                     @endforeach
                 </ul>
+                <!-- Dirección de envío -->
+                @if($faltaDireccion)
+                    <div class="max-w-6xl mx-auto px-6 py-4 mb-6 bg-red-100 text-red-700 rounded-xl flex justify-between items-center">
+                        <span>Debes introducir una dirección de envío antes de continuar con el pedido.</span>
+                        <a href="{{ route('micuenta.editar') }}"
+                        class="bg-red-300 text-white px-4 py-2 rounded-md hover:bg-red-400 transition">
+                        Añadir
+                        </a>
+                    </div>
+                @endif
+                @if(!$faltaDireccion)
+                    <h2 class="text-xl font-handwritten text-gray-700 mb-4">Tu dirección</h2>
+                    <div class="bg-gray-100 rounded-md p-4 flex justify-between items-center hover:shadow-md transition">
+                        <div class="text-gray-600 text-sm space-y-1">
+                            <p><strong>Destinatario:</strong> {{ $usuario->nombreUsuario }} {{ $usuario->apellidos }}</p>
+                            <p><strong>Dirección:</strong> {{ $usuario->direccion }}</p>
+                            <p><strong>Código postal:</strong> {{ $usuario->cp }}</p>
+                            <p><strong>Localidad:</strong> {{ $usuario->localidad }} - {{ $usuario->provincia }}</p>
+                        </div>
+
+                        <div class="mt-3">
+                            <a href="{{ route('micuenta.editar') }}"
+                            class="bg-red-300 text-white px-4 py-2 rounded-md hover:bg-red-400 transition text-center">
+                            Editar dirección
+                            </a>
+                        </div>
+                    </div>
+                @endif
             @endif
         </div>
         <div class="space-y-6">
@@ -96,7 +124,8 @@
                         @csrf
                         <input type="hidden" name="codigoDescuento" id="codigoDescuentoInput">
                         <button type="submit"
-                            class="w-full bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition cursor-pointer">
+                            class="w-full bg-red-300 text-white px-6 py-2 rounded-md hover:bg-red-400 transition cursor-pointer"
+                            @if($faltaDireccion) disabled @endif>
                             Realizar pedido
                         </button>
                     </form>

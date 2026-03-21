@@ -18,6 +18,7 @@ class PedidoController extends Controller
     public function checkout()
     {
         $usuario = Auth::user();
+
         $cesta = $usuario->cesta()->with('producto')->get();
 
         $subtotal = $cesta->sum(function($item){
@@ -27,7 +28,10 @@ class PedidoController extends Controller
         $envio = 3.95;
         $total = $subtotal + $envio;
 
-        return view('pedido', compact('cesta', 'subtotal', 'envio', 'total'));
+        // Flag para saber si falta dirección
+        $faltaDireccion = empty(trim($usuario->direccion ?? ''));   
+
+        return view('pedido', compact('cesta', 'subtotal', 'envio', 'total', 'usuario', 'faltaDireccion'));
     }
 
     public function validarDescuento(Request $request)
