@@ -9,7 +9,7 @@
         </p>
 
         <!-- Enlace a Instagram -->
-        <a href="https://www.instagram.com/maldita.carlita" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:opacity-80 transition duration-300">
+        <a href="https://www.instagram.com/maldita_carlita" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:opacity-80 transition duration-300">
         <img src="{{asset('assets/img/logos_instagram/logo_instagram_acuarela.png')}}" 
             alt="Instagram" 
             class="w-6 h-6">
