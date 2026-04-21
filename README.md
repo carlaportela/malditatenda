@@ -287,6 +287,6 @@ Las contribuciones son bienvenidas:
 Para dudas o colaboración:
 
 * GitHub
-* Email (opcional)
+* Email
 
 ---
