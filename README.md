@@ -1,6 +1,6 @@
 # 🛍️ Maldita Carlita - Tienda Online Artesanal
 <p align="center">
-  <img src="URL_DE_TU_IMAGEN" alt="Maldita Carlita Banner" width="80%"/>
+  <img src="https://github.com/carlaportela/malditatenda/blob/main/etiqueta_maldita_carlita_frontal.png" alt="Maldita Carlita Banner" width="80%"/>
 </p>
 
 ![Laravel](https://img.shields.io/badge/Laravel-Backend-red)
