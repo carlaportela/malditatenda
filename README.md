@@ -18,9 +18,14 @@ Aplicación web e-commerce desarrollada para la marca artesanal **Maldita Carlit
 
 ## 📊 Status del Proyecto
 
-🟡 **Estado actual:** En desarrollo  
-🚧 **Versión:** v0.1 (MVP en construcción)  
-📅 **Última actualización:** 2026  
+<p align="left">
+
+  <img src="https://img.shields.io/badge/Estado-En%20desarrollo-yellow" />
+  <img src="https://img.shields.io/badge/Versión-v0.1-blue" />
+  <img src="https://img.shields.io/badge/Tipo-MVP-lightgrey" />
+  <img src="https://img.shields.io/badge/Última%20actualización-2026-informational" />
+
+</p>
 
 ---
 
