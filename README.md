@@ -1,4 +1,7 @@
 # 🛍️ Maldita Carlita - Tienda Online Artesanal
+<p align="center">
+  <img src="URL_DE_TU_IMAGEN" alt="Maldita Carlita Banner" width="80%"/>
+</p>
 
 ![Laravel](https://img.shields.io/badge/Laravel-Backend-red)
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue)
@@ -6,9 +9,17 @@
 ![Tailwind](https://img.shields.io/badge/TailwindCSS-UI-38B2AC)
 ![Stripe](https://img.shields.io/badge/Stripe-Payments-635BFF)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow)
-![License](https://img.shields.io/badge/license-MIT-green)
+![License](https://img.shields.io/badge/license-Proprietary-red)
 
 Aplicación web e-commerce desarrollada para la marca artesanal **Maldita Carlita**, enfocada en la venta de productos hechos a mano como cerámica, bordados e ilustraciones.
+
+---
+
+## 📊 Status del Proyecto
+
+🟡 **Estado actual:** En desarrollo  
+🚧 **Versión:** v0.1 (MVP en construcción)  
+📅 **Última actualización:** 2026  
 
 ---
 
@@ -262,9 +273,11 @@ php artisan serve
 
 ## 📄 Licencia
 
-Este proyecto es de uso educativo y portfolio.
+Este proyecto es de uso **propietario (Proprietary License)**.
 
----
+No está permitido su uso, copia o distribución sin autorización expresa del autor.
+
+© 2026 Carla Portela. Todos los derechos reservados.
 
 ## 👩‍💻 Autor
 
