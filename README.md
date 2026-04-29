@@ -1,11 +1,11 @@
 # 🛍️ Maldita Carlita - Tienda Online Artesanal
 
+![Status](https://img.shields.io/badge/status-En%20desarrollo-orange)
 ![Laravel](https://img.shields.io/badge/Laravel-Backend-red)
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue)
-![MySQL](https://img.shields.io/badge/MySQL-Database-orange)
+![MySQL](https://img.shields.io/badge/MySQL-Database-yellow)
 ![Tailwind](https://img.shields.io/badge/TailwindCSS-UI-38B2AC)
 ![Stripe](https://img.shields.io/badge/Stripe-Payments-635BFF)
-![Status](https://img.shields.io/badge/status-in%20development-yellow)
 ![License](https://img.shields.io/badge/license-Proprietary-red)
 
 <p align="center">
